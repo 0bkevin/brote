@@ -6,6 +6,8 @@
   "outputDirectory": "dist",
   "rewrites": [
     { "source": "/app", "destination": "/app/index.html" },
-    { "source": "/app/", "destination": "/app/index.html" }
+    { "source": "/app/", "destination": "/app/index.html" },
+    { "source": "/architecture", "destination": "/architecture/index.html" },
+    { "source": "/architecture/", "destination": "/architecture/index.html" }
   ]
 }
