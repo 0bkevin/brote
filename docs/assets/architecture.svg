@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 650" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 650" width="1100" height="650" role="img" aria-labelledby="title desc">
   <title id="title">Brote architecture: practice ledger and guardian-controlled real SOL</title>
   <desc id="desc">Two separate paths. Practice Brotes are stored in a browser-local ledger with a Web Locks single writer. For real SOL, a Phantom or Solflare guardian signs System Program instructions for a seed-derived profile account on Solana mainnet. Brote saves the signed transaction in a local journal before broadcast, then confirms or reconciles its status with RPC. No child private keys, custom deployed program, or Brotes token.</desc>
   <defs>
