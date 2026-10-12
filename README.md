@@ -1,67 +1,46 @@
-# Brote · Crecemos juntos
+# Brote
 
-A web app for learning to manage money with someone you trust. A responsible person creates profiles for children, adults or seniors, assigns practice money, reviews spending, and helps them grow through goals and short games. Real SOL lives in separate guardian-controlled accounts on **Solana mainnet**.
+**Learn money skills together. Start with practice. Explore Solana with someone you trust.**
+
+Brote is a responsive web app where a guardian creates profiles for children, adults, or seniors, reviews practice spending, and helps them learn through savings goals and short games. The interface is Spanish; repository documentation is English.
+
+## Try it
+
+Open the landing page at `/`, then enter the app at `/app/`. Practice mode works without a wallet: create a profile, assign fictional **Brotes**, complete a mission, and review a purchase request. Solana mode supports Phantom, Solflare, and read-only public addresses.
+
+## Architecture
+
+![Brote architecture: browser-local practice and guardian-authorized Solana accounts](docs/assets/architecture.svg)
+
+- **React + TypeScript + Vite** serve the landing page and app as static files. No backend is required for this prototype.
+- **Practice:** an immutable ledger handles balances, goals, approvals, and once-only XP rewards. Browser storage persists the state; Web Locks coordinate one writing tab. CSV exports and JSON backups support review and recovery.
+- **Real SOL:** `@solana/web3.js` derives a separate zero-data System Program account for each profile using `PublicKey.createWithSeed(guardian, profileSeed, SystemProgram.programId)`. The guardian's injected wallet signs account creation, deposits, and `TransferWithSeed` withdrawals. Brote stores no child private keys and deploys no custom program.
+
+![Signing flow: review, guardian signature, durable journal, broadcast, and RPC confirmation](docs/assets/solana-flow.gif)
+
+Signed transaction bytes are saved locally **before broadcast**. Uncertain outcomes block new signatures; recovery checks chain status or explicitly rebroadcasts the same bytes. RPC endpoints are verified against **Solana mainnet**. Practice Brotes have no monetary value and never become SOL.
+
+See [the Solana integration](SOLANA.md) and [interactive architecture diagram](docs/architecture.html) for details.
 
 ## Run locally
 
-Requires Node.js 22+ and npm. No secret keys or backend are needed for the prototype.
+Use Node.js **22.12+** and npm.
 
 ```sh
-npm install
+npm ci
 npm run dev
 npm test
 npm run build
 ```
 
-The web interface is Spanish. The submission documents are English. This project focuses on the desktop web experience.
+Optional: set `VITE_SOLANA_RPC_URL` to a browser-accessible HTTPS **mainnet** RPC. Vite exposes this value in the client bundle, so use an endpoint intended for public clients. Without it, Brote uses verified public mainnet endpoints.
 
-## What works
+## Prototype scope
 
-- A separate landing page at `/` leads to the working app at `/app`.
-- Enable simple mode for larger controls, fewer details and a step-by-step scam quiz with optional spoken prompts.
-- Create profiles with their own practice wallet, avatar and relationship. Adult profiles ask for agreement to share activity.
-- Assign fictitious Brotes, record categorized practice expenses, approve or reject requests, and set a per-purchase limit or pause.
-- Create goals and move spendable Brotes into savings. Amounts are checked in integer cents; approval deducts funds once.
-- Complete a shopping budget, a phishing quiz and an emergency allocation game. Earn XP, levels and badges; rewards are granted once per profile.
-- Switch between family and personal demo views. Filter activity and export CSV.
-- Export and restore profile backups, including stable IDs needed to rediscover the same Solana addresses.
-- Connect injected Phantom or Solflare, or inspect a public address without signing. Derive profile accounts, read real balances and recent activity from mainnet RPC, and open Solana Explorer.
-- Prepare guardian-signed account creation, deposits and seed-authorized withdrawals. The extension reviews the real transaction, and Brote waits for RPC confirmation. No transaction was sent during development.
+Profiles, practice history, and the signed-operation journal are stored in this browser. The family/personal view switch is a demo control; local limits and consent prompts are not on-chain enforcement or account authentication. Real activity shows blockchain transfers, not merchant purchase details. Mainnet reads were tested; extension signing and funded transfers still require a live wallet test. Visa and production custody are future work.
 
-Brotes have no monetary value and cannot be converted into SOL. The app never uses a simulated balance to represent real SOL.
+[Roadmap](docs/ROADMAP.md) · [Pitch](docs/PITCH.md) · [Audit](docs/AUDIT.md) · [Verification](docs/VERIFICATION.md) · [Commit guide](docs/COMMITS.md)
 
-## Solana architecture
+## License
 
-A profile is a zero-data System Program account derived from the guardian public key and a stable profile seed with `PublicKey.createWithSeed`. The guardian signs `CreateAccountWithSeed`, funding transfers and `TransferWithSeed` withdrawals. Profiles do not store private keys. All RPC endpoints are checked against mainnet's genesis hash. No custom on-chain program is deployed.
-
-See [SOLANA.md](SOLANA.md) for the implementation, wallet API, custody model and RPC behavior. An optional `VITE_SOLANA_RPC_URL` can point to a dedicated HTTPS mainnet RPC; the default public endpoint has a verified PublicNode fallback. A browser-visible RPC URL is public configuration; use an appropriately restricted endpoint.
-
-## Prototype boundaries
-
-Practice data is stored in this browser. The role selector is a demo switch, not authentication or access enforcement. Local limits apply to practice money; mainnet operations are authorized by the guardian's signature, with no delegated spending program. Profiles are not independent bank accounts.
-
-Preserve profile IDs and the verified guardian address for each account to recover the same accounts. A profile may have accounts under more than one guardian; backup files retain each verified profile/address pair. An address found in an older backup is kept only as an unverified recovery hint. Resetting practice downloads a backup first; restoring downloads a copy of the current data first. The app does not infer what was purchased from a Solana transfer. Practice descriptions and categories are entered by the user; on-chain history shows account balance changes.
-
-Only one open tab can edit the local practice data at a time. Other tabs follow saved changes in read-only mode until the writer tab closes. A browser without Web Locks opens read-only. A failed storage write leaves the current profile data unchanged and reports an error. If stored data cannot be parsed, Brote keeps its original bytes and offers a download before explicit replacement or restore. Backup files are compact JSON with a 50 MB export and import limit; they contain public addresses, practice data and signed transaction records, never private keys. Restore validates the signed bytes and profile derivations, retains local pending signatures, and stops if the dialog closes or the data changes while preparing the copy.
-
-Creation/deposit/withdrawal transaction construction and signer authority are covered by focused tests. A real wallet signature and confirmed mainnet transfer still require a user-led test. Public RPC availability can vary. This is a hackathon prototype, not a production custody service.
-
-`npm audit` currently reports four moderate findings in the legacy web3.js dependency tree (`jayson`, `stream-json`, `uuid`). A production SDK migration/dependency review remains in the roadmap; do not force a major SDK update without adapting and retesting wallet signing.
-
-## Project files
-
-- `src/Landing.tsx` — game-inspired product landing and working demo links.
-
-- `src/domain.ts` — practice ledger, rules and validation.
-- `src/store.tsx` — local persistence and React API.
-- `src/components/Wallets.tsx` — profile, spending and goal flows.
-- `src/components/Learning.tsx` — interactive lessons.
-- `src/solana.tsx` — wallet connection, mainnet reads and signing.
-- `src/solana-utils.ts` — exact lamport parsing and deterministic seeds.
-- `docs/ROADMAP.md` — shipped scope and next milestones.
-- `docs/PITCH.md` — timed pitch and demo shot plan.
-- `docs/SUBMISSION.md` — competition submission copy and remaining materials.
-- `docs/BRAND.md` — naming options and visual direction.
-- `docs/COMMITS.md` — the actual commit history and purpose of each change.
-
-Reference: [Piggy Wallet](https://www.piggywallet.app/), for the family wallet and learning concept. Brote's design and code are original.
+[MIT](LICENSE) © 2026 Kevin Bravo.
