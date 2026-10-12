@@ -1493,9 +1493,31 @@ h3,
 .app-shell .bell-button { width: 44px; height: 44px; flex: none; border-radius: 10px; }
 .app-shell .bell-button:hover { background: #f4f0ff; }
 .app-shell .family-switch { padding: 9px; margin-bottom: 17px; border: 0; border-radius: 10px; }
+.app-shell .sidebar {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
 .app-shell .workspace-label { margin-top: 20px; }
 .app-shell .nav-link { min-height: 44px; padding-block: 10px; }
 .app-shell .main-content { padding-top: 24px; }
+
+/* Short section actions keep their label and icon on one aligned row. */
+.app-shell .dashboard-bottom > .card { min-width: 0; }
+.section-heading > div { min-width: 0; }
+.app-shell .section-heading > .button,
+.app-shell .section-heading > .text-button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.section-heading h2 { min-width: 0; }
+.goal-section-head h3 { min-width: 0; }
+.app-shell .goal-section-head > .text-button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.button > svg,
+.text-button > svg { flex-shrink: 0; }
 
 @media (max-width: 900px) {
   .app-shell .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }

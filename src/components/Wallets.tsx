@@ -462,11 +462,12 @@ function GoalCard({
             <input
               id={goal.id}
               type="number"
+              inputMode="decimal"
               min="0.01"
               step="0.01"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              placeholder="Cantidad de Brotes"
+              placeholder="0,00"
               required
             />
             <button className="button button-primary" type="submit">

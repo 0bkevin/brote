@@ -27,6 +27,7 @@
   .app-shell .learner-select .avatar-art { width: 22px; height: 22px; }
   .app-shell .field input, .app-shell .field select,
   .app-shell .sr-label select, .app-shell .solana-action input,
+  .app-shell .inline-save input,
   .app-shell .solana-watch input, .app-shell .solana-profilebar select,
   .modal .field input, .modal .field select {
     min-height: 34px !important;
@@ -52,6 +53,12 @@
   .modal .learning-stepper { gap: 8px; }
   .modal .learning-stepper strong { min-width: 32px; }
   .modal .amount-input { min-height: 34px; }
+  .modal .amount-presets > button {
+    min-width: 0;
+    min-height: 34px;
+    padding: 4px 8px;
+    white-space: nowrap;
+  }
   .app-shell .stat-icon, .app-shell .tx-icon { width: 34px; height: 34px; }
   .app-shell .stat-card { padding: 14px 16px; }
   .app-shell .avatar-picker button, .modal .avatar-picker button { padding: 5px; }
@@ -86,4 +93,21 @@
   .modal .learning-modal-intro { margin-bottom: 14px; }
   .modal .avatar-picker button { width: 34px; height: 34px; min-width: 34px; padding: 0; }
   .modal .avatar-picker .avatar-art { width: 30px; height: 30px; }
+}
+
+@media (max-width: 600px) {
+  .app-shell .transaction-row:has(.tx-review) {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+    gap: 8px;
+  }
+  .app-shell .transaction-row:has(.tx-review) .tx-copy strong {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .app-shell .transaction-row:has(.tx-review) .tx-review {
+    grid-column: 2 / -1;
+    justify-content: flex-end;
+    margin-left: 0;
+  }
 }
