@@ -307,11 +307,19 @@ function WeekChart({ transactions }: { transactions: Transaction[] }) {
             <div className="bar-pair">
               <div
                 className="income-bar"
-                style={{ height: `${Math.max(3, (d.income / max) * 105)}px` }}
+                title={`${moneyNumber(d.income)} Brotes recibidos`}
+                style={{
+                  height: `${(d.income / max) * 100}%`,
+                  minHeight: d.income > 0 ? 3 : 0,
+                }}
               />
               <div
                 className="expense-bar"
-                style={{ height: `${Math.max(3, (d.expense / max) * 105)}px` }}
+                title={`${moneyNumber(d.expense)} Brotes gastados`}
+                style={{
+                  height: `${(d.expense / max) * 100}%`,
+                  minHeight: d.expense > 0 ? 3 : 0,
+                }}
               />
             </div>
             <span>{d.day}</span>

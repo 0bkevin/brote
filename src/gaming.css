@@ -563,6 +563,11 @@ h3,
 .rhythm-card {
   padding: 23px;
 }
+.rhythm-card {
+  display: flex;
+  flex-direction: column;
+}
+.rhythm-card .section-heading { flex-shrink: 0; }
 .recent-card h2,
 .rhythm-card h2 {
   font-size: 18px;
@@ -639,6 +644,83 @@ h3,
 }
 .chart-bars:before {
   border-color: #efe9f8;
+}
+.week-chart {
+  --chart-label-height: 30px;
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 12px;
+  height: 240px;
+  min-height: 240px;
+  flex: 1;
+  padding-top: 16px;
+}
+.chart-axis {
+  width: auto;
+  font-size: 13px;
+  line-height: 1;
+  white-space: nowrap;
+  padding-bottom: var(--chart-label-height);
+}
+.chart-axis > span:first-child { transform: translateY(-50%); }
+.chart-axis > span:last-child { transform: translateY(50%); }
+.chart-bars {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  min-width: 0;
+  border-bottom: 0;
+}
+.chart-bars:before { top: calc((100% - var(--chart-label-height)) / 2); }
+.chart-bars:after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: var(--chart-label-height);
+  border-top: 1px solid #eee9f8;
+}
+.chart-day {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) var(--chart-label-height);
+  justify-content: stretch;
+  align-items: stretch;
+  min-width: 0;
+}
+.bar-pair {
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+  justify-content: center;
+  gap: 6px;
+}
+.bar-pair > div {
+  width: auto;
+  min-width: 0;
+  max-width: 22px;
+  flex: 1;
+  border-radius: 6px 6px 0 0;
+}
+.chart-day > span {
+  font-size: 13px;
+  line-height: 20px;
+  padding: 10px 0 0;
+  text-align: center;
+  white-space: nowrap;
+}
+.chart-legend {
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  font-size: 14px;
+  padding-top: 18px;
+}
+.chart-legend i { width: 9px; height: 9px; }
+@media (max-width: 800px) {
+  .app-shell .week-chart { height: 220px; min-height: 220px; gap: 8px; }
+  .chart-axis, .chart-day > span { font-size: 12px; }
+  .bar-pair { gap: 3px; }
+  .bar-pair > div { max-width: 18px; }
+  .chart-legend { font-size: 12px; }
 }
 .adventure-teaser {
   background: #eaf0ff;
@@ -1521,7 +1603,7 @@ h3,
 
 @media (max-width: 900px) {
   .app-shell .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .app-shell .rhythm-card { display: block; }
+  .app-shell .rhythm-card { display: flex; }
   .app-shell .stat-card { display: flex; }
   .app-shell .stat-icon { margin-bottom: 0; }
   .app-shell .wallet-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
