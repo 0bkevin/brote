@@ -47,3 +47,15 @@ Additional checks covered:
 - A read-only mainnet query of the public System Program address returned one lamport through the verified PublicNode fallback. The derived example profile had no created account.
 - These are browser viewport checks, not physical-device or user-research results. Real wallet signing, funded account creation, deposits, and withdrawals were not performed in this visual pass.
 - Single-line mobile controls use 34px. Multiline choices retain enough height for their text, and long public addresses scroll within their input rather than widening the page.
+
+## Weekly chart follow-up
+
+The weekly chart was separately reviewed after feedback that it looked too small. Its container was fixed at 151px, bars were capped at 105px, and the 39px axis wrapped the top amount. The new plot uses the card's available height, responsive bar widths, and a non-wrapping axis. Gridlines follow the plot's actual height.
+
+- Checked all ten presets again: no horizontal overflow in the card, axis, day groups, or legend.
+- At 1440px, the chart measures about 281px and the highest bar about 235px, compared with 151px and 105px previously. Bars reach 22px wide. At 320px, the chart is 220px high and the highest bar 174px.
+- Computed browser styles confirm 13px desktop axis/day labels, a 14px legend, and 12px mobile labels. A review concern about a later typography override was checked against both source and computed styles; that later rule sets only the text color.
+- Days with zero income or expenses have zero-height bars. Positive small amounts retain a minimum visible mark. The completed-transaction filter and amount totals remain unchanged.
+- Checked the learner's smaller weekly totals and the existing simple-mode visibility behavior. The production build and whitespace checks pass.
+
+[Desktop chart](assets/weekly-chart-desktop.png) · [Chart at 320px](assets/weekly-chart-mobile-320.png)

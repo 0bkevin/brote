@@ -253,9 +253,17 @@ Use two mission columns at medium desktop widths, wrap footer actions, preserve 
 
 Remove hard card outlines, soften shadows, contain narrow game cards, and use 34px mobile calls to action with a shorter header.
 
-## 62. docs(quality): record responsive alignment checks and evidence
+## 62. `e37af6b` — docs(quality): record responsive alignment checks and evidence
 
-Record the ten viewport presets, verified form heights, independent review results, and screenshot evidence. Extend the complete commit index and product overview. This entry describes the current documentation update; retrieve its hash with `git log --oneline --grep="record responsive alignment"`.
+Record the ten viewport presets, verified form heights, independent review results, and screenshot evidence. Extend the complete commit index and product overview.
+
+## 63. `3496833` — fix(dashboard): enlarge the weekly chart and clarify its scale
+
+Let the weekly chart fill its card, use proportional responsive bars, enlarge labels and the legend, and align guide lines to the plot. Keep zero values invisible and preserve completed-transaction filtering.
+
+## 64. docs(quality): document weekly chart readability checks
+
+Record the chart sizing correction, ten responsive presets, rendered typography, zero-value checks, and desktop/mobile captures. Extend this index and the product overview. Retrieve this documentation commit with `git log --oneline --grep="weekly chart readability"`.
 
 ## Updating this index
 
