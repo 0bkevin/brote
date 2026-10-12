@@ -16,13 +16,16 @@ import {
   Transaction,
 } from "@solana/web3.js";
 import type { Wallet } from "./types";
+import { translate } from "./i18n-core";
 import { useStore } from "./store";
-import { parseSolLamports, seedFor } from "./solana-utils";
+import { hasValidSystemAccountRemainder, parseSolLamports, seedFor } from "./solana-utils";
 import { ConnectionRequests, mergeVerifiedReads, retryReadOnVerifiedFallback, verifyMainnetConnection } from "./solana-connection";
 import {
   OperationJournal,
   SOLANA_OPERATIONS_KEY,
   SigningSession,
+  assertFinalTransactionFunds,
+  estimateTransactionFee,
   rebroadcastSignedOperation,
   reconcileOperation,
   signAndSendOperation,
@@ -697,6 +700,9 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
         profileId,
         profileAddress: address,
         kind,
+        beforeSign: (prepared) => assertFinalTransactionFunds(
+          prepared, guardian, new PublicKey(address), kind, connection,
+        ),
         confirmWithTimeout: (promise) => withTimeout(promise, 90_000),
       });
       return {
@@ -735,19 +741,6 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
         const lamports = safeLamports(
           await connection.getMinimumBalanceForRentExemption(0, COMMITMENT),
         );
-        const guardianBalance = safeLamports(
-          await connection.getBalance(guardian, COMMITMENT),
-        );
-        if (guardianBalance <= lamports + 10_000)
-          throw new Error(
-            "Saldo insuficiente en la billetera del representante para crear la cuenta y pagar la comisión.",
-          );
-        if (
-          !window.confirm(
-            `SOLANA MAINNET · SOL real\n\nCrear cuenta para ${wallet.name}\nDirección: ${key.toBase58()}\nDesde: ${guardian.toBase58()}\nDepósito inicial: ${(lamports / LAMPORTS_PER_SOL).toFixed(9)} SOL, más comisión de red.\n\nLa billetera del representante deberá firmar. ¿Continuar?`,
-          )
-        )
-          throw new Error("Operación cancelada.");
         const transaction = new Transaction().add(
           SystemProgram.createAccountWithSeed({
             fromPubkey: guardian,
@@ -759,6 +752,20 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
             programId: SystemProgram.programId,
           }),
         );
+        const feeLamports = await estimateTransactionFee(transaction, guardian, connection);
+        const guardianBalance = safeLamports(
+          await connection.getBalance(guardian, COMMITMENT),
+        );
+        if (guardianBalance < lamports + feeLamports)
+          throw new Error(
+            "Saldo insuficiente en la billetera del representante para crear la cuenta y pagar la comisión.",
+          );
+        if (
+          !window.confirm(
+            translate(`SOLANA MAINNET · SOL real\n\nCrear cuenta para ${wallet.name}\nDirección: ${key.toBase58()}\nDesde: ${guardian.toBase58()}\nDepósito inicial: ${(lamports / LAMPORTS_PER_SOL).toFixed(9)} SOL, más comisión de red.\n\nLa billetera del representante deberá firmar. ¿Continuar?`),
+          )
+        )
+          throw new Error("Operación cancelada.");
         assertSigner(session);
         const receipt = await submit(transaction, key.toBase58(), wallet.id, "create", session);
         return receipt;
@@ -782,19 +789,6 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
             "La cuenta del perfil no existe o no es una cuenta de sistema válida.",
           );
         safeLamports(account.lamports);
-        const guardianBalance = safeLamports(
-          await connection.getBalance(guardian, COMMITMENT),
-        );
-        if (guardianBalance <= lamports + 10_000)
-          throw new Error(
-            "Saldo insuficiente para el depósito y la comisión de red.",
-          );
-        if (
-          !window.confirm(
-            `SOLANA MAINNET · SOL real\n\nDepositar ${amountSol} SOL para ${wallet.name}\nDesde: ${guardian.toBase58()}\nHacia: ${key.toBase58()}\nMás comisión de red pagada por el representante.\n\n¿Continuar a la firma en tu billetera?`,
-          )
-        )
-          throw new Error("Operación cancelada.");
         const transaction = new Transaction().add(
           SystemProgram.transfer({
             fromPubkey: guardian,
@@ -802,6 +796,20 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
             lamports,
           }),
         );
+        const feeLamports = await estimateTransactionFee(transaction, guardian, connection);
+        const guardianBalance = safeLamports(
+          await connection.getBalance(guardian, COMMITMENT),
+        );
+        if (guardianBalance < lamports + feeLamports)
+          throw new Error(
+            "Saldo insuficiente para el depósito y la comisión de red.",
+          );
+        if (
+          !window.confirm(
+            translate(`SOLANA MAINNET · SOL real\n\nDepositar ${amountSol} SOL para ${wallet.name}\nDesde: ${guardian.toBase58()}\nHacia: ${key.toBase58()}\nMás comisión de red pagada por el representante.\n\n¿Continuar a la firma en tu billetera?`),
+          )
+        )
+          throw new Error("Operación cancelada.");
         assertSigner(session);
         return submit(transaction, key.toBase58(), wallet.id, "deposit", session);
       }),
@@ -831,19 +839,13 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
         safeLamports(account.lamports);
         if (account.lamports < lamports)
           throw new Error("Saldo insuficiente en la cuenta del perfil.");
-        if (
-          safeLamports(await connection.getBalance(guardian, COMMITMENT)) <
-          10_000
-        )
+        const minimumBalance = safeLamports(
+          await connection.getMinimumBalanceForRentExemption(0, COMMITMENT),
+        );
+        if (!hasValidSystemAccountRemainder(account.lamports, lamports, minimumBalance))
           throw new Error(
-            "El representante necesita SOL para la comisión de red.",
+            "El retiro debe dejar la cuenta vacía o conservar su saldo mínimo de rent-exemption.",
           );
-        if (
-          !window.confirm(
-            `SOLANA MAINNET · SOL real\n\nRetirar ${amountSol} SOL de ${wallet.name}\nDesde: ${key.toBase58()}\nHacia: ${toPubkey.toBase58()}\nFirma: ${guardian.toBase58()}\nLa comisión se paga desde la billetera del representante.\n\nVerifica cuidadosamente el destino. ¿Continuar?`,
-          )
-        )
-          throw new Error("Operación cancelada.");
         const transaction = new Transaction().add(
           SystemProgram.transfer({
             fromPubkey: key,
@@ -854,6 +856,19 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
             programId: SystemProgram.programId,
           }),
         );
+        const feeLamports = await estimateTransactionFee(transaction, guardian, connection);
+        if (
+          safeLamports(await connection.getBalance(guardian, COMMITMENT)) < feeLamports
+        )
+          throw new Error(
+            "El representante necesita SOL para la comisión de red.",
+          );
+        if (
+          !window.confirm(
+            translate(`SOLANA MAINNET · SOL real\n\nRetirar ${amountSol} SOL de ${wallet.name}\nDesde: ${key.toBase58()}\nHacia: ${toPubkey.toBase58()}\nFirma: ${guardian.toBase58()}\nLa comisión se paga desde la billetera del representante.\n\nVerifica cuidadosamente el destino. ¿Continuar?`),
+          )
+        )
+          throw new Error("Operación cancelada.");
         assertSigner(session);
         return submit(transaction, key.toBase58(), wallet.id, "withdraw", session);
       }),

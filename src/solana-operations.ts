@@ -70,7 +70,11 @@ export class OperationJournal {
     const bySignature = new Map(records.map((record) => [record.signature, record]));
     for (const record of imported) {
       const existing = bySignature.get(record.signature);
-      bySignature.set(record.signature, existing ? mergeOperation(existing, record) : record);
+      // A backup is user-editable JSON. Its claimed terminal state is not chain
+      // evidence, so every imported operation must be reconciled before it can
+      // stop blocking new writes.
+      const unverified = { ...record, state: "pending" as const, detail: undefined };
+      bySignature.set(record.signature, existing ? mergeOperation(existing, unverified) : unverified);
     }
     return this.write([...bySignature.values()]);
   }
@@ -90,6 +94,93 @@ export class OperationJournal {
     if (this.read().some((record) => record.state === "pending"))
       throw new Error("Hay una transacción sin resultado definitivo. Verifica su estado antes de firmar otra operación.");
   }
+}
+
+/** Quote the current RPC fee for the exact legacy transaction message. */
+export async function estimateTransactionFee(
+  transaction: Transaction,
+  guardian: PublicKey,
+  connection: {
+    getLatestBlockhash: (commitment: "confirmed") => Promise<{ blockhash: string; lastValidBlockHeight: number }>;
+    getFeeForMessage: (message: ReturnType<Transaction["compileMessage"]>, commitment: "confirmed") => Promise<{ value: number | null }>;
+  },
+): Promise<number> {
+  const { blockhash } = await connection.getLatestBlockhash("confirmed");
+  transaction.feePayer = guardian;
+  transaction.recentBlockhash = blockhash;
+  const { value: fee } = await connection.getFeeForMessage(transaction.compileMessage(), "confirmed");
+  if (fee === null || !Number.isSafeInteger(fee) || fee < 0)
+    throw new Error("El RPC no pudo estimar la comisión de esta transacción.");
+  return fee;
+}
+
+/** Recheck funds against the exact message prepared for wallet signing. */
+export async function assertFinalTransactionFunds(
+  transaction: Transaction,
+  guardian: PublicKey,
+  profileAddress: PublicKey,
+  kind: OperationKind,
+  connection: {
+    getFeeForMessage: (message: ReturnType<Transaction["compileMessage"]>, commitment: "confirmed") => Promise<{ value: number | null }>;
+    getBalance: (address: PublicKey, commitment: "confirmed") => Promise<number>;
+    getMinimumBalanceForRentExemption: (dataLength: number, commitment: "confirmed") => Promise<number>;
+  },
+): Promise<void> {
+  if (!transaction.feePayer?.equals(guardian) || !transaction.recentBlockhash ||
+      transaction.instructions.length !== 1 ||
+      !transaction.instructions[0].programId.equals(SystemProgram.programId))
+    throw new Error("La transacción cambió antes de firmarse. No se envió.");
+
+  const instruction = transaction.instructions[0];
+  let amount = 0n;
+  let guardianCredit = 0n;
+  try {
+    if (kind === "create") {
+      const decoded = SystemInstruction.decodeCreateWithSeed(instruction);
+      if (!decoded.fromPubkey.equals(guardian) || !decoded.basePubkey.equals(guardian) ||
+          !decoded.newAccountPubkey.equals(profileAddress) ||
+          !decoded.programId.equals(SystemProgram.programId) || decoded.space !== 0 ||
+          !decoded.seed.startsWith("brote1-")) throw new Error();
+      amount = BigInt(decoded.lamports);
+    } else if (kind === "deposit") {
+      const decoded = SystemInstruction.decodeTransfer(instruction);
+      if (!decoded.fromPubkey.equals(guardian) || !decoded.toPubkey.equals(profileAddress)) throw new Error();
+      amount = BigInt(decoded.lamports);
+    } else {
+      const decoded = SystemInstruction.decodeTransferWithSeed(instruction);
+      if (!decoded.fromPubkey.equals(profileAddress) || !decoded.basePubkey.equals(guardian) ||
+          !decoded.programId.equals(SystemProgram.programId) || !decoded.seed.startsWith("brote1-"))
+        throw new Error();
+      amount = BigInt(decoded.lamports);
+      if (decoded.toPubkey.equals(guardian)) guardianCredit = amount;
+    }
+  } catch {
+    throw new Error("La transacción cambió antes de firmarse. No se envió.");
+  }
+  if (amount <= 0n || amount > BigInt(Number.MAX_SAFE_INTEGER))
+    throw new Error("La transacción cambió antes de firmarse. No se envió.");
+  const debit = kind === "withdraw" ? 0n : amount;
+
+  const { value: fee } = await connection.getFeeForMessage(transaction.compileMessage(), "confirmed");
+  if (fee === null || !Number.isSafeInteger(fee) || fee < 0)
+    throw new Error("El RPC no pudo estimar la comisión de esta transacción.");
+  const balance = await connection.getBalance(guardian, "confirmed");
+  if (!Number.isSafeInteger(balance) || balance < 0)
+    throw new Error("El RPC devolvió un saldo inválido para la billetera del representante.");
+  if (BigInt(balance) < debit + BigInt(fee))
+    throw new Error(kind === "create"
+      ? "Saldo insuficiente en la billetera del representante para crear la cuenta y pagar la comisión."
+      : kind === "deposit"
+        ? "Saldo insuficiente para el depósito y la comisión de red."
+        : "El representante necesita SOL para la comisión de red.");
+  const minimum = await connection.getMinimumBalanceForRentExemption(0, "confirmed");
+  if (!Number.isSafeInteger(minimum) || minimum < 0)
+    throw new Error("El RPC devolvió un saldo mínimo exento de renta inválido.");
+  const afterFee = BigInt(balance) - BigInt(fee);
+  const afterInstruction = afterFee - debit + guardianCredit;
+  const isValidRemainder = (lamports: bigint) => lamports === 0n || lamports >= BigInt(minimum);
+  if (!isValidRemainder(afterFee) || !isValidRemainder(afterInstruction))
+    throw new Error("La billetera del representante debe quedar vacía o conservar su saldo mínimo exento de renta tras la comisión y la operación.");
 }
 
 function sameIdentity(left: SignedOperation, right: SignedOperation): boolean {
@@ -136,15 +227,15 @@ export function isSignedOperation(value: unknown): value is SignedOperation {
       const decoded = SystemInstruction.decodeCreateWithSeed(instruction);
       return decoded.fromPubkey.equals(guardian) && decoded.basePubkey.equals(guardian) &&
         decoded.newAccountPubkey.equals(profile) && decoded.programId.equals(SystemProgram.programId) &&
-        decoded.seed.startsWith("brote1-");
+        decoded.space === 0 && decoded.lamports > 0 && decoded.seed.startsWith("brote1-");
     }
     if (item.kind === "deposit") {
       const decoded = SystemInstruction.decodeTransfer(instruction);
-      return decoded.fromPubkey.equals(guardian) && decoded.toPubkey.equals(profile);
+      return decoded.fromPubkey.equals(guardian) && decoded.toPubkey.equals(profile) && decoded.lamports > 0;
     }
     const decoded = SystemInstruction.decodeTransferWithSeed(instruction);
     return decoded.fromPubkey.equals(profile) && decoded.basePubkey.equals(guardian) &&
-      decoded.programId.equals(SystemProgram.programId) && decoded.seed.startsWith("brote1-");
+      decoded.programId.equals(SystemProgram.programId) && decoded.lamports > 0 && decoded.seed.startsWith("brote1-");
   } catch {
     return false;
   }
@@ -211,6 +302,7 @@ export async function signAndSendOperation(args: {
   profileId: string;
   profileAddress: string;
   kind: OperationKind;
+  beforeSign?: (transaction: Transaction) => Promise<void>;
   confirmWithTimeout?: <T>(promise: Promise<T>) => Promise<T>;
 }): Promise<SignedOperation> {
   const { transaction, provider, guardian, connection, assertSession, journal, save } = args;
@@ -220,6 +312,14 @@ export async function signAndSendOperation(args: {
   transaction.feePayer = guardian;
   transaction.recentBlockhash = blockhash;
   const expectedMessage = transaction.serializeMessage();
+  if (args.beforeSign) {
+    await args.beforeSign(transaction);
+    assertSession();
+    const checkedMessage = transaction.serializeMessage();
+    if (expectedMessage.length !== checkedMessage.length ||
+        expectedMessage.some((byte, index) => byte !== checkedMessage[index]))
+      throw new Error("La transacción cambió antes de firmarse. No se envió.");
+  }
   assertSession();
   const signed = await provider.signTransaction(transaction);
   assertSession();
