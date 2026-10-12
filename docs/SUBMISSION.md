@@ -4,11 +4,11 @@
 
 **Name:** Brote — _Crecemos juntos_ (“We grow together”)
 
-**Product URL:** https://brote-family-solana.brown-isle-1431.chatgpt.site
+**Product URL:** https://brote-three.vercel.app
 
-**App:** https://brote-family-solana.brown-isle-1431.chatgpt.site/app/
+**App:** https://brote-three.vercel.app/app/
 
-**Logo:** https://brote-family-solana.brown-isle-1431.chatgpt.site/logo.svg
+**Logo:** https://brote-three.vercel.app/logo.svg
 
 **Project description:** Brote is a family-friendly web app for practicing money decisions together. It gives each family member an individual profile with practice balances, savings goals, activity, and optional adult review of practice purchases. Three short games teach budgeting, scam awareness, and planning for unexpected expenses. The intended audience includes young children learning with a responsible adult, adults new to crypto, and senior learners. Simple mode supports people who prefer a slower, clearer experience.
 

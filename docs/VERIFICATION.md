@@ -71,3 +71,15 @@ Latest captures:
 - [Mobile wallets](assets/mobile-wallets.png)
 - [Full-height lateral menu](assets/mobile-menu.png)
 - [Compact desktop](assets/desktop-compact.png)
+
+## Vercel release verification — October 12, 2026
+
+The public deployment at https://brote-three.vercel.app was checked after the GitHub repository was connected to the Vercel project.
+
+- `/`, `/app`, `/app/`, `/architecture`, `/architecture/`, `logo.svg`, and `favicon.svg` returned HTTP 200 with the expected content types.
+- The mobile landing CTA opened the app. At 390 × 844, the app header measured 48 px, the side sheet filled the viewport, and its buttons and selects measured 34 px. The inspected pages had no horizontal overflow.
+- The side sheet opened learning and Solana mode correctly. The Spanish interface remained unchanged.
+- Read-only observation of the public System Program address returned one lamport through the genesis-verified PublicNode fallback; the derived example profile had no existing account. No extension was connected and no money was moved.
+- GitHub rendered the English README, MIT license, architecture SVG, and animated GIF. The validation workflow passed all 53 tests and the production build.
+
+This verifies deployment routing and browser behavior, not a funded mainnet signing session or physical-device coverage.

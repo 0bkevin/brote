@@ -197,6 +197,42 @@ Record the function-by-function audit, 53 tests, and browser flows. Include scre
 
 Extend this index through the audit and responsive mobile refinements, and update the interactive product overview.
 
+## 48. `3f0e6b8` — chore(license): publish Brote under the MIT license
+
+Add the MIT license and matching package metadata, including the public repository URL.
+
+## 49. `97a1f7e` — docs: present the repository and current architecture in English
+
+Translate the remaining repository presentation, preserve Spanish interface labels, and replace obsolete component ownership instructions with the current architecture.
+
+## 50. `5185f6d` — ci: validate the ledger, Solana safeguards, and production build
+
+Run the regression tests and production build in GitHub Actions using Node.js 22 and read-only repository permissions.
+
+## 51. `1a5911a` — build(vercel): configure static deployment and direct app routes
+
+Configure the Vite build output, deterministic npm installation, direct app routes, and ignored local Vercel settings.
+
+## 52. `1ec64ec` — docs(architecture): illustrate practice storage and guardian signing flows
+
+Add a static SVG, responsive standalone HTML diagram, six-second GIF, and reproducible generator for the separate practice and real-SOL paths.
+
+## 53. `0c92d7e` — build: publish the architecture page and exclude local deployment credentials
+
+Publish the standalone architecture page with both URL forms and exclude local credentials and generated files from deployment uploads.
+
+## 54. `89b2455` — docs(readme): explain Brote and its Solana architecture concisely
+
+Replace the long introduction with a concise English README covering the product, architecture, mainnet signing, local setup, and prototype limits.
+
+## 55. `bfdcd5f` — fix(docs): give the architecture SVG readable intrinsic dimensions
+
+Set explicit SVG dimensions so GitHub displays the architecture at a legible width; regenerate the standalone HTML.
+
+## 56. docs(deployment): record the live release and complete publication history
+
+This index update records the public GitHub repository, Vercel deployment, live route and responsive checks, and all publication commits. Its own hash is available with `git log -1 --oneline`; it is omitted here to avoid a self-reference.
+
 ## Updating this index
 
 The history retains the individual commits and has not been rewritten as a single commit. To keep this index current, append each new commit with its hash, subject, and a concise summary.

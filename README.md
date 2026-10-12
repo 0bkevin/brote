@@ -6,7 +6,9 @@ Brote is a responsive web app where a guardian creates profiles for children, ad
 
 ## Try it
 
-Open the landing page at `/`, then enter the app at `/app/`. Practice mode works without a wallet: create a profile, assign fictional **Brotes**, complete a mission, and review a purchase request. Solana mode supports Phantom, Solflare, and read-only public addresses.
+[Live website](https://brote-three.vercel.app) · [Open the app](https://brote-three.vercel.app/app/) · [Architecture diagram](https://brote-three.vercel.app/architecture/)
+
+Practice mode works without a wallet: create a profile, assign fictional **Brotes**, complete a mission, and review a purchase request. Solana mode supports Phantom, Solflare, and read-only public addresses.
 
 ## Architecture
 
@@ -20,7 +22,7 @@ Open the landing page at `/`, then enter the app at `/app/`. Practice mode works
 
 Signed transaction bytes are saved locally **before broadcast**. Uncertain outcomes block new signatures; recovery checks chain status or explicitly rebroadcasts the same bytes. RPC endpoints are verified against **Solana mainnet**. Practice Brotes have no monetary value and never become SOL.
 
-See [the Solana integration](SOLANA.md) and [interactive architecture diagram](docs/architecture.html) for details.
+See [the Solana integration](SOLANA.md) and [interactive architecture diagram](https://brote-three.vercel.app/architecture/) for details.
 
 ## Run locally
 
@@ -39,7 +41,7 @@ Optional: set `VITE_SOLANA_RPC_URL` to a browser-accessible HTTPS **mainnet** RP
 
 Profiles, practice history, and the signed-operation journal are stored in this browser. The family/personal view switch is a demo control; local limits and consent prompts are not on-chain enforcement or account authentication. Real activity shows blockchain transfers, not merchant purchase details. Mainnet reads were tested; extension signing and funded transfers still require a live wallet test. Visa and production custody are future work.
 
-[Roadmap](docs/ROADMAP.md) · [Pitch](docs/PITCH.md) · [Audit](docs/AUDIT.md) · [Verification](docs/VERIFICATION.md) · [Commit guide](docs/COMMITS.md)
+[Roadmap](docs/ROADMAP.md) · [Pitch](docs/PITCH.md) · [Deployment](docs/DEPLOYMENT.md) · [Audit](docs/AUDIT.md) · [Verification](docs/VERIFICATION.md) · [Commit guide](docs/COMMITS.md)
 
 ## License
 
