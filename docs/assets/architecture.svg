@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 650" role="img" aria-labelledby="title desc">
+  <title id="title">Brote architecture: practice ledger and guardian-controlled real SOL</title>
+  <desc id="desc">Two separate paths. Practice Brotes are stored in a browser-local ledger with a Web Locks single writer. For real SOL, a Phantom or Solflare guardian signs System Program instructions for a seed-derived profile account on Solana mainnet. Brote saves the signed transaction in a local journal before broadcast, then confirms or reconciles its status with RPC. No child private keys, custom deployed program, or Brotes token.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#faf9ff"/><stop offset="1" stop-color="#f4f2ff"/></linearGradient>
+    <linearGradient id="real" x2="1" y2="1"><stop stop-color="#f3efff"/><stop offset="1" stop-color="#ebe9ff"/></linearGradient>
+    <filter id="shadow" x="-10%" y="-25%" width="120%" height="160%"><feDropShadow dx="0" dy="7" stdDeviation="10" flood-color="#322667" flood-opacity=".08"/></filter>
+    <marker id="arrowLime" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M1 1l7 3.5L1 8" fill="none" stroke="#7b9c20" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+    <marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M1 1l7 3.5L1 8" fill="none" stroke="#755ce3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  </defs>
+  <style>
+    text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#24234a}
+    .title{font-size:32px;font-weight:800;letter-spacing:-1px}.sub{font-size:15px;fill:#5e5d79}
+    .eyebrow{font-size:12px;font-weight:800;letter-spacing:1.35px}.head{font-size:19px;font-weight:800;letter-spacing:-.35px}
+    .body{font-size:14px;fill:#595a75}.small{font-size:12.5px;fill:#686981}.step{font-size:14px;font-weight:700}
+    .num{font-size:12px;font-weight:900;fill:#fff}.pill{font-size:12px;font-weight:800;letter-spacing:.6px}
+  </style>
+  <rect width="1100" height="650" fill="url(#bg)"/>
+  <circle cx="63" cy="54" r="23" fill="#d7ff5c"/>
+  <path d="M63 65V51m0 5c-9 0-13-5-13-12 8 0 13 4 13 12zm0-5c0-9 5-14 14-14 0 9-5 14-14 14z" fill="none" stroke="#343567" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text class="title" x="99" y="58">How Brote works</text>
+  <text class="sub" x="100" y="85">One friendly interface, two clearly separate kinds of money.</text>
+  <rect x="818" y="35" width="234" height="38" rx="19" fill="#ede9ff"/>
+  <circle cx="839" cy="54" r="5" fill="#6c4bff"/>
+  <text x="853" y="59" style="font-size:13px;font-weight:800;fill:#533cc7">React + TypeScript · client only</text>
+
+  <rect x="34" y="111" width="1032" height="191" rx="22" fill="#f4ffd9" stroke="#d8eea4" filter="url(#shadow)"/>
+  <rect x="56" y="132" width="159" height="25" rx="12.5" fill="#d7ff5c"/>
+  <text class="eyebrow" x="70" y="149" fill="#3e591b">PRACTICE PATH</text>
+  <text x="234" y="150" style="font-size:14px;font-weight:700;fill:#586344">Fictitious Brotes · no monetary value</text>
+  <g>
+    <rect x="56" y="174" width="275" height="90" rx="16" fill="#fff" stroke="#d7e9b1"/>
+    <circle cx="82" cy="201" r="12" fill="#e6ffac"/><path d="M76 201h12m-6-6v12" stroke="#597d25" stroke-width="2" stroke-linecap="round"/>
+    <text class="head" x="104" y="206">Profiles + Brotes</text>
+    <text class="body" x="74" y="236">Goals, requests and practice spending</text>
+    <path d="M340 219h39" stroke="#7b9c20" stroke-width="2.5" marker-end="url(#arrowLime)"/>
+    <rect x="389" y="174" width="278" height="90" rx="16" fill="#fff" stroke="#d7e9b1"/>
+    <circle cx="414" cy="201" r="12" fill="#e6ffac"/><path d="M410 199v-3a4 4 0 018 0v3m-9 0h10v8h-10z" fill="none" stroke="#597d25" stroke-width="1.8" stroke-linecap="round"/>
+    <text class="head" x="438" y="206">One writer tab</text>
+    <text class="body" x="407" y="236">Web Locks coordinate local edits</text>
+    <path d="M676 219h39" stroke="#7b9c20" stroke-width="2.5" marker-end="url(#arrowLime)"/>
+    <rect x="725" y="174" width="319" height="90" rx="16" fill="#fff" stroke="#d7e9b1"/>
+    <circle cx="750" cy="201" r="12" fill="#e6ffac"/><path d="M745 197h10v9h-10zM747 200h6m-6 3h6" fill="none" stroke="#597d25" stroke-width="1.6"/>
+    <text class="head" x="774" y="206">Browser-local ledger</text>
+    <text class="body" x="743" y="236">Saved in localStorage on this device</text>
+  </g>
+  <text x="550" y="289" text-anchor="middle" style="font-size:13px;font-weight:800;fill:#4e6631">BROTES ARE NOT A TOKEN AND NEVER CONVERT TO SOL</text>
+
+  <rect x="34" y="323" width="1032" height="294" rx="22" fill="url(#real)" stroke="#d9d0ff" filter="url(#shadow)"/>
+  <rect x="56" y="344" width="151" height="25" rx="12.5" fill="#6c4bff"/>
+  <text class="eyebrow" x="70" y="361" style="fill:#fff">REAL SOL PATH</text>
+  <text x="226" y="362" style="font-size:14px;font-weight:700;fill:#6557ad">Solana mainnet · guardian approval required</text>
+
+  <rect x="56" y="386" width="277" height="106" rx="16" fill="#fff" stroke="#d7ceff"/>
+  <circle cx="82" cy="413" r="13" fill="#eee9ff"/><path d="M77 413l4 4 7-8" fill="none" stroke="#694ed6" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text class="head" x="105" y="418">Guardian wallet</text>
+  <text class="body" x="75" y="449">Injected Phantom or Solflare</text>
+  <text class="small" x="75" y="471">Only the guardian signs</text>
+  <path d="M343 439h27" stroke="#755ce3" stroke-width="2.5" marker-end="url(#arrowPurple)"/>
+
+  <rect x="381" y="386" width="321" height="106" rx="16" fill="#fff" stroke="#d7ceff"/>
+  <circle cx="408" cy="413" r="13" fill="#eee9ff"/><path d="M402 413h12m-6-6v12" stroke="#694ed6" stroke-width="2" stroke-linecap="round"/>
+  <text class="head" x="431" y="418">System Program</text>
+  <text class="body" x="400" y="446">CreateAccountWithSeed · deposit</text>
+  <text class="body" x="400" y="468">TransferWithSeed withdrawal</text>
+  <path d="M712 439h27" stroke="#755ce3" stroke-width="2.5" marker-end="url(#arrowPurple)"/>
+
+  <rect x="750" y="386" width="294" height="106" rx="16" fill="#fff" stroke="#d7ceff"/>
+  <circle cx="776" cy="413" r="13" fill="#eee9ff"/><path d="M770 416v-7l6-3 6 3v7l-6 3z" fill="none" stroke="#694ed6" stroke-width="1.7"/><path d="M776 413v6m-6-10 6 4 6-4" fill="none" stroke="#694ed6" stroke-width="1.5"/>
+  <text class="head" x="799" y="418">Profile account</text>
+  <text class="body" x="768" y="449">Derived from guardian + seed</text>
+  <text class="small" x="768" y="471">On mainnet · no child key</text>
+
+  <text class="eyebrow" x="57" y="522" style="fill:#6f61aa">TRANSACTION SAFETY SEQUENCE</text>
+  <g>
+    <rect id="step1" x="56" y="536" width="220" height="48" rx="12" fill="#fff" stroke="#d7ceff"/>
+    <circle cx="78" cy="560" r="12" fill="#6c4bff"/><text class="num" x="74" y="564">1</text>
+    <text class="step" x="99" y="565">Wallet signs</text>
+    <path d="M281 560h22" stroke="#755ce3" stroke-width="2" marker-end="url(#arrowPurple)"/>
+    <rect id="step2" x="312" y="536" width="220" height="48" rx="12" fill="#fff" stroke="#d7ceff"/>
+    <circle cx="334" cy="560" r="12" fill="#6c4bff"/><text class="num" x="330" y="564">2</text>
+    <text class="step" x="355" y="565">Save signed journal</text>
+    <path d="M537 560h22" stroke="#755ce3" stroke-width="2" marker-end="url(#arrowPurple)"/>
+    <rect id="step3" x="568" y="536" width="220" height="48" rx="12" fill="#fff" stroke="#d7ceff"/>
+    <circle cx="590" cy="560" r="12" fill="#6c4bff"/><text class="num" x="586" y="564">3</text>
+    <text class="step" x="611" y="565">Broadcast to RPC</text>
+    <path d="M793 560h22" stroke="#755ce3" stroke-width="2" marker-end="url(#arrowPurple)"/>
+    <rect id="step4" x="824" y="536" width="220" height="48" rx="12" fill="#fff" stroke="#d7ceff"/>
+    <circle cx="846" cy="560" r="12" fill="#6c4bff"/><text class="num" x="842" y="564">4</text>
+    <text class="step" x="867" y="565">Confirm / reconcile</text>
+  </g>
+  <text x="550" y="606" text-anchor="middle" style="font-size:12.5px;font-weight:700;fill:#6a6199">Unknown outcome stays pending · withdrawal goes to a chosen address · no custom deployed program</text>
+  <text x="550" y="639" text-anchor="middle" style="font-size:12px;fill:#797894">Brote architecture · practice and real SOL remain separate</text>
+</svg>
