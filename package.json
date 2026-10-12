@@ -24,5 +24,11 @@
     "typescript": "^5.9.0",
     "tsx": "^4.20.0",
     "@types/node": "^24.0.0"
+  },
+  "description": "A gamified family finance web app with supervised practice wallets and guardian-controlled Solana accounts.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0bkevin/brote.git"
   }
 }
