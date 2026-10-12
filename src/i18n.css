@@ -1,0 +1,5 @@
+.language-switcher { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 34px; padding: 0 10px; flex-shrink: 0; border: 1px solid #e5e0ef; border-radius: 9px; background: #fff; color: #4b3d75; font: 700 12px/1.2 "Nunito Sans", sans-serif; }
+.language-switcher select { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; padding: 0; opacity: 0; cursor: pointer; }
+.language-switcher:focus-within { outline: 3px solid #8b72ed; outline-offset: 2px; }
+.language-switcher > svg { flex-shrink: 0; }
+@media(max-width:800px) { .language-switcher { height:34px; min-height:34px; } }
