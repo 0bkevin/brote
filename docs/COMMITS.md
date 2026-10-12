@@ -233,9 +233,29 @@ Set explicit SVG dimensions so GitHub displays the architecture at a legible wid
 
 Record the public GitHub repository, Vercel deployment, live route and responsive checks, and all publication commits.
 
-## 57. fix(readme): retain legible diagram sizing in GitHub previews
+## 57. `5f75f79` — fix(readme): retain legible diagram sizing in GitHub previews
 
-Declare the diagram's display width in the README so cached SVG intrinsic dimensions cannot shrink the architecture preview. This index includes the current update; inspect its own hash with `git log -1 --oneline`.
+Declare the diagram's display width in the README so cached SVG intrinsic dimensions cannot shrink the architecture preview.
+
+## 58. `3f10bae` — fix(solana): align form inputs with wallet action buttons
+
+Remove label-wrapper spacing and use shared control heights: 44px on desktop, 48px in simple mode, and 34px on mobile.
+
+## 59. `5917158` — fix(ui): keep responsive actions compact and readable
+
+Align savings fields, keep amount presets on one line, preserve narrow approval text, and make short sidebars reachable. Prevent simple-mode dashboard overflow at 320px.
+
+## 60. `6b328cc` — fix(learning): adapt mission cards and dialog scroll layouts
+
+Use two mission columns at medium desktop widths, wrap footer actions, preserve budget amounts, and keep game headings outside the scrolling body. Align mobile allocation icons and labels.
+
+## 61. `6b1052d` — style(landing): soften cards and compact mobile actions
+
+Remove hard card outlines, soften shadows, contain narrow game cards, and use 34px mobile calls to action with a shorter header.
+
+## 62. docs(quality): record responsive alignment checks and evidence
+
+Record the ten viewport presets, verified form heights, independent review results, and screenshot evidence. Extend the complete commit index and product overview. This entry describes the current documentation update; retrieve its hash with `git log --oneline --grep="record responsive alignment"`.
 
 ## Updating this index
 

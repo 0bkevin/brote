@@ -83,3 +83,7 @@ The public deployment at https://brote-three.vercel.app was checked after the Gi
 - GitHub rendered the English README, MIT license, architecture SVG, and animated GIF. The validation workflow passed all 53 tests and the production build.
 
 This verifies deployment routing and browser behavior, not a funded mainnet signing session or physical-device coverage.
+
+## Form alignment and full responsive review
+
+The latest [responsive review](RESPONSIVE_QA.md) extends coverage to ten presets from 320 × 780 through 1920 × 1080. It records matched Solana input/action heights, compact savings and amount presets, readable approval rows, medium-width mission cards, game dialog scrolling, short-window navigation, and narrow landing/simple-mode layouts. Independent final reviews found no remaining actionable regressions. All 53 tests and the production build pass; the report includes screenshots and verification limits.
