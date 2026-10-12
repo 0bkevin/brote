@@ -8,80 +8,219 @@ export function LeafLogo({ size = 32 }: { size?: number }) {
       aria-hidden="true"
     >
       <path
-        d="M20 34V18"
+        d="M20 35V19"
         stroke="currentColor"
-        strokeWidth="3.4"
+        strokeWidth="4"
         strokeLinecap="round"
       />
-      <path d="M20 22C7 24 5 12 6 7c12-1 16 7 14 15Z" fill="currentColor" />
-      <path d="M21 16C20 7 29 3 35 5c1 9-6 14-14 11Z" fill="currentColor" />
+      <path d="M19 24C6 24 4 12 6 7c11-1 17 7 13 17Z" fill="currentColor" />
+      <path d="M21 18C19 7 29 3 35 5c2 10-5 16-14 13Z" fill="currentColor" />
+      <path
+        d="m10 11 7 8m9-9-3 5"
+        stroke="#fff"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        opacity=".45"
+      />
     </svg>
   );
 }
 export default function Plant() {
   return (
-    <svg className="hero-plant" viewBox="0 0 340 220" aria-hidden="true">
+    <svg
+      className="hero-plant"
+      viewBox="0 0 360 240"
+      aria-hidden="true"
+      fill="none"
+    >
+      <defs>
+        <linearGradient id="plant-leaf" x1=".1" y1="0" x2=".85" y2="1">
+          <stop stopColor="#c8ff69" />
+          <stop offset=".55" stopColor="#6be985" />
+          <stop offset="1" stopColor="#20bcae" />
+        </linearGradient>
+        <linearGradient id="plant-leaf-alt" x1=".1" y1="0" x2=".9" y2="1">
+          <stop stopColor="#73ffe0" />
+          <stop offset="1" stopColor="#28c9c0" />
+        </linearGradient>
+        <linearGradient id="plant-pot" x1="0" y1="0" x2="1" y2="1">
+          <stop stopColor="#ff9c7e" />
+          <stop offset=".48" stopColor="#ff6f75" />
+          <stop offset="1" stopColor="#e84472" />
+        </linearGradient>
+        <linearGradient id="plant-rim" x1="0" y1="0" x2="1" y2="1">
+          <stop stopColor="#ffe477" />
+          <stop offset="1" stopColor="#ffae55" />
+        </linearGradient>
+        <linearGradient id="plant-pack" x1="0" y1="0" x2="1" y2="1">
+          <stop stopColor="#38dce2" />
+          <stop offset="1" stopColor="#438cff" />
+        </linearGradient>
+        <filter id="plant-shadow" x="-30%" y="-30%" width="160%" height="180%">
+          <feDropShadow
+            dx="0"
+            dy="5"
+            stdDeviation="4"
+            floodColor="#251d56"
+            floodOpacity=".3"
+          />
+        </filter>
+      </defs>
+
+      {/* A bright little loot-star and coin frame the sprout without crowding it. */}
       <ellipse
-        cx="184"
-        cy="195"
-        rx="109"
-        ry="14"
-        fill="#a6c497"
-        opacity=".25"
+        cx="177"
+        cy="218"
+        rx="117"
+        ry="13"
+        fill="#211b54"
+        opacity=".24"
       />
-      <circle cx="267" cy="54" r="30" fill="#f2dfa1" />
-      <path
-        d="M250 66q-7-11-13-1"
-        fill="none"
-        stroke="#efe4bc"
-        strokeWidth="2"
-      />
-      <path d="M102 181q-34-38-3-67 29 14 24 52" fill="#b5d09e" />
-      <path d="m105 178-5-37" stroke="#75946a" strokeWidth="2" />
-      <path
-        d="M161 129V64"
-        stroke="#436d4c"
-        strokeWidth="6"
+      <g transform="translate(72 77) rotate(-12)">
+        <path
+          d="m0-19 6 12 13 2-9 9 2 13-12-6-12 6 2-13-9-9 13-2Z"
+          fill="#ffdf58"
+          stroke="#3c2c74"
+          strokeWidth="3"
+          strokeLinejoin="round"
+        />
+        <path
+          d="m-2-11 3-5 2 5"
+          stroke="#fff7b7"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+      </g>
+      <g transform="translate(283 64) rotate(14)" filter="url(#plant-shadow)">
+        <circle r="24" fill="#ffdc4d" stroke="#34265f" strokeWidth="4" />
+        <circle r="17" fill="#ffb949" stroke="#fff09a" strokeWidth="2" />
+        <path
+          d="M-4-9q6-4 12 0l-4 6 3 12H-7l3-12Z"
+          fill="#fff178"
+          opacity=".9"
+        />
+        <path
+          d="M-12-13q4-5 9-5"
+          stroke="#fff9bc"
+          strokeWidth="3"
+          strokeLinecap="round"
+        />
+      </g>
+
+      {/* Leaves and stem */}
+      <g
+        stroke="#30245b"
+        strokeWidth="4"
+        strokeLinejoin="round"
         strokeLinecap="round"
-      />
-      <path d="M161 103q-55 4-56-43 54-8 56 43" fill="#518652" />
-      <path d="M163 84q-4-56 52-62 9 48-52 62" fill="#7ea86c" />
+      >
+        <path d="M171 133q-59-5-68-59 54-17 77 41" fill="url(#plant-leaf)" />
+        <path
+          d="M177 119q-1-63 54-79 23 51-37 87"
+          fill="url(#plant-leaf-alt)"
+        />
+        <path
+          d="M173 128q-8-38-44-48m48 29q15-39 39-53"
+          fill="none"
+          stroke="#efffa1"
+          strokeWidth="3"
+        />
+        <path d="M175 132V94" fill="none" stroke="#36c99c" strokeWidth="7" />
+      </g>
       <path
-        d="M161 95q-15-22-34-22M164 78q20-29 34-35"
-        stroke="#bdd6a4"
-        strokeWidth="2.5"
-        fill="none"
-        strokeLinecap="round"
-      />
-      <path d="m118 124 88 0-10 53q-3 18-33 18-29 0-35-18Z" fill="#d68f62" />
-      <rect x="112" y="115" width="100" height="18" rx="7" fill="#e5a77a" />
-      <circle cx="147" cy="149" r="3.5" fill="#4b4732" />
-      <circle cx="180" cy="149" r="3.5" fill="#4b4732" />
-      <path
-        d="M155 159q9 9 18 0"
-        stroke="#4b4732"
+        d="M119 75q13-6 22-4"
+        stroke="#fff"
         strokeWidth="3"
-        fill="none"
         strokeLinecap="round"
+        opacity=".55"
       />
-      <ellipse cx="136" cy="159" rx="7" ry="4" fill="#edb98e" />
-      <ellipse cx="190" cy="159" rx="7" ry="4" fill="#edb98e" />
-      <path d="m233 166 14-35 17 8-7 35" fill="#d7bc72" />
-      <path d="M232 168q-3 14 14 18l13-4 2-12Z" fill="#e9cc83" />
       <path
-        d="m246 132 8-11 13 8-4 12"
-        stroke="#8a8855"
+        d="M206 61q8-7 15-8"
+        stroke="#fff"
         strokeWidth="3"
-        fill="none"
+        strokeLinecap="round"
+        opacity=".58"
       />
+
+      {/* Backpack peeking around the pot */}
+      <g
+        filter="url(#plant-shadow)"
+        stroke="#30245b"
+        strokeWidth="4"
+        strokeLinejoin="round"
+      >
+        <path
+          d="M247 138q2-13 16-14l20 7q12 5 9 19l-8 39-38-10Z"
+          fill="url(#plant-pack)"
+        />
+        <path d="m249 151 37 10-4 17-37-10Z" fill="#86f5ef" />
+        <path
+          d="m260 141 12 4m-2 24 4 1"
+          stroke="#fff"
+          strokeWidth="3"
+          strokeLinecap="round"
+        />
+        <path
+          d="M251 139q-7 7-6 16"
+          fill="none"
+          stroke="#b5fff3"
+          strokeWidth="3"
+        />
+      </g>
+
+      {/* Pot body doubles as the mascot's suit */}
+      <g
+        filter="url(#plant-shadow)"
+        stroke="#30245b"
+        strokeWidth="4"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      >
+        <path
+          d="m117 142 122 0-12 59q-5 18-48 18-43 0-49-18Z"
+          fill="url(#plant-pot)"
+        />
+        <path
+          d="m130 155-8 39q-2 8 4 13"
+          fill="none"
+          stroke="#ffb59a"
+          strokeWidth="5"
+        />
+        <path
+          d="M111 135q0-7 8-7h118q8 0 8 7v15q0 7-8 7H119q-8 0-8-7Z"
+          fill="url(#plant-rim)"
+        />
+        <path d="M119 134h117" stroke="#fff2a4" strokeWidth="3" />
+      </g>
+      <g fill="#28214e">
+        <ellipse cx="157" cy="174" rx="4" ry="5" />
+        <ellipse cx="199" cy="174" rx="4" ry="5" />
+      </g>
+      <circle cx="158" cy="172" r="1.5" fill="#fff" />
+      <circle cx="200" cy="172" r="1.5" fill="#fff" />
       <path
-        d="m218 106 8-4m-6-10 4 1M85 56l6 2m-2-9-1 5"
-        stroke="#6b9160"
-        strokeWidth="2"
+        d="M169 183q9 10 18 0"
+        stroke="#30245b"
+        strokeWidth="3.5"
         strokeLinecap="round"
       />
-      <circle cx="285" cy="136" r="3" fill="#9aba83" />
-      <path d="m67 180 12-19 10 24" fill="#a2be8e" />
+      <ellipse cx="143" cy="184" rx="7" ry="4" fill="#ffb2a0" />
+      <ellipse cx="213" cy="184" rx="7" ry="4" fill="#ffb2a0" />
+      <path
+        d="m177 162 3 5 6 .8-4.5 4.3 1 6-5.5-2.8-5.5 2.8 1-6-4.5-4.3 6-.8Z"
+        fill="#fff078"
+        stroke="#5b348c"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+
+      {/* Sparkles */}
+      <path
+        d="m103 126 2 5 5 2-5 2-2 5-2-5-5-2 5-2Zm179 72 1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5Z"
+        fill="#c7ff72"
+      />
+      <circle cx="95" cy="160" r="3" fill="#72f6de" />
+      <circle cx="269" cy="114" r="3" fill="#ff798c" />
     </svg>
   );
 }
