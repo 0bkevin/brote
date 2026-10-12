@@ -1,4 +1,5 @@
 .solana-panel {
+  --solana-control-height: 44px;
   display: grid;
   gap: 1.5rem;
 }
@@ -107,6 +108,24 @@
 .solana-watch input {
   flex: 1;
   min-width: 0;
+}
+.simple-mode .solana-panel {
+  --solana-control-height: 48px;
+}
+.solana-panel .solana-watch input,
+.solana-panel .solana-profilebar select,
+.solana-panel .solana-action input,
+.solana-panel .solana-watch .button,
+.solana-panel .solana-profilebar .button {
+  height: var(--solana-control-height);
+  min-height: var(--solana-control-height);
+  margin-block: 0;
+  padding-block: 0;
+}
+.solana-panel .solana-watch .button,
+.solana-panel .solana-profilebar .button {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 .solana-note,
 .solana-error,
@@ -355,6 +374,7 @@
 .solana-panel .solana-account { border-radius: 14px; }
 
 @media (max-width: 800px) {
+  .app-shell .solana-panel { --solana-control-height: 34px; }
   .solana-panel { min-width: 0; gap: 16px; padding: 18px; }
   .solana-panel__head { flex-direction: column; gap: 10px; }
   .solana-panel__head h2 { font-size: 22px; }

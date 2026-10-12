@@ -256,7 +256,6 @@ export default function SolanaPanel({
             <div>
               <input
                 id="solana-watch-address"
-                className="field"
                 value={watchInput}
                 onChange={(event) => setWatchInput(event.target.value)}
                 placeholder="Dirección pública de Solana"
@@ -323,7 +322,6 @@ export default function SolanaPanel({
             <label htmlFor="solana-profile">Perfil</label>
             <select
               id="solana-profile"
-              className="field"
               value={profileId}
               onChange={(event) => {
                 setProfileId(event.target.value);
@@ -458,7 +456,6 @@ export default function SolanaPanel({
                       <label htmlFor="solana-deposit">Monto en SOL</label>
                       <input
                         id="solana-deposit"
-                        className="field"
                         type="text"
                         inputMode="decimal"
                         placeholder="0.01"
@@ -498,7 +495,6 @@ export default function SolanaPanel({
                       <label htmlFor="solana-withdraw">Monto en SOL</label>
                       <input
                         id="solana-withdraw"
-                        className="field"
                         type="text"
                         inputMode="decimal"
                         placeholder="0.01"
@@ -515,7 +511,6 @@ export default function SolanaPanel({
                       </label>
                       <input
                         id="solana-destination"
-                        className="field"
                         type="text"
                         value={destination}
                         onChange={(event) => setDestination(event.target.value)}
