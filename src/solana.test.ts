@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { PublicKey, SystemProgram } from "@solana/web3.js";
-import { encodeBase58, parseSolLamports, seedFor } from "./solana-utils";
+import { encodeBase58, hasValidSystemAccountRemainder, parseSolLamports, seedFor } from "./solana-utils";
 
 test("profile seed is stable, distinct and within createWithSeed limit", async () => {
   const first = await seedFor("sofia");
@@ -26,6 +26,21 @@ test("SOL amount parsing keeps lamport precision and rejects unsafe values", () 
   for (const value of ["0", "-1", "1.0000000001", "1e3", "9007199.254740992"]) {
     assert.throws(() => parseSolLamports(value), value);
   }
+});
+
+test("profile withdrawals may empty an account or leave it rent-exempt, never rent-paying", () => {
+  const minimum = 890_880;
+  assert.equal(hasValidSystemAccountRemainder(2_000_000, 2_000_000, minimum), true);
+  assert.equal(hasValidSystemAccountRemainder(2_000_000, 1_109_120, minimum), true);
+  assert.equal(hasValidSystemAccountRemainder(2_000_000, 1_109_121, minimum), false);
+  assert.equal(hasValidSystemAccountRemainder(2_000_000, 2_000_001, minimum), false);
+});
+
+test("localized SOL input accepts either decimal separator without losing lamports", () => {
+  assert.equal(parseSolLamports("0,000000001"), 1);
+  assert.equal(parseSolLamports("1,234567891"), parseSolLamports("1.234567891"));
+  for (const value of ["1,2.3", "1.2,3", "1,2,3", "0,0000000001"])
+    assert.throws(() => parseSolLamports(value));
 });
 
 test("TransferWithSeed requires the guardian base signer and derived source", async () => {

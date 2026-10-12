@@ -2,7 +2,7 @@ const LAMPORTS_PER_SOL = 1_000_000_000n;
 const BASE58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
 export function parseSolLamports(amountSol: string): number {
-  const value = amountSol.trim();
+  const value = amountSol.trim().replace(",", ".");
   if (!/^(?:0|[1-9]\d*)(?:\.\d{1,9})?$/.test(value))
     throw new Error("Introduce un monto de SOL válido, con hasta 9 decimales.");
   const [whole, fraction = ""] = value.split(".");
@@ -13,6 +13,19 @@ export function parseSolLamports(amountSol: string): number {
       "El monto debe ser mayor que cero y estar dentro del límite permitido.",
     );
   return Number(lamports);
+}
+
+/** A System Program transfer may leave a zero-byte account empty or rent-exempt. */
+export function hasValidSystemAccountRemainder(
+  balanceLamports: number,
+  transferLamports: number,
+  minimumBalanceLamports: number,
+): boolean {
+  if (![balanceLamports, transferLamports, minimumBalanceLamports].every(Number.isSafeInteger) ||
+      balanceLamports < 0 || transferLamports < 0 || minimumBalanceLamports < 0 ||
+      transferLamports > balanceLamports) return false;
+  const remaining = balanceLamports - transferLamports;
+  return remaining === 0 || remaining >= minimumBalanceLamports;
 }
 
 export async function seedFor(walletId: string): Promise<string> {
