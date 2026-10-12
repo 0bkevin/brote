@@ -305,9 +305,17 @@ Quote the final signing message, recheck guardian funds and rent transitions, pr
 
 Document 120 responsive locale checks, screenshot evidence, the 73-test suite, exact fee/rent guards, and the limits of read-only mainnet verification.
 
-## 75. docs(history): index localization and Solana verification commits
+## 75. `48cf94e` — docs(history): index localization and Solana verification commits
 
-Extend the complete functional commit index and product overview through this release. Retrieve this index update with `git log --oneline --grep="index localization"`.
+Extend the complete functional commit index and product overview through this release.
+
+## 76. `bd66864` — fix(i18n): polish English hero copy and singular progress labels
+
+Use natural English landing copy and singular labels for one goal, one completed adventure, or one pending mobile approval in each language.
+
+## 77. docs(history): record final translation copy refinements
+
+Keep the complete commit index and overview current after the language copy polish. Retrieve this entry with `git log --oneline --grep="final translation copy"`.
 
 ## Updating this index
 
