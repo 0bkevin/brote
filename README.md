@@ -12,7 +12,7 @@ Practice mode works without a wallet: create a profile, assign fictional **Brote
 
 ## Architecture
 
-![Brote architecture: browser-local practice and guardian-authorized Solana accounts](docs/assets/architecture.svg)
+<img src="docs/assets/architecture.svg" width="1100" alt="Brote architecture: browser-local practice and guardian-authorized Solana accounts">
 
 - **React + TypeScript + Vite** serve the landing page and app as static files. No backend is required for this prototype.
 - **Practice:** an immutable ledger handles balances, goals, approvals, and once-only XP rewards. Browser storage persists the state; Web Locks coordinate one writing tab. CSV exports and JSON backups support review and recovery.

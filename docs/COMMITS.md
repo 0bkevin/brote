@@ -229,9 +229,13 @@ Replace the long introduction with a concise English README covering the product
 
 Set explicit SVG dimensions so GitHub displays the architecture at a legible width; regenerate the standalone HTML.
 
-## 56. docs(deployment): record the live release and complete publication history
+## 56. `6e84d41` — docs(deployment): record the live release and complete publication history
 
-This index update records the public GitHub repository, Vercel deployment, live route and responsive checks, and all publication commits. Its own hash is available with `git log -1 --oneline`; it is omitted here to avoid a self-reference.
+Record the public GitHub repository, Vercel deployment, live route and responsive checks, and all publication commits.
+
+## 57. fix(readme): retain legible diagram sizing in GitHub previews
+
+Declare the diagram's display width in the README so cached SVG intrinsic dimensions cannot shrink the architecture preview. This index includes the current update; inspect its own hash with `git log -1 --oneline`.
 
 ## Updating this index
 
