@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { cloneElement, isValidElement, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { stopSpeech } from "../speech";
 import {
   ArrowRight,
@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import Modal from "./Modal";
 import type { StoreAPI, Wallet } from "../types";
+import { useI18n } from "../i18n";
 
 type Props = {
   wallet: Wallet;
@@ -154,12 +155,28 @@ const shopItems = [
 
 const money = (value: number) => `${value} B`;
 
+function translateTree(node: ReactNode, t: ReturnType<typeof useI18n>["t"]): ReactNode {
+  if (typeof node === "string") {
+    const match = node.match(/^(\s*)([\s\S]*?)(\s*)$/);
+    if (!match || !match[2]) return node;
+    return `${match[1]}${t(match[2])}${match[3]}`;
+  }
+  if (Array.isArray(node)) return node.map((child) => translateTree(child, t));
+  if (!isValidElement<{ children?: ReactNode }>(node)) return node;
+  const props = { ...node.props } as Record<string, unknown>;
+  for (const key of ["aria-label", "title", "alt"]) {
+    if (typeof props[key] === "string") props[key] = t(props[key] as string);
+  }
+  return cloneElement(node, props, translateTree(node.props.children, t));
+}
+
 export default function Learning({
   wallet,
   store,
   notify,
   simple = false,
 }: Props) {
+  const { t, locale } = useI18n();
   const [active, setActive] = useState<MissionId | null>(null);
   const [shopSelected, setShopSelected] = useState<string[]>([]);
   const [shopChecked, setShopChecked] = useState(false);
@@ -200,7 +217,7 @@ export default function Learning({
   };
   const openMission = (id: MissionId) => {
     if (wallet.paused) {
-      notify("El aprendizaje está en pausa para este perfil.");
+      notify(t("El aprendizaje está en pausa para este perfil."));
       return;
     }
     setJustCompleted(false);
@@ -219,11 +236,11 @@ export default function Learning({
   };
   const finishMission = (item: Mission) => {
     if (wallet.paused) {
-      notify("El perfil está en pausa. No se entregaron recompensas.");
+      notify(t("El perfil está en pausa. No se entregaron recompensas."));
       return;
     }
     if ((wallet.completedMissions ?? []).includes(item.id)) {
-      notify("Esta misión ya fue completada.");
+      notify(t("Esta misión ya fue completada."));
       closeMission();
       return;
     }
@@ -232,14 +249,12 @@ export default function Learning({
     } catch (error) {
       notify(
         error instanceof Error
-          ? error.message
-          : "No pudimos guardar tu progreso.",
+          ? t(error.message)
+          : t("No pudimos guardar tu progreso."),
       );
       return;
     }
-    notify(
-      `¡Misión completada! +${item.xp} XP y ${item.reward} Brotes de práctica.`,
-    );
+    notify(t("¡Misión completada! +{xp} XP y {reward} Brotes de práctica.", { xp: item.xp, reward: item.reward }));
     setJustCompleted(true);
   };
 
@@ -268,22 +283,22 @@ export default function Learning({
     if (typeof window === "undefined" || !("speechSynthesis" in window) ||
         typeof SpeechSynthesisUtterance === "undefined") {
       setSpeechMessage(
-        "La lectura en voz alta no está disponible en este navegador.",
+        t("La lectura en voz alta no está disponible en este navegador."),
       );
       return;
     }
     stopSpeech(window.speechSynthesis, spoken.current);
     const question = quiz[quizStep];
     const utterance = new SpeechSynthesisUtterance(
-      `${question.prompt} ${question.options.map((option, index) => `Opción ${index + 1}: ${option}`).join(". ")}`,
+      `${t(question.prompt)} ${question.options.map((option, index) => `${t("Opción {count}: {option}", { count: index + 1, option: t(option) })}`).join(". ")}`,
     );
-    utterance.lang = "es-VE";
+    utterance.lang = locale;
     spoken.current = utterance;
-    utterance.onstart = () => setSpeechMessage("Leyendo en voz alta…");
-    utterance.onend = () => setSpeechMessage("Lectura terminada.");
+    utterance.onstart = () => setSpeechMessage(t("Leyendo en voz alta…"));
+    utterance.onend = () => setSpeechMessage(t("Lectura terminada."));
     utterance.onerror = () =>
-      setSpeechMessage("No se pudo iniciar la lectura en voz alta.");
-    setSpeechMessage("Preparando lectura…");
+      setSpeechMessage(t("No se pudo iniciar la lectura en voz alta."));
+    setSpeechMessage(t("Preparando lectura…"));
     window.speechSynthesis.speak(utterance);
   };
 
@@ -291,14 +306,14 @@ export default function Learning({
     if (!mission) return null;
     const isDone = completed.includes(mission.id);
     return (
-      <Modal title={mission.title} onClose={closeMission}>
+          <Modal title={t(mission.title)} onClose={closeMission}>
         <div className="learning-modal-content">
           <div className="learning-modal-intro">
             <span className={`learning-icon learning-icon-${mission.tone}`}>
               <mission.icon size={22} />
             </span>
             <div>
-              <p className="learning-eyebrow">{mission.eyebrow}</p>
+              <p className="learning-eyebrow">{t(mission.eyebrow)}</p>
               <p className="learning-muted">
                 Una práctica breve. Todo aquí es simulado.
               </p>
@@ -321,7 +336,7 @@ export default function Learning({
               </h3>
               <p>
                 {justCompleted
-                  ? `Sumaste ${mission.xp} XP y ${mission.reward} Brotes de práctica. Tu avance cuenta, paso a paso.`
+                  ? t("Sumaste {xp} XP y {reward} Brotes de práctica. Tu avance cuenta, paso a paso.", { xp: mission.xp, reward: mission.reward })
                   : "Tu progreso y recompensa de práctica ya están guardados para este perfil."}
               </p>
               <button className="button button-primary" onClick={closeMission}>
@@ -379,9 +394,9 @@ export default function Learning({
                         {selected && <Check size={15} />}
                       </span>
                       <span className="learning-choice-copy">
-                        <strong>{item.name}</strong>
+                        <strong>{t(item.name)}</strong>
                         <small>
-                          {item.kind} · {item.detail}
+                          {t(item.kind)} · {t(item.detail)}
                         </small>
                       </span>
                       <b>{money(item.price)}</b>
@@ -434,7 +449,7 @@ export default function Learning({
                         className="learning-simple-progress"
                         aria-live="polite"
                       >
-                        Pregunta {quizStep + 1} de {quiz.length}
+                        {t("Pregunta {count} de {total}", { count: quizStep + 1, total: quiz.length })}
                       </div>
                       <fieldset
                         className="learning-question learning-question-simple"
@@ -444,7 +459,7 @@ export default function Learning({
                           <span className="learning-question-number">
                             0{quizStep + 1}
                           </span>
-                          {quiz[quizStep].prompt}
+                          {t(quiz[quizStep].prompt)}
                         </legend>
                         <div className="learning-options">
                           {quiz[quizStep].options.map((option, optionIndex) => (
@@ -461,7 +476,7 @@ export default function Learning({
                                   })
                                 }
                               />
-                              <span>{option}</span>
+                                <span>{t(option)}</span>
                             </label>
                           ))}
                         </div>
@@ -489,7 +504,7 @@ export default function Learning({
                           <span className="learning-question-number">
                             0{index + 1}
                           </span>
-                          {question.prompt}
+                          {t(question.prompt)}
                         </legend>
                         <div className="learning-options">
                           {question.options.map((option, optionIndex) => (
@@ -506,7 +521,7 @@ export default function Learning({
                                   })
                                 }
                               />
-                              <span>{option}</span>
+                              <span>{t(option)}</span>
                             </label>
                           ))}
                         </div>
@@ -552,7 +567,7 @@ export default function Learning({
                     className={`learning-quiz-score ${quizReady ? "good" : "try"}`}
                     role="status"
                   >
-                    <strong>{quizScore} de 3 correctas</strong>
+                    <strong>{t("{score} de 3 correctas", { score: quizScore })}</strong>
                     <span>
                       {quizReady
                         ? "¡Excelente criterio digital!"
@@ -577,8 +592,8 @@ export default function Learning({
                           )}
                         </span>
                         <p>
-                          <strong>Pregunta {index + 1}</strong>
-                          {question.why}
+                          <strong>{t("Pregunta {count}", { count: index + 1 })}</strong>
+                          {t(question.why)}
                         </p>
                       </div>
                     ))}
@@ -651,8 +666,8 @@ export default function Learning({
                       {bucket.icon}
                     </span>
                     <div className="learning-bucket-name">
-                      <strong>{bucket.label}</strong>
-                      <small>{bucket.note}</small>
+                    <strong>{t(bucket.label)}</strong>
+                    <small>{t(bucket.note)}</small>
                     </div>
                     <div className="learning-stepper">
                       <button
@@ -712,7 +727,7 @@ export default function Learning({
     );
   };
 
-  return (
+  return translateTree((
     <section className="learning-page" aria-labelledby="learning-title">
       <div className="learning-hero">
         <div className="learning-hero-copy">
@@ -730,7 +745,7 @@ export default function Learning({
             </span>
             <div>
               <span className="learning-muted">TU PROGRESO</span>
-              <strong>Nivel {level}</strong>
+              <strong>{t("Nivel {level}", { level })}</strong>
             </div>
             <span className="learning-xp-total">{xp} XP</span>
           </div>
@@ -747,7 +762,7 @@ export default function Learning({
           <div className="learning-level-foot">
             <span>{levelProgress} / 100 XP</span>
             <span>
-              {100 - levelProgress} XP para nivel {level + 1}
+              {t("{count} XP para nivel {level}", { count: 100 - levelProgress, level: level + 1 })}
             </span>
           </div>
         </div>
@@ -799,7 +814,7 @@ export default function Learning({
                   <Icon size={22} />
                 </span>
                 <span className="learning-mission-step">
-                  MISIÓN 0{index + 1}
+                  {t("MISIÓN 0{count}", { count: index + 1 })}
                 </span>
                 {isDone && (
                   <span className="learning-done-label">
@@ -808,12 +823,12 @@ export default function Learning({
                 )}
               </div>
               <p className="learning-eyebrow">{item.eyebrow}</p>
-              <h3>{item.title}</h3>
-              <p className="learning-card-lesson">{item.lesson}</p>
+          <h3>{t(item.title)}</h3>
+              <p className="learning-card-lesson">{t(item.lesson)}</p>
               <div className="learning-card-meta">
                 <span>
                   <Star size={14} />
-                  {item.difficulty}
+                  {t(item.difficulty)}
                 </span>
                 <span>
                   <Clock3 size={14} />
@@ -831,7 +846,7 @@ export default function Learning({
                 <button
                   className={`learning-start-button ${isDone ? "done" : ""}`}
                   type="button"
-                  aria-label={`${isDone ? "Ver" : "Comenzar"} misión: ${item.title}`}
+                  aria-label={t("{action} misión: {title}", { action: t(isDone ? "Ver" : "Comenzar"), title: t(item.title) })}
                   onClick={() => openMission(item.id)}
                   disabled={wallet.paused}
                 >
@@ -892,8 +907,8 @@ export default function Learning({
                 {badge.icon}
               </span>
               <span>
-                <strong>{badge.title}</strong>
-                <small>{badge.note}</small>
+                  <strong>{t(badge.title)}</strong>
+                  <small>{t(badge.note)}</small>
               </span>
               {completed.includes(badge.id) ? (
                 <BadgeCheck size={17} />
@@ -932,5 +947,5 @@ export default function Learning({
       </div>
       {renderMission()}
     </section>
-  );
+  ), t) as ReactNode;
 }
