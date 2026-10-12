@@ -261,9 +261,53 @@ Record the ten viewport presets, verified form heights, independent review resul
 
 Let the weekly chart fill its card, use proportional responsive bars, enlarge labels and the legend, and align guide lines to the plot. Keep zero values invisible and preserve completed-transaction filtering.
 
-## 64. docs(quality): document weekly chart readability checks
+## 64. `94bf26a` — docs(quality): document weekly chart readability checks
 
-Record the chart sizing correction, ten responsive presets, rendered typography, zero-value checks, and desktop/mobile captures. Extend this index and the product overview. Retrieve this documentation commit with `git log --oneline --grep="weekly chart readability"`.
+Record the chart sizing correction, ten responsive presets, rendered typography, zero-value checks, and desktop/mobile captures. Extend this index and the product overview.
+
+## 65. `8066e03` — fix(docs): capture the enlarged weekly chart accurately
+
+Replace the mistaken hero capture with the actual enlarged weekly chart, using document coordinates for the screenshot crop.
+
+## 66. `411b7d2` — feat(i18n): add persistent Spanish, English, and Portuguese catalogs
+
+Add reactive language selection, cross-tab synchronization, document metadata, precise locale formatting, dynamic templates, and translation regression tests.
+
+## 67. `6bd3f78` — feat(landing): localize every section and add a compact language selector
+
+Translate the complete landing experience and keep its language selector and mobile demo action compact.
+
+## 68. `26e1d1a` — feat(wallets): translate profile, spending, savings, and recovery flows
+
+Localize wallet creation, consent, amounts, rules, savings, backup and restore while preserving profile identities and open form values.
+
+## 69. `ee3290a` — feat(app): localize dashboards, activity, settings, and mobile navigation
+
+Translate the shared shell, side menu, summaries, activity filters and CSV display descriptions; keep existing notifications reactive to language changes.
+
+## 70. `6a9702c` — feat(learning): translate missions, feedback, badges, and read-aloud prompts
+
+Localize all three games, feedback, rewards, badges and narration using stable mission and answer IDs.
+
+## 71. `6413b55` — feat(solana): localize account controls, receipts, and exact SOL displays
+
+Translate the account panel, validation, status and receipts; format SOL precisely with locale separators and preserve public addresses.
+
+## 72. `6dcff37` — fix(solana): parse decimal commas and reject rent-invalid withdrawals
+
+Accept a single decimal comma or point without losing lamports; reject mixed separators and profile withdrawals leaving an invalid rent balance.
+
+## 73. `1dc689c` — fix(solana): recheck final fees, rent states, and imported signatures
+
+Quote the final signing message, recheck guardian funds and rent transitions, preserve session/message identity, and reconcile imported terminal claims before accepting them.
+
+## 74. `c1264a2` — docs(quality): record localization coverage and mainnet integration safeguards
+
+Document 120 responsive locale checks, screenshot evidence, the 73-test suite, exact fee/rent guards, and the limits of read-only mainnet verification.
+
+## 75. docs(history): index localization and Solana verification commits
+
+Extend the complete functional commit index and product overview through this release. Retrieve this index update with `git log --oneline --grep="index localization"`.
 
 ## Updating this index
 
