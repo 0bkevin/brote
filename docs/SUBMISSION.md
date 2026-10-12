@@ -4,11 +4,15 @@
 
 **Name:** Brote — _Crecemos juntos_ (“We grow together”)
 
-**Product URL:** [TODO: add the publicly accessible live demo URL]
+**Product URL:** https://brote-family-solana.brown-isle-1431.chatgpt.site
+
+**App:** https://brote-family-solana.brown-isle-1431.chatgpt.site/app/
+
+**Logo:** https://brote-family-solana.brown-isle-1431.chatgpt.site/logo.svg
 
 **Project description:** Brote is a family-friendly web app for practicing money decisions together. It gives each family member an individual profile with practice balances, savings goals, activity, and optional adult review of practice purchases. Three short games teach budgeting, scam awareness, and planning for unexpected expenses. The intended audience includes young children learning with a responsible adult, adults new to crypto, and senior learners. Simple mode supports people who prefer a slower, clearer experience.
 
-The app includes an optional Solana mainnet prototype. A connected guardian wallet (Phantom or Solflare) can create deterministic, zero-data System Program accounts for profiles, read balances through RPC, and sign SOL account creation, deposits, and withdrawals. This prototype has no deployed Anchor program, does not enforce app spending limits on chain, and is not production ready. We have not verified that a mainnet transaction has been sent. Brotes and game rewards are simulated and have no cash value.
+The app includes an optional Solana mainnet prototype. A connected guardian wallet (Phantom or Solflare) can create deterministic, zero-data System Program accounts for profiles, read balances through RPC, and sign SOL account creation, deposits, and withdrawals. This prototype has no deployed Anchor program, does not enforce app spending limits on chain, and is not production ready. Mainnet RPC balances and profile derivation were verified in the browser. No mainnet transaction was sent; a user-led wallet signing test remains pending. Brotes and game rewards are simulated and have no cash value.
 
 ## Tools and blockchains
 

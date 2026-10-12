@@ -15,7 +15,7 @@ Brote is a family-friendly web app for learners from their first money decisions
 
 ## Next: hackathon validation
 
-1. Put the web demo at a stable, publicly accessible URL and test it in a clean browser.
+1. Publish the completed landing and web demo, then confirm public-link access in a clean browser.
 2. Validate the core story with the intended first cohort: can a teen practice a decision and can the adult understand the review step? Invite adult and senior feedback without assuming they need supervision.
 3. Rehearse the demo with a connected test wallet and a clear separation between simulated Brotes and real SOL. Verify any transaction on mainnet before showing or claiming it; never imply a transaction was sent when it was not.
 4. Gather permission-based feedback and note usability issues. Do not present a small demo as evidence of broad impact.
