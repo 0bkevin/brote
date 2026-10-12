@@ -5,7 +5,7 @@ Verified on October 12, 2026 in Chrome, using generated demo data. No wallet was
 ## Automated checks
 
 - TypeScript and the Vite production build pass.
-- `npm test`: 14 tests pass. They cover exact practice amounts, non-negative balances, approval replay protection, goal savings, once-only rewards, pause guards, persisted-state validation, deterministic seeds, lamport precision and guardian signer keys for `TransferWithSeed`.
+- `npm test`: 53 tests pass. They cover practice invariants, exact decimal cents, review dates, final-cent goals, CSV literals, durable storage failures and leases, validated backup/journal recovery, switched signer sessions, byte-identical retry, monotonic outcomes, RPC fallback/partial reads, deterministic seeds and guardian signer keys for `TransferWithSeed`.
 - `git diff --check` passes.
 - Static `/` and `/app/` entries return HTTP 200; query links open the intended learning or Solana view.
 
@@ -36,3 +36,38 @@ The public System Program address `11111111111111111111111111111111` was used on
 - [`assets/landing.jpg`](assets/landing.jpg)
 - [`assets/dashboard.jpg`](assets/dashboard.jpg)
 - [`assets/solana.jpg`](assets/solana.jpg)
+
+## Independent audits and current browser regression pass
+
+See [AUDIT.md](AUDIT.md) for per-function coverage, findings and corrections. Independent GPT-6 and Luna agents reviewed ledger rules, persistence/recovery, signing, each of the three games, profile/goal flows, activity/export, mainnet reads, navigation/accessibility and the mobile menu. Follow-up rounds reviewed fixes.
+
+- Created an adult profile, checked consent, changed its name and verified that creation was blocked until consent was checked again.
+- Opened two Chrome tabs on the same local origin. The second was explicitly read-only, received the first tab's saved balance, rejected its own profile creation, and acquired editing access when the writer navigated to the landing. The landing does not hold a data lease.
+- Created a 2-Brote goal, saved 1.99, verified the final saving action remained enabled, then saved 0.01 and verified exact completion.
+- Checked an empty shopping basket, an incorrect quiz response and the initial emergency allocation. Completed each valid game for the generated profile; 36 practice Brotes and 105 XP persisted after reload.
+- Requested an 8-Brote purchase while the generated profile held 59. The request left the balance unchanged. Approval deducted once to 51; the guardian controls then disappeared for that completed request.
+- Downloaded a filtered CSV and parsed its actual file: seven movements belonging only to the generated profile, with activity and request dates in separate columns. The browser's download-event notification timed out, but the downloaded file was present and validated.
+- Exported a four-profile, 15-movement backup; verified its JSON included the signed-operation field. Added one Brote, restored the backup through the file chooser and recovered the expected 51 balance, complete goal and 105 XP. Real signed-operation migration was exercised with mock signed fixtures in tests.
+- Queried the public System Program address in the latest production build. PublicNode returned 1 lamport for that watched address; the derived test profile had no created account. This was a read-only mainnet check with no extension or signature.
+- Dialog accessibility showed only the modal while open. Tab/Shift+Tab wrapped; Escape closed it and returned focus. Transitioning from the mobile sheet to help also returned focus correctly.
+- Final inspected browser console had no errors or warnings.
+
+## Responsive visual checks
+
+The web app and landing were inspected in Chrome viewport emulation. These are browser emulations, not physical-device testing.
+
+| Width | Checks | Result |
+|---|---|---|
+| 320px | Landing, lateral menu, profile form, Solana view, emergency controls | No horizontal overflow; readable fields; six budget stepper buttons measured 34px. |
+| 375px | Wallet cards, sheet actions, role/mode navigation, simple quiz | Cards have 0px border and no top stripe; controls remain usable and wrapped options can grow. |
+| 390px | Dashboard, full-height menu, menu sizes | No horizontal overflow; every inspected sheet action/select measured 34px. |
+| 768px | Full-height right sheet and background | Sheet is 400px wide, starts at x=368, reaches the full 1024px viewport height. |
+| 1280px | Desktop chrome, cards and resize transition | Topbar measures 62px; mobile sheet closes and mobile header is hidden. |
+
+Mobile has one 48px header and a menu that slides in from the right. Single-line controls use 34px; multi-line content retains flexible height. Text input size remains 16px.
+
+Latest captures:
+
+- [Mobile wallets](assets/mobile-wallets.png)
+- [Full-height lateral menu](assets/mobile-menu.png)
+- [Compact desktop](assets/desktop-compact.png)
