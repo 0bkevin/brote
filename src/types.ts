@@ -36,6 +36,7 @@ export interface Transaction {
   type: "topup" | "purchase" | "saving" | "reward";
   status: "completed" | "pending" | "rejected";
   createdAt: string;
+  resolvedAt?: string;
 }
 export interface AppState {
   version: 1;

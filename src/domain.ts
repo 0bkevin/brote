@@ -11,17 +11,24 @@ import type {
 export function toCents(amount: number, label = "El monto"): number {
   if (!Number.isFinite(amount) || amount < 0)
     throw new Error(`${label} debe ser una cantidad válida y no negativa.`);
-  const scaled = amount * 100;
-  const cents = Math.round(scaled);
-  if (!Number.isSafeInteger(cents) || Math.abs(scaled - cents) > 1e-7) {
+  const decimal = /^(\d+)(?:\.(\d{1,2}))?$/.exec(String(amount));
+  const exact = decimal
+    ? BigInt(decimal[1]) * 100n + BigInt((decimal[2] ?? "").padEnd(2, "0"))
+    : null;
+  if (exact === null || exact > BigInt(Number.MAX_SAFE_INTEGER)) {
     throw new Error(
       `${label} debe tener como máximo dos decimales y estar dentro del límite permitido.`,
     );
   }
-  return cents;
+  return Number(exact);
 }
 
-const fromCents = (cents: number) => cents / 100;
+function fromCents(cents: number): number {
+  const amount = cents / 100;
+  if (!Number.isSafeInteger(cents) || toCents(amount) !== cents)
+    throw new Error("El monto supera el límite de precisión permitido.");
+  return amount;
+}
 function positiveCents(amount: number, label: string): number {
   const cents = toCents(amount, label);
   if (cents <= 0) throw new Error(`${label} debe ser mayor que cero.`);
@@ -530,7 +537,7 @@ export function reviewTransactionState(
     return {
       ...state,
       transactions: state.transactions.map((item) =>
-        item.id === tx.id ? { ...item, status: "rejected" } : item,
+        item.id === tx.id ? { ...item, status: "rejected", resolvedAt: now() } : item,
       ),
     };
   const wallet = walletOrThrow(state, tx.walletId);
@@ -552,7 +559,7 @@ export function reviewTransactionState(
         : item,
     ),
     transactions: state.transactions.map((item) =>
-      item.id === tx.id ? { ...item, status: "completed" } : item,
+      item.id === tx.id ? { ...item, status: "completed", resolvedAt: now() } : item,
     ),
   };
 }
@@ -671,11 +678,17 @@ export function isAppState(value: unknown): value is AppState {
         !["topup", "purchase", "saving", "reward"].includes(tx.type) ||
         !["completed", "pending", "rejected"].includes(tx.status) ||
         typeof tx.createdAt !== "string" ||
-        Number.isNaN(Date.parse(tx.createdAt))
+        Number.isNaN(Date.parse(tx.createdAt)) ||
+        (tx.status !== "completed" && tx.type !== "purchase") ||
+        (tx.resolvedAt !== undefined &&
+          (typeof tx.resolvedAt !== "string" ||
+            Number.isNaN(Date.parse(tx.resolvedAt)) ||
+            tx.status === "pending" ||
+            Date.parse(tx.resolvedAt) < Date.parse(tx.createdAt)))
       )
         return false;
       transactionIds.add(tx.id);
-      toCents(tx.amount);
+      positiveCents(tx.amount, "El movimiento");
     } catch {
       return false;
     }

@@ -64,10 +64,49 @@ test("money amounts use safe integer cents and reject invalid precision or signs
     Number.NaN,
     Number.POSITIVE_INFINITY,
     1.001,
+    1.0000000005,
     Number.MAX_SAFE_INTEGER,
   ]) {
     assert.throws(() => toCents(amount));
   }
+});
+
+test("large accepted balances keep exact decimal cents or reject an unrepresentable result", () => {
+  const initial = createInitialState();
+  initial.wallets[0].practiceBalance = 90071992547409.89;
+  const topped = topUpState(initial, "sofia", 0.01, "practice");
+  assert.equal(toCents(topped.wallets[0].practiceBalance), 9007199254740990);
+  assert.equal(toCents(JSON.parse(JSON.stringify(topped)).wallets[0].practiceBalance), 9007199254740990);
+  assert.throws(() => topUpState(initial, "sofia", 0.02, "practice"), /precisión/i);
+  assert.equal(initial.wallets[0].practiceBalance, 90071992547409.89);
+});
+
+test("restored movements must be positive and only purchases can await review", () => {
+  for (const type of ["topup", "saving", "reward"] as const) {
+    for (const status of ["pending", "rejected"] as const) {
+      const state = createInitialState();
+      state.transactions[0] = { ...state.transactions[0], type, status };
+      assert.equal(isAppState(state), false);
+    }
+  }
+  const zero = createInitialState();
+  zero.transactions[0].amount = 0;
+  assert.equal(isAppState(zero), false);
+});
+
+test("approval and rejection record their resolution date while retaining request date", () => {
+  const state = createInitialState();
+  const pending = state.transactions.find(tx => tx.status === "pending")!;
+  pending.createdAt = "2020-01-01T00:00:00.000Z";
+  for (const approved of [true, false]) {
+    const result = reviewTransactionState(state, pending.id, approved);
+    const tx = result.transactions.find(tx => tx.id === pending.id)!;
+    assert.equal(tx.createdAt, pending.createdAt);
+    assert.ok(Date.parse(tx.resolvedAt!) >= Date.now() - 1000);
+    assert.equal(isAppState(result), true);
+  }
+  pending.resolvedAt = "2026-01-01T00:00:00.000Z";
+  assert.equal(isAppState(state), false);
 });
 
 test("practice top-ups and purchases use immutable states and preserve a non-negative balance", () => {
