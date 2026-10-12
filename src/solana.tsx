@@ -296,7 +296,7 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
           connectionRef.current = connection;
           setRpcUrl(PUBLIC_FALLBACK_RPC);
           setRpcNotice(
-            `El RPC público de Solana no respondió (${message}). Se usa PublicNode, verificado como mainnet.`,
+            "La conexión principal no está disponible. Seguimos conectados a Solana mainnet a través de PublicNode.",
           );
           setRpcError(null);
           return connection;
