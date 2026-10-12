@@ -74,6 +74,8 @@
   align-items: center;
   gap: 42px;
 }
+.landing-header__tools { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.landing-header__cta-mobile { display: none; }
 .landing-brand {
   display: inline-flex;
   align-items: center;
@@ -1524,7 +1526,7 @@
     display: none;
   }
   .landing-header__cta {
-    margin-left: auto;
+    margin-left: 0;
   }
   .landing-hero__grid {
     display: flex;
@@ -1804,6 +1806,15 @@
   .landing-solana h2 { font-size: 35px; }
   .landing-all__display-main { padding: 22px 16px; }
   .landing-solana__frame { transform: rotate(-2deg); padding: 12px; }
+}
+
+@media (max-width: 800px) {
+  .landing-header__inner { gap: 8px; }
+  .landing-header__tools { gap: 6px; margin-left: auto; }
+  .landing-header__cta { min-height: 34px; padding-inline: 8px; gap: 4px; }
+  .landing-header__cta-desktop { display: none; }
+  .landing-header__cta-mobile { display: inline; }
+  .landing .language-switcher { min-height: 34px; padding-inline: 7px; gap: 4px; }
 }
 
 @media (max-width: 800px) {

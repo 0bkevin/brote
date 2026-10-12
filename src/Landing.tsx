@@ -19,6 +19,7 @@ import {
 import type { ReactNode } from "react";
 import Plant, { LeafLogo } from "./components/Plant";
 import Avatar from "./components/Avatar";
+import { useI18n, LanguageSwitcher } from "./i18n";
 
 const APP = "/app";
 const LEARN = "/app?view=learn";
@@ -42,10 +43,11 @@ function ArrowLink({
 }
 
 export default function Landing() {
+  const { t } = useI18n();
   return (
     <div className="landing" id="inicio">
       <a className="landing-skip" href="#contenido">
-        Saltar al contenido
+        {t("Saltar al contenido")}
       </a>
 
       <header className="landing-header">
@@ -53,7 +55,7 @@ export default function Landing() {
           <a
             className="landing-brand"
             href="#inicio"
-            aria-label="Brote, ir al inicio"
+            aria-label={t("Brote, ir al inicio")}
           >
             <span className="landing-brand__mark">
               <LeafLogo size={28} />
@@ -62,15 +64,20 @@ export default function Landing() {
               brote<span className="landing-brand__dot">.</span>
             </span>
           </a>
-          <nav className="landing-nav" aria-label="Navegación principal">
-            <a href="#como-funciona">Cómo funciona</a>
-            <a href="#juegos">Explora y juega</a>
-            <a href="#para-todos">Para todos</a>
-            <a href="#solana">Solana</a>
+          <nav className="landing-nav" aria-label={t("Navegación principal")}>
+            <a href="#como-funciona">{t("Cómo funciona")}</a>
+            <a href="#juegos">{t("Explora y juega")}</a>
+            <a href="#para-todos">{t("Para todos")}</a>
+            <a href="#solana">{t('Solana')}</a>
           </nav>
-          <a className="landing-header__cta" href={APP}>
-            Probar la demo <ArrowUpRight size={17} aria-hidden="true" />
-          </a>
+          <div className="landing-header__tools">
+            <LanguageSwitcher />
+            <a className="landing-header__cta" href={APP}>
+              <span className="landing-header__cta-desktop">{t("Probar la demo")}</span>
+              <span className="landing-header__cta-mobile">{t('Demo')}</span>
+              <ArrowUpRight size={17} aria-hidden="true" />
+            </a>
+          </div>
         </div>
       </header>
 
@@ -79,23 +86,15 @@ export default function Landing() {
           <div className="landing-shell landing-hero__grid">
             <div className="landing-hero__copy">
               <div className="landing-kicker">
-                <span className="landing-kicker__star">✳</span> UNA NUEVA FORMA
-                DE CRECER JUNTOS
-              </div>
-              <h1 id="landing-hero-title">
-                El dinero se aprende.
-                <br />
-                <em>En equipo.</em>
+                <span className="landing-kicker__star">✳</span>{t('UNA NUEVA FORMA DE CRECER JUNTOS')}</div>
+              <h1 id="landing-hero-title">{t('El dinero se aprende.')}<br />
+                <em>{t('En equipo.')}</em>
               </h1>
-              <p className="landing-hero__lead">
-                Un espacio para practicar, jugar y tomar mejores decisiones con
-                alguien a tu lado. Desde la primera alcancía hasta una nueva
-                etapa de vida.
-              </p>
+              <p className="landing-hero__lead">{t('Un espacio para practicar, jugar y tomar mejores decisiones con alguien a tu lado. Desde la primera alcancía hasta una nueva etapa de vida.')}</p>
               <div className="landing-hero__actions">
-                <ArrowLink href={APP}>Entrar a la demo</ArrowLink>
+                <ArrowLink href={APP}>{t('Entrar a la demo')}</ArrowLink>
                 <a className="landing-text-link" href="#como-funciona">
-                  Descubre cómo funciona{" "}
+                  {t("Descubre cómo funciona")} {" "}
                   <ArrowRight size={18} aria-hidden="true" />
                 </a>
               </div>
@@ -103,14 +102,13 @@ export default function Landing() {
                 <span className="landing-hero__note-icon">
                   <Check size={14} strokeWidth={3} />
                 </span>{" "}
-                Demo interactiva, sin crear una cuenta · Brotes de práctica sin
-                valor monetario
+                {t("Demo interactiva, sin crear una cuenta · Brotes de práctica sin valor monetario")}
               </div>
             </div>
 
             <div
               className="landing-hero__art"
-              aria-label="Ilustración de Brote y tarjetas de ejemplo de práctica"
+              aria-label={t("Ilustración de Brote y tarjetas de ejemplo de práctica")}
               role="img"
             >
               <div className="landing-hero__orbit landing-hero__orbit--one" />
@@ -123,13 +121,11 @@ export default function Landing() {
               </span>
               <div className="landing-hero__platform">
                 <span className="landing-hero__platform-label">
-                  <Zap size={15} fill="currentColor" /> APRENDER ES UNA AVENTURA
-                </span>
+                  <Zap size={15} fill="currentColor" />{t('APRENDER ES UNA AVENTURA')}</span>
                 <div className="landing-hero__mascot">
                   <Plant />
                 </div>
-                <span className="landing-hero__platform-bottom">
-                  PASO A PASO <span>↗</span>
+                <span className="landing-hero__platform-bottom">{t('PASO A PASO')}<span>↗</span>
                 </span>
               </div>
               <div className="landing-float landing-float--wallet">
@@ -139,14 +135,11 @@ export default function Landing() {
                   </span>
                   <span className="landing-float__dots">•••</span>
                 </div>
-                <span className="landing-float__eyebrow">
-                  EJEMPLO DE PRÁCTICA
-                </span>
+                <span className="landing-float__eyebrow">{t('EJEMPLO DE PRÁCTICA')}</span>
                 <strong>
-                  240 <small>Brotes</small>
+                  240 <small>{t('Brotes')}</small>
                 </strong>
-                <span className="landing-float__foot">
-                  Saldo ficticio <span>↗</span>
+                <span className="landing-float__foot">{t('Saldo ficticio')}<span>↗</span>
                 </span>
               </div>
               <div className="landing-float landing-float--goal">
@@ -154,25 +147,24 @@ export default function Landing() {
                   <Target size={21} />
                 </span>
                 <span>
-                  <b>Mi primera meta</b>
-                  <small>¡Cada paso cuenta!</small>
+                  <b>{t('Mi primera meta')}</b>
+                  <small>{t('¡Cada paso cuenta!')}</small>
                 </span>
                 <span className="landing-float__goal-stars">✦</span>
               </div>
               <div className="landing-hero__level">
-                <span>01</span> TU PRÓXIMO NIVEL
-              </div>
+                <span>01</span>{t('TU PRÓXIMO NIVEL')}</div>
             </div>
           </div>
           <div className="landing-hero__rail">
-            <span>IMAGINA</span>
-            <span>APRENDE</span>
-            <span>DECIDE</span>
-            <span>CRECE</span>
+            <span>{t('IMAGINA')}</span>
+            <span>{t('APRENDE')}</span>
+            <span>{t('DECIDE')}</span>
+            <span>{t('CRECE')}</span>
             <span className="landing-hero__rail-icon">✳</span>
-            <span>IMAGINA</span>
-            <span>APRENDE</span>
-            <span>DECIDE</span>
+            <span>{t('IMAGINA')}</span>
+            <span>{t('APRENDE')}</span>
+            <span>{t('DECIDE')}</span>
           </div>
         </section>
 
@@ -184,19 +176,13 @@ export default function Landing() {
           <div className="landing-shell">
             <div className="landing-section-head landing-section-head--split">
               <div>
-                <span className="landing-overline">
-                  EL CAMINO BROTE <span>↘</span>
+                <span className="landing-overline">{t('EL CAMINO BROTE')}<span>↘</span>
                 </span>
-                <h2 id="landing-how-title">
-                  Pequeños pasos.
-                  <br />
-                  <span>Grandes posibilidades.</span>
+                <h2 id="landing-how-title">{t('Pequeños pasos.')}<br />
+                  <span>{t('Grandes posibilidades.')}</span>
                 </h2>
               </div>
-              <p>
-                Un círculo donde cada persona aprende a su ritmo y quien
-                acompaña conserva la claridad de cada decisión.
-              </p>
+              <p>{t('Un círculo donde cada persona aprende a su ritmo y quien acompaña conserva la claridad de cada decisión.')}</p>
             </div>
             <div className="landing-steps">
               <article className="landing-step landing-step--purple">
@@ -218,11 +204,8 @@ export default function Landing() {
                   </div>
                   <span className="landing-step__visual-star">✳</span>
                 </div>
-                <h3>Crea tu círculo</h3>
-                <p>
-                  Organiza los perfiles de quienes aprenden y acompaña sus
-                  primeros pasos desde un mismo lugar.
-                </p>
+                <h3>{t('Crea tu círculo')}</h3>
+                <p>{t('Organiza los perfiles de quienes aprenden y acompaña sus primeros pasos desde un mismo lugar.')}</p>
               </article>
               <article className="landing-step landing-step--blue">
                 <div className="landing-step__top">
@@ -233,21 +216,18 @@ export default function Landing() {
                 </div>
                 <div className="landing-step__visual landing-step__visual--game">
                   <div className="landing-step__mini-card">
-                    <span>RETO DEL DÍA</span>
-                    <b>Elige y aprende</b>
+                    <span>{t('RETO DEL DÍA')}</span>
+                    <b>{t('Elige y aprende')}</b>
                     <div className="landing-step__mini-bars">
                       <i />
                       <i />
                       <i />
                     </div>
                   </div>
-                  <span className="landing-step__mini-badge">+ XP</span>
+                  <span className="landing-step__mini-badge">{t('+ XP')}</span>
                 </div>
-                <h3>Practica jugando</h3>
-                <p>
-                  Explora misiones, metas y decisiones cotidianas con Brotes
-                  ficticios. Equivocarse también enseña.
-                </p>
+                <h3>{t('Practica jugando')}</h3>
+                <p>{t('Explora misiones, metas y decisiones cotidianas con Brotes ficticios. Equivocarse también enseña.')}</p>
               </article>
               <article className="landing-step landing-step--lime">
                 <div className="landing-step__top">
@@ -262,17 +242,14 @@ export default function Landing() {
                       <ShieldCheck size={26} />
                     </span>
                     <div>
-                      <b>Decisión por revisar</b>
-                      <small>Tú acompañas el proceso</small>
+                      <b>{t('Decisión por revisar')}</b>
+                      <small>{t('Tú acompañas el proceso')}</small>
                     </div>
                     <Check size={21} />
                   </div>
                 </div>
-                <h3>Acompaña de cerca</h3>
-                <p>
-                  Revisa la actividad, conversa sobre cada elección y decide
-                  cuándo avanzar juntos.
-                </p>
+                <h3>{t('Acompaña de cerca')}</h3>
+                <p>{t('Revisa la actividad, conversa sobre cada elección y decide cuándo avanzar juntos.')}</p>
               </article>
             </div>
           </div>
@@ -286,28 +263,21 @@ export default function Landing() {
           <div className="landing-shell">
             <div className="landing-section-head landing-games__head">
               <div>
-                <span className="landing-overline">
-                  APRENDER SE SIENTE DIFERENTE <span>✦</span>
+                <span className="landing-overline">{t('APRENDER SE SIENTE DIFERENTE')}<span>✦</span>
                 </span>
-                <h2 id="landing-games-title">
-                  Aquí cada decisión
-                  <br />
-                  suma experiencia<span className="landing-punctuation">.</span>
+                <h2 id="landing-games-title">{t('Aquí cada decisión')}<br />{t('suma experiencia')}<span className="landing-punctuation">.</span>
                 </h2>
               </div>
-              <p>
-                Retos sencillos para explorar el valor de ahorrar, elegir y
-                planear. Todo dentro de la práctica.
-              </p>
+              <p>{t('Retos sencillos para explorar el valor de ahorrar, elegir y planear. Todo dentro de la práctica.')}</p>
             </div>
             <div className="landing-game-grid">
               <article className="landing-game landing-game--coral">
                 <div className="landing-game__top">
-                  <span>MISIÓN 01</span>
+                  <span>{t('MISIÓN 01')}</span>
                   <ArrowUpRight size={20} />
                 </div>
                 <div className="landing-game__picture landing-game__picture--basket">
-                  <span className="landing-game__ticket">¿Qué llevarías?</span>
+                  <span className="landing-game__ticket">{t('¿Qué llevarías?')}</span>
                   <span className="landing-game__basket">▣</span>
                   <span className="landing-game__fruit landing-game__fruit--one">
                     ●
@@ -319,15 +289,14 @@ export default function Landing() {
                     ●
                   </span>
                 </div>
-                <h3>La compra inteligente</h3>
-                <p>Arma una canasta sin pasarte del presupuesto de práctica.</p>
-                <a href={LEARN}>
-                  Jugar en la demo <ArrowRight size={17} aria-hidden="true" />
+                <h3>{t('La compra inteligente')}</h3>
+                <p>{t('Arma una canasta sin pasarte del presupuesto de práctica.')}</p>
+                <a href={LEARN}>{t('Jugar en la demo')}<ArrowRight size={17} aria-hidden="true" />
                 </a>
               </article>
               <article className="landing-game landing-game--blue">
                 <div className="landing-game__top">
-                  <span>MISIÓN 02</span>
+                  <span>{t('MISIÓN 02')}</span>
                   <ArrowUpRight size={20} />
                 </div>
                 <div className="landing-game__picture landing-game__picture--path">
@@ -341,42 +310,33 @@ export default function Landing() {
                   <span className="landing-game__path-flag">⚑</span>
                   <span className="landing-game__path-spark">✳</span>
                 </div>
-                <h3>Detective digital</h3>
-                <p>Encuentra pistas para reconocer mensajes sospechosos.</p>
-                <a href={LEARN}>
-                  Jugar en la demo <ArrowRight size={17} aria-hidden="true" />
+                <h3>{t('Detective digital')}</h3>
+                <p>{t('Encuentra pistas para reconocer mensajes sospechosos.')}</p>
+                <a href={LEARN}>{t('Jugar en la demo')}<ArrowRight size={17} aria-hidden="true" />
                 </a>
               </article>
               <article className="landing-game landing-game--purple">
                 <div className="landing-game__top">
-                  <span>MISIÓN 03</span>
+                  <span>{t('MISIÓN 03')}</span>
                   <ArrowUpRight size={20} />
                 </div>
                 <div className="landing-game__picture landing-game__picture--choice">
                   <span className="landing-game__choice-card">
-                    <Sparkles size={26} /> Hoy
-                  </span>
-                  <span className="landing-game__choice-vs">O</span>
+                    <Sparkles size={26} />{t('Hoy')}</span>
+                  <span className="landing-game__choice-vs">{t('O')}</span>
                   <span className="landing-game__choice-card">
-                    <Target size={26} /> Después
-                  </span>
+                    <Target size={26} />{t('Después')}</span>
                 </div>
-                <h3>Un plan para imprevistos</h3>
-                <p>
-                  Decide cuánto destinar a hoy y cuánto guardar para el futuro.
-                </p>
-                <a href={LEARN}>
-                  Jugar en la demo <ArrowRight size={17} aria-hidden="true" />
+                <h3>{t('Un plan para imprevistos')}</h3>
+                <p>{t('Decide cuánto destinar a hoy y cuánto guardar para el futuro.')}</p>
+                <a href={LEARN}>{t('Jugar en la demo')}<ArrowRight size={17} aria-hidden="true" />
                 </a>
               </article>
             </div>
             <div className="landing-games__more">
               <span>
-                <CirclePlay size={20} /> Juega, repite, aprende a tu manera.
-              </span>
-              <ArrowLink href={LEARN} variant="outline">
-                Explorar los juegos
-              </ArrowLink>
+                <CirclePlay size={20} />{t('Juega, repite, aprende a tu manera.')}</span>
+              <ArrowLink href={LEARN} variant="outline">{t('Explorar los juegos')}</ArrowLink>
             </div>
           </div>
         </section>
@@ -388,57 +348,42 @@ export default function Landing() {
         >
           <div className="landing-shell landing-all__grid">
             <div className="landing-all__copy">
-              <span className="landing-overline">
-                PARA CADA ETAPA <span>✳</span>
+              <span className="landing-overline">{t('PARA CADA ETAPA')}<span>✳</span>
               </span>
-              <h2 id="landing-all-title">
-                Aprender no tiene
-                <br />
-                <em>una sola edad.</em>
+              <h2 id="landing-all-title">{t('Aprender no tiene')}<br />
+                <em>{t('una sola edad.')}</em>
               </h2>
-              <p>
-                Una niña que descubre su primera meta. Un adulto que quiere
-                ordenar sus decisiones. Una persona mayor que prefiere ir paso a
-                paso. Brote deja espacio para todos.
-              </p>
+              <p>{t('Una niña que descubre su primera meta. Un adulto que quiere ordenar sus decisiones. Una persona mayor que prefiere ir paso a paso. Brote deja espacio para todos.')}</p>
               <div className="landing-all__pills">
-                <span>Desde los primeros pasos</span>
-                <span>A cualquier ritmo</span>
-                <span>En compañía</span>
+                <span>{t('Desde los primeros pasos')}</span>
+                <span>{t('A cualquier ritmo')}</span>
+                <span>{t('En compañía')}</span>
               </div>
-              <ArrowLink href={APP} variant="light">
-                Conoce la demo
-              </ArrowLink>
+              <ArrowLink href={APP} variant="light">{t('Conoce la demo')}</ArrowLink>
             </div>
             <div className="landing-all__display">
               <div className="landing-all__display-top">
-                <span>UNA VISTA MÁS CLARA</span>
+                <span>{t('UNA VISTA MÁS CLARA')}</span>
                 <span>
-                  <MousePointer2 size={18} /> MODO SIMPLE
-                </span>
+                  <MousePointer2 size={18} />{t('MODO SIMPLE')}</span>
               </div>
               <div className="landing-all__display-main">
                 <span className="landing-all__display-icon">
                   <BookOpen size={31} />
                 </span>
-                <span>UN PASO A LA VEZ</span>
-                <strong>¿Qué te gustaría hacer hoy?</strong>
-                <p>
-                  Opciones claras. Textos fáciles de leer. Tu propio ritmo para
-                  decidir.
-                </p>
+                <span>{t('UN PASO A LA VEZ')}</span>
+                <strong>{t('¿Qué te gustaría hacer hoy?')}</strong>
+                <p>{t('Opciones claras. Textos fáciles de leer. Tu propio ritmo para decidir.')}</p>
                 <div>
-                  <span>Ver mi saldo</span>
+                  <span>{t('Ver mi saldo')}</span>
                   <ArrowRight size={22} />
                 </div>
               </div>
               <div className="landing-all__display-bottom">
                 <span>
-                  <Check size={17} /> Sin prisa
-                </span>
+                  <Check size={17} />{t('Sin prisa')}</span>
                 <span>
-                  <Check size={17} /> Con apoyo
-                </span>
+                  <Check size={17} />{t('Con apoyo')}</span>
               </div>
             </div>
           </div>
@@ -452,17 +397,16 @@ export default function Landing() {
           <div className="landing-shell landing-solana__grid">
             <div className="landing-solana__art" aria-hidden="true">
               <div className="landing-solana__frame">
-                <span className="landing-solana__frame-top">
-                  DOS CAMINOS, CLAROS DESDE EL INICIO <span>✳</span>
+                <span className="landing-solana__frame-top">{t('DOS CAMINOS, CLAROS DESDE EL INICIO')}<span>✳</span>
                 </span>
                 <div className="landing-solana__practice">
                   <span>
                     <Sparkles size={25} />
                   </span>
                   <div>
-                    <small>01 / APRENDER</small>
-                    <b>Brotes de práctica</b>
-                    <p>Ficticios · sin valor monetario</p>
+                    <small>{t('01 / APRENDER')}</small>
+                    <b>{t('Brotes de práctica')}</b>
+                    <p>{t('Ficticios · sin valor monetario')}</p>
                   </div>
                 </div>
                 <div className="landing-solana__bridge">↓</div>
@@ -471,41 +415,26 @@ export default function Landing() {
                     <LockKeyhole size={25} />
                   </span>
                   <div>
-                    <small>02 / DECIDIR</small>
-                    <b>SOL en Solana</b>
-                    <p>Real · firma del responsable</p>
+                    <small>{t('02 / DECIDIR')}</small>
+                    <b>{t('SOL en Solana')}</b>
+                    <p>{t('Real · firma del responsable')}</p>
                   </div>
                 </div>
               </div>
-              <span className="landing-solana__side">
-                TU WALLET, TU DECISIÓN ↗
-              </span>
+              <span className="landing-solana__side">{t('TU WALLET, TU DECISIÓN ↗')}</span>
             </div>
             <div className="landing-solana__copy">
-              <span className="landing-overline">
-                CUANDO QUIERAS EXPLORAR MÁS <span>↗</span>
+              <span className="landing-overline">{t('CUANDO QUIERAS EXPLORAR MÁS')}<span>↗</span>
               </span>
-              <h2 id="landing-solana-title">
-                La práctica es juego.
-                <br />
-                <span>SOL es real.</span>
+              <h2 id="landing-solana-title">{t('La práctica es juego.')}<br />
+                <span>{t('SOL es real.')}</span>
               </h2>
-              <p>
-                Los Brotes te ayudan a aprender sin mover dinero. En una
-                experiencia aparte puedes conectar una wallet de Solana mainnet
-                y revisar operaciones reales. La persona responsable debe
-                iniciar y firmar cada movimiento.
-              </p>
+              <p>{t('Los Brotes te ayudan a aprender sin mover dinero. En una experiencia aparte puedes conectar una wallet de Solana mainnet y revisar operaciones reales. La persona responsable debe iniciar y firmar cada movimiento.')}</p>
               <div className="landing-solana__fact">
                 <ShieldCheck size={22} />
-                <span>
-                  Explora distintos perfiles en la demo. Para mover SOL, la
-                  wallet responsable tiene que firmar.
-                </span>
+                <span>{t('Explora distintos perfiles en la demo. Para mover SOL, la wallet responsable tiene que firmar.')}</span>
               </div>
-              <ArrowLink href={SOLANA} variant="outline">
-                Explorar Solana en la demo
-              </ArrowLink>
+              <ArrowLink href={SOLANA} variant="outline">{t('Explorar Solana en la demo')}</ArrowLink>
             </div>
           </div>
         </section>
@@ -518,19 +447,12 @@ export default function Landing() {
             <span className="landing-final__star" aria-hidden="true">
               ✳
             </span>
-            <span className="landing-overline">TU HISTORIA EMPIEZA AQUÍ</span>
-            <h2 id="landing-final-title">
-              Un pequeño paso puede
-              <br />
-              <em>cambiarlo todo.</em>
+            <span className="landing-overline">{t('TU HISTORIA EMPIEZA AQUÍ')}</span>
+            <h2 id="landing-final-title">{t('Un pequeño paso puede')}<br />
+              <em>{t('cambiarlo todo.')}</em>
             </h2>
-            <p>
-              Abre la demo, explora un círculo de ejemplo y descubre una forma
-              más cercana de aprender sobre dinero.
-            </p>
-            <ArrowLink href={APP} variant="light">
-              Entrar a la demo
-            </ArrowLink>
+            <p>{t('Abre la demo, explora un círculo de ejemplo y descubre una forma más cercana de aprender sobre dinero.')}</p>
+            <ArrowLink href={APP} variant="light">{t('Entrar a la demo')}</ArrowLink>
             <span className="landing-final__corner" aria-hidden="true">
               ↗
             </span>
@@ -542,7 +464,7 @@ export default function Landing() {
           <a
             className="landing-brand"
             href="#inicio"
-            aria-label="Brote, volver al inicio"
+            aria-label={t("Brote, volver al inicio")}
           >
             <span className="landing-brand__mark">
               <LeafLogo size={25} />
@@ -551,23 +473,19 @@ export default function Landing() {
               brote<span className="landing-brand__dot">.</span>
             </span>
           </a>
-          <p>Crecer se aprende juntos.</p>
+          <p>{t('Crecer se aprende juntos.')}</p>
           <div>
-            <a href="#como-funciona">Cómo funciona</a>
-            <a href="#juegos">Juegos</a>
-            <a href="#para-todos">Para todos</a>
-            <a href={APP}>
-              Abrir demo <ArrowUpRight size={15} />
+            <a href="#como-funciona">{t('Cómo funciona')}</a>
+            <a href="#juegos">{t('Juegos')}</a>
+            <a href="#para-todos">{t('Para todos')}</a>
+            <a href={APP}>{t('Abrir demo')}<ArrowUpRight size={15} />
             </a>
           </div>
         </div>
         <div className="landing-shell landing-footer__bottom">
           <span>© {new Date().getFullYear()} Brote</span>
-          <span>
-            Brotes de práctica sin valor monetario. SOL real en Solana mainnet.
-          </span>
-          <a href="#inicio">
-            Volver arriba <ChevronDown size={15} />
+          <span>{t('Brotes de práctica sin valor monetario. SOL real en Solana mainnet.')}</span>
+          <a href="#inicio">{t('Volver arriba')}<ChevronDown size={15} />
           </a>
         </div>
       </footer>
