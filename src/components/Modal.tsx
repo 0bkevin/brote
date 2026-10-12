@@ -1,6 +1,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
+import { useI18n } from "../i18n";
 export default function Modal({
   title,
   onClose,
@@ -12,6 +13,7 @@ export default function Modal({
   children: ReactNode;
   variant?: "sheet";
 }) {
+  const { t } = useI18n();
   const dialog = useRef<HTMLDivElement>(null);
   const close = useRef(onClose);
   close.current = onClose;
@@ -79,7 +81,7 @@ export default function Modal({
       >
         <div className="modal-heading">
           <h2>{title}</h2>
-          <button className="icon-button" onClick={onClose} aria-label="Cerrar">
+          <button className="icon-button" onClick={onClose} aria-label={t("Cerrar")}>
             <X size={20} />
           </button>
         </div>

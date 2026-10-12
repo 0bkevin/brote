@@ -11,6 +11,7 @@ import {
 import type { Mode } from "../types";
 import { LeafLogo } from "./Plant";
 import Modal from "./Modal";
+import { useI18n, LanguageSwitcher } from "../i18n";
 
 export type Page = "home" | "wallets" | "learn" | "activity" | "settings";
 
@@ -49,6 +50,7 @@ export default function MobileNav({
   onHelp: () => void;
 }) {
   const [open, setOpen] = useState(false);
+  const { t } = useI18n();
   const guardian = role === "guardian";
 
   useEffect(() => {
@@ -75,7 +77,7 @@ export default function MobileNav({
             event.preventDefault();
             onNavigate("home");
           }}
-          aria-label="Brote · ir al inicio"
+          aria-label={t("Brote · ir al inicio")}
         >
           <LeafLogo size={27} />
           <span>brote<span className="mobile-brand-dot">.</span></span>
@@ -84,8 +86,8 @@ export default function MobileNav({
           className="mobile-menu-trigger"
           type="button"
           aria-label={guardian && pendingCount > 0
-            ? `Abrir menú · ${pendingCount} aprobaciones pendientes`
-            : "Abrir menú"}
+            ? t("Abrir menú · {count} aprobaciones pendientes", { count: pendingCount })
+            : t("Abrir menú")}
           aria-expanded={open}
           onClick={() => setOpen(true)}
         >
@@ -96,27 +98,27 @@ export default function MobileNav({
         </button>
       </header>
       {open && (
-        <Modal title="Menú de Brote" variant="sheet" onClose={() => setOpen(false)}>
+        <Modal title={t("Menú de Brote")} variant="sheet" onClose={() => setOpen(false)}>
           <div className="mobile-sheet-content">
             <div className="mobile-sheet-section">
-              <p className="mobile-sheet-label">Tu espacio</p>
+              <p className="mobile-sheet-label">{t("Tu espacio")}</p>
               <label className="mobile-sheet-field">
-                <span>Vista de demo</span>
+                <span>{t("Vista de demo")}</span>
                 <select
                   value={role}
                   onChange={(event) => choose(() => onRoleChange(event.target.value))}
                 >
-                  <option value="guardian">Vista familiar</option>
+                  <option value="guardian">{t("Vista familiar")}</option>
                   {people.map((person) => (
                     <option key={person.id} value={person.id}>
-                      Mi espacio · {person.name}
+                      {t("Mi espacio · {name}", { name: person.name })}
                     </option>
                   ))}
                 </select>
               </label>
               {guardian ? (
                 <label className="mobile-sheet-field">
-                  <span>Perfil seleccionado</span>
+                  <span>{t("Perfil seleccionado")}</span>
                   <select
                     value={selectedId}
                     onChange={(event) => choose(() => onPersonChange(event.target.value))}
@@ -128,13 +130,13 @@ export default function MobileNav({
                 </label>
               ) : (
                 <p className="mobile-sheet-person">
-                  Espacio personal · {people.find((person) => person.id === role)?.name}
+                  {t("Espacio personal · {name}", { name: people.find((person) => person.id === role)?.name || "" })}
                 </p>
               )}
             </div>
 
-            <nav className="mobile-sheet-section mobile-sheet-nav" aria-label="Navegación principal móvil">
-              <p className="mobile-sheet-label">Explorar</p>
+            <nav className="mobile-sheet-section mobile-sheet-nav" aria-label={t("Navegación principal móvil")}>
+              <p className="mobile-sheet-label">{t("Explorar")}</p>
               {nav.map((item) => (
                 <button
                   type="button"
@@ -146,7 +148,7 @@ export default function MobileNav({
                   <item.icon size={20} aria-hidden="true" />
                   <span>{item.label}</span>
                   {guardian && item.id === "activity" && pendingCount > 0 && (
-                    <span className="mobile-sheet-count">{pendingCount} por aprobar</span>
+                    <span className="mobile-sheet-count">{t("{count} por aprobar", { count: pendingCount })}</span>
                   )}
                   <ArrowRight className="mobile-sheet-arrow" size={17} aria-hidden="true" />
                 </button>
@@ -154,15 +156,15 @@ export default function MobileNav({
             </nav>
 
             <div className="mobile-sheet-section">
-              <p className="mobile-sheet-label">Tipo de dinero</p>
-              <div className="mobile-sheet-modes" role="group" aria-label="Tipo de dinero">
+              <p className="mobile-sheet-label">{t("Tipo de dinero")}</p>
+              <div className="mobile-sheet-modes" role="group" aria-label={t("Tipo de dinero")}>
                 <button
                   type="button"
                   className={mode === "practice" ? "active" : ""}
                   aria-pressed={mode === "practice"}
                   onClick={() => choose(() => onModeChange("practice"))}
                 >
-                  <Sparkles size={17} aria-hidden="true" /> Práctica
+                  <Sparkles size={17} aria-hidden="true" /> {t("Práctica")}
                 </button>
                 <button
                   type="button"
@@ -177,7 +179,7 @@ export default function MobileNav({
             </div>
 
             <div className="mobile-sheet-section mobile-sheet-nav">
-              <p className="mobile-sheet-label">Más opciones</p>
+              <p className="mobile-sheet-label">{t("Más opciones")}</p>
               <button
                 type="button"
                 className={`mobile-sheet-action${page === "settings" ? " active" : ""}`}
@@ -185,7 +187,7 @@ export default function MobileNav({
                 onClick={() => choose(() => onNavigate("settings"))}
               >
                 <Settings2 size={20} aria-hidden="true" />
-                <span>Preferencias</span>
+                <span>{t("Preferencias")}</span>
                 <ArrowRight className="mobile-sheet-arrow" size={17} aria-hidden="true" />
               </button>
               <button
@@ -195,14 +197,18 @@ export default function MobileNav({
                 onClick={() => choose(onSimpleChange)}
               >
                 <Accessibility size={20} aria-hidden="true" />
-                <span>Modo simple</span>
-                <span className="mobile-sheet-state">{simple ? "Activado" : "Desactivado"}</span>
+                <span>{t("Modo simple")}</span>
+                <span className="mobile-sheet-state">{simple ? t("Activado") : t("Desactivado")}</span>
               </button>
               <button type="button" className="mobile-sheet-action" onClick={() => choose(onHelp)}>
                 <CircleHelp size={20} aria-hidden="true" />
-                <span>Conoce Brote</span>
+                <span>{t("Conoce Brote")}</span>
                 <ArrowRight className="mobile-sheet-arrow" size={17} aria-hidden="true" />
               </button>
+              <div className="mobile-sheet-action language-action">
+                <span>{t("Idioma")}</span>
+                <LanguageSwitcher compact />
+              </div>
             </div>
           </div>
         </Modal>

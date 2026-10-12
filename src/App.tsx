@@ -40,6 +40,7 @@ import Wallets, {
 } from "./components/Wallets";
 import Learning from "./components/Learning";
 import SolanaPanel from "./components/SolanaPanel";
+import { useI18n, LanguageSwitcher } from "./i18n";
 
 function TransactionList({
   transactions,
@@ -54,6 +55,7 @@ function TransactionList({
   notify: (s: string) => void;
   compact?: boolean;
 }) {
+  const { locale, t: tr } = useI18n();
   const sorted = [...transactions].sort(
     (a, b) => Date.parse(activityDate(b)) - Date.parse(activityDate(a)),
   );
@@ -79,10 +81,10 @@ function TransactionList({
               )}
             </span>
             <div className="tx-copy">
-              <strong>{t.title}</strong>
+              <strong>{tr(t.title)}</strong>
               <span>
-                {w?.name} <i>·</i> {t.category} <i>·</i>{" "}
-                {new Intl.DateTimeFormat("es", {
+                {w?.name} <i>·</i> {tr(t.category)} <i>·</i>{" "}
+                {new Intl.DateTimeFormat(locale, {
                   day: "numeric",
                   month: "short",
                 }).format(new Date(activityDate(t)))}
@@ -97,7 +99,7 @@ function TransactionList({
                 <span
                   className={`tag ${t.status === "pending" ? "tag-orange" : "tag-muted"}`}
                 >
-                  {t.status === "pending" ? "Por aprobar" : "Rechazado"}
+                  {t.status === "pending" ? tr("Por aprobar") : tr("Rechazado")}
                 </span>
               )}
             </div>
@@ -105,16 +107,14 @@ function TransactionList({
               <div className="tx-review">
                 <button
                   className="review-button approve"
-                  aria-label={`Aprobar ${t.title}`}
+                  aria-label={tr("Aprobar {name}", { name: tr(t.title) })}
                   onClick={() => {
                     try {
                       store.reviewTransaction(t.id, true);
-                      notify(
-                        "Gasto aprobado. Brotes descontados una sola vez.",
-                      );
+                      notify(tr("Gasto aprobado. Brotes descontados una sola vez."));
                     } catch (e) {
                       notify(
-                        e instanceof Error ? e.message : "No se pudo aprobar.",
+                        e instanceof Error ? tr(e.message) : tr("No se pudo aprobar."),
                       );
                     }
                   }}
@@ -123,14 +123,14 @@ function TransactionList({
                 </button>
                 <button
                   className="review-button"
-                  aria-label={`Rechazar ${t.title}`}
+                  aria-label={tr("Rechazar {name}", { name: tr(t.title) })}
                   onClick={() => {
                     try {
                       store.reviewTransaction(t.id, false);
-                      notify("Gasto rechazado. Su saldo sigue disponible.");
+                      notify(tr("Gasto rechazado. Su saldo sigue disponible."));
                     } catch (e) {
                       notify(
-                        e instanceof Error ? e.message : "No se pudo rechazar.",
+                        e instanceof Error ? tr(e.message) : tr("No se pudo rechazar."),
                       );
                     }
                   }}
@@ -145,8 +145,8 @@ function TransactionList({
       {!transactions.length && (
         <div className="empty-state">
           <Leaf size={28} />
-          <h3>Aquí empieza tu historia</h3>
-          <p>Cada paso aparecerá en tu actividad.</p>
+          <h3>{tr("Aquí empieza tu historia")}</h3>
+          <p>{tr("Cada paso aparecerá en tu actividad.")}</p>
         </div>
       )}
     </div>
@@ -164,6 +164,7 @@ function Activity({
   selectedId: string;
   notify: (s: string) => void;
 }) {
+  const { t } = useI18n();
   const [filter, setFilter] = useState("all");
   const [status, setStatus] = useState("all");
   const all = store.state.transactions.filter(
@@ -176,16 +177,16 @@ function Activity({
   );
   const exportCSV = () => {
     const rows = [
-      ["Fecha de actividad", "Fecha de solicitud", "Persona", "Concepto", "Categoría", "Brotes", "Tipo", "Estado"],
-      ...list.map((t) => [
-        activityDate(t),
-        t.createdAt,
-        store.state.wallets.find((w) => w.id === t.walletId)?.name || "",
-        t.title,
-        t.category,
-        String(t.amount),
-        t.type,
-        t.status,
+      [t("Fecha de actividad"), t("Fecha de solicitud"), t("Persona"), t("Concepto"), t("Categoría"), t("Brotes"), t("Tipo"), t("Estado")],
+      ...list.map((transaction) => [
+        activityDate(transaction),
+        transaction.createdAt,
+        store.state.wallets.find((w) => w.id === transaction.walletId)?.name || "",
+        t(transaction.title),
+        t(transaction.category),
+        String(transaction.amount),
+        transaction.type,
+        transaction.status,
       ]),
     ];
     const url = URL.createObjectURL(
@@ -199,36 +200,36 @@ function Activity({
     a.download = "brote-actividad-practica.csv";
     a.click();
     window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
-    notify("Actividad de práctica exportada.");
+    notify(t("Actividad de práctica exportada."));
   };
   return (
     <>
       <div className="section-heading">
         <div>
-          <h2>Cada movimiento, una historia</h2>
-          <p>Entiende cómo practican y qué hábitos van construyendo.</p>
+          <h2>{t("Cada movimiento, una historia")}</h2>
+          <p>{t("Entiende cómo practican y qué hábitos van construyendo.")}</p>
         </div>
         <button className="button button-secondary" onClick={exportCSV}>
           <Download size={16} />
-          Exportar
+          {t("Exportar")}
         </button>
       </div>
       <div className="card activity-card">
         <div className="activity-filters">
           <span className="tag tag-green">
             <Sparkles size={13} />
-            Dinero de práctica
+            {t("Dinero de práctica")}
           </span>
           <div>
             {isGuardian && (
               <label className="sr-label">
-                Persona
+                {t("Persona")}
                 <select
                   value={filter}
                   onChange={(e) => setFilter(e.target.value)}
-                  aria-label="Filtrar por persona"
+                  aria-label={t("Filtrar por persona")}
                 >
-                  <option value="all">Toda la familia</option>
+                  <option value="all">{t("Toda la familia")}</option>
                   {store.state.wallets.map((w) => (
                     <option value={w.id} key={w.id}>
                       {w.name}
@@ -238,16 +239,16 @@ function Activity({
               </label>
             )}
             <label className="sr-label">
-              Estado
+              {t("Estado")}
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                aria-label="Filtrar por estado"
+                aria-label={t("Filtrar por estado")}
               >
-                <option value="all">Todos los movimientos</option>
-                <option value="pending">Por aprobar</option>
-                <option value="completed">Completados</option>
-                <option value="rejected">Rechazados</option>
+                <option value="all">{t("Todos los movimientos")}</option>
+                <option value="pending">{t("Por aprobar")}</option>
+                <option value="completed">{t("Completados")}</option>
+                <option value="rejected">{t("Rechazados")}</option>
               </select>
             </label>
           </div>
@@ -264,6 +265,7 @@ function Activity({
 }
 
 function WeekChart({ transactions }: { transactions: Transaction[] }) {
+  const { locale, t } = useI18n();
   const days = Array.from({ length: 7 }, (_, i) => {
     const d = new Date();
     d.setDate(d.getDate() - 6 + i);
@@ -273,7 +275,7 @@ function WeekChart({ transactions }: { transactions: Transaction[] }) {
         new Date(activityDate(t)).toDateString() === d.toDateString(),
     );
     return {
-      day: new Intl.DateTimeFormat("es", { weekday: "short" })
+      day: new Intl.DateTimeFormat(locale, { weekday: "short" })
         .format(d)
         .replace(".", ""),
       income: tx
@@ -292,7 +294,7 @@ function WeekChart({ transactions }: { transactions: Transaction[] }) {
       aria-label={days
         .map(
           (d) =>
-            `${d.day}: ${d.income} Brotes recibidos, ${d.expense} gastados`,
+            t("{day}: {income} Brotes recibidos, {expense} gastados", { day: d.day, income: d.income, expense: d.expense }),
         )
         .join(". ")}
     >
@@ -307,7 +309,7 @@ function WeekChart({ transactions }: { transactions: Transaction[] }) {
             <div className="bar-pair">
               <div
                 className="income-bar"
-                title={`${moneyNumber(d.income)} Brotes recibidos`}
+                title={t("{amount} Brotes recibidos", { amount: moneyNumber(d.income) })}
                 style={{
                   height: `${(d.income / max) * 100}%`,
                   minHeight: d.income > 0 ? 3 : 0,
@@ -315,7 +317,7 @@ function WeekChart({ transactions }: { transactions: Transaction[] }) {
               />
               <div
                 className="expense-bar"
-                title={`${moneyNumber(d.expense)} Brotes gastados`}
+                title={t("{amount} Brotes gastados", { amount: moneyNumber(d.expense) })}
                 style={{
                   height: `${(d.expense / max) * 100}%`,
                   minHeight: d.expense > 0 ? 3 : 0,
@@ -331,6 +333,7 @@ function WeekChart({ transactions }: { transactions: Transaction[] }) {
 }
 
 export default function App() {
+  const { t } = useI18n();
   const store = useStore();
   const chain = useSolana();
   const [page, setPage] = useState<Page>(() =>
@@ -422,14 +425,14 @@ export default function App() {
     setPage("wallets");
   };
   const nav = [
-    { id: "home" as Page, label: "Inicio", icon: Home },
+    { id: "home" as Page, label: t("Inicio"), icon: Home },
     {
       id: "wallets" as Page,
-      label: isGuardian ? "Mis wallets" : "Mi wallet",
+      label: isGuardian ? t("Mis wallets") : t("Mi wallet"),
       icon: WalletIcon,
     },
-    { id: "learn" as Page, label: "Aprender jugando", icon: Sparkles },
-    { id: "activity" as Page, label: "Actividad", icon: ArrowUpRight },
+    { id: "learn" as Page, label: t("Aprender jugando"), icon: Sparkles },
+    { id: "activity" as Page, label: t("Actividad"), icon: ArrowUpRight },
   ];
   return (
     <div className={`app-shell${simple ? " simple-mode" : ""}`}>
@@ -463,18 +466,18 @@ export default function App() {
           </span>
           brote<span className="brand-dot">.</span>
         </a>
-        <div className="workspace-label">CRECEMOS JUNTOS</div>
+        <div className="workspace-label">{t("CRECEMOS JUNTOS")}</div>
         <div className="family-switch">
           <span className="family-icon">
             <Home size={17} />
           </span>
           <div>
-            <strong>Familia García</strong>
-            <span>Tu círculo de confianza</span>
+            <strong>{t("Familia García")}</strong>
+            <span>{t("Tu círculo de confianza")}</span>
           </div>
           <ChevronDown size={15} />
         </div>
-        <nav aria-label="Navegación principal">
+        <nav aria-label={t("Navegación principal")}>
           {nav.map((n) => (
             <button
               key={n.id}
@@ -493,18 +496,18 @@ export default function App() {
           <div className="sidebar-note">
             <LeafLogo size={29} />
             <strong>
-              Aprende a tu ritmo.
+              {t("Aprende a tu ritmo.")}
               <br />
-              Avanza en compañía.
+              {t("Avanza en compañía.")}
             </strong>
-            <span>Tu próxima aventura te espera.</span>
+            <span>{t("Tu próxima aventura te espera.")}</span>
           </div>
           <button
             className={`nav-link ${page === "settings" ? "active" : ""}`}
             onClick={() => go("settings")}
           >
             <Settings2 size={19} />
-            Preferencias
+            {t("Preferencias")}
           </button>
           <button
             className="nav-link simple-toggle"
@@ -512,23 +515,23 @@ export default function App() {
             onClick={() => setSimple((value) => !value)}
           >
             <Accessibility size={19} />
-            Modo simple{" "}
+            {t("Modo simple")}{" "}
             <span className={`toggle-indicator ${simple ? "on" : ""}`} />
           </button>
           <button className="nav-link" onClick={() => setHelp(true)}>
             <CircleHelp size={19} />
-            Conoce Brote
+            {t("Conoce Brote")}
           </button>
           <div className="sidebar-user">
             <span className="human-avatar">
               {isGuardian ? "CG" : selected.name.slice(0, 2).toUpperCase()}
             </span>
             <div>
-              <strong>{isGuardian ? "Carolina García" : selected.name}</strong>
+              <strong>{isGuardian ? t("Carolina García") : selected.name}</strong>
               <span>
                 {isGuardian
-                  ? "Persona responsable · demo"
-                  : "Espacio personal · demo"}
+                  ? t("Persona responsable · demo")
+                  : t("Espacio personal · demo")}
               </span>
             </div>
             <ShieldCheck size={18} />
@@ -538,20 +541,20 @@ export default function App() {
       <div className="main-shell">
         <header className="topbar">
           <div className="breadcrumb">
-            Mi espacio <span>/</span>{" "}
+              {t("Mi espacio")} <span>/</span>{" "}
             <strong>
-              {nav.find((n) => n.id === page)?.label || "Preferencias"}
+              {nav.find((n) => n.id === page)?.label || t("Preferencias")}
             </strong>
           </div>
           <div className="topbar-actions">
-            <div className="mode-switch" role="group" aria-label="Tipo de dinero">
+            <div className="mode-switch" role="group" aria-label={t("Tipo de dinero")}>
               <button
                 className={mode === "practice" ? "active" : ""}
                 aria-pressed={mode === "practice"}
                 onClick={() => changeMode("practice")}
               >
                 <Sparkles size={14} />
-                Práctica
+                {t("Práctica")}
               </button>
               <button
                 className={mode === "crypto" ? "active" : ""}
@@ -567,22 +570,23 @@ export default function App() {
               </button>
             </div>
             <label className="role-switch">
-              <span className="sr-only">Cambiar vista de demo</span>
+              <span className="sr-only">{t("Cambiar vista de demo")}</span>
               <select
                 value={role}
                 onChange={(e) => changeRole(e.target.value)}
               >
-                <option value="guardian">Vista familiar</option>
+                <option value="guardian">{t("Vista familiar")}</option>
                 {store.state.wallets.map((w) => (
                   <option key={w.id} value={w.id}>
-                    Mi espacio · {w.name}
+                    {t("Mi espacio · {name}", { name: w.name })}
                   </option>
                 ))}
               </select>
             </label>
+            <LanguageSwitcher compact />
             <button
               className="bell-button"
-              aria-label={isGuardian ? "Ver aprobaciones" : "Ver mi actividad"}
+              aria-label={isGuardian ? t("Ver aprobaciones") : t("Ver mi actividad")}
               onClick={() => {
                 setMode("practice");
                 go("activity");
@@ -598,9 +602,9 @@ export default function App() {
             <div className="form-note persistence-notice" role="status">
               <ShieldCheck size={20} />
               <span>{store.persistence.loading
-                ? "Comprobando los datos guardados…"
-                : store.persistence.error ?? "Esta pestaña está en modo lectura. Los cambios de la pestaña activa aparecerán aquí."}
-                {store.persistence.corruptRaw && " Abre Preferencias para descargar el registro original o restaurar una copia."}
+                ? t("Comprobando los datos guardados…")
+                : store.persistence.error ? t(store.persistence.error) : t("Esta pestaña está en modo lectura. Los cambios de la pestaña activa aparecerán aquí.")}
+                {store.persistence.corruptRaw && t(" Abre Preferencias para descargar el registro original o restaurar una copia.")}
               </span>
             </div>
           )}
@@ -608,43 +612,39 @@ export default function App() {
             <div>
               <span className="eyebrow">
                 {isGuardian
-                  ? "TU CÍRCULO, TU TRANQUILIDAD"
-                  : "TU PRÓXIMO PASO EMPIEZA AQUÍ"}
+                  ? t("TU CÍRCULO, TU TRANQUILIDAD")
+                  : t("TU PRÓXIMO PASO EMPIEZA AQUÍ")}
               </span>
               <h1>
                 {mode === "crypto"
-                  ? "Un puente a Solana"
+                  ? t("Un puente a Solana")
                   : page === "home"
-                    ? (isGuardian
-                        ? "Hola, Carolina"
-                        : "Hola, " + selected.name) +
-                      ". " +
-                      (isGuardian ? "Todo va creciendo." : "Vamos a crecer.")
+                    ? t("Hola, {name}. {ending}", { name: isGuardian ? t("Carolina García") : selected.name, ending: t(isGuardian ? "Todo va creciendo." : "Vamos a crecer.") })
                     : page === "wallets"
-                      ? "Cada wallet, un mundo."
+                      ? t("Cada wallet, un mundo.")
                       : page === "learn"
-                        ? `Aventuras de ${selected.name}`
+                        ? t("Aventuras de {name}", { name: selected.name })
                         : page === "activity"
-                          ? "Los pasos que van dando."
-                          : "A tu manera."}
+                          ? t("Los pasos que van dando.")
+                          : t("A tu manera.")}
               </h1>
               <p>
                 {mode === "crypto"
-                  ? "Cuentas reales acompañadas, bajo la firma de tu wallet."
+                  ? t("Cuentas reales acompañadas, bajo la firma de tu wallet.")
                   : page === "home"
-                    ? "Acompaña sus decisiones de hoy. Celebra sus hábitos de mañana."
+                    ? t("Acompaña sus decisiones de hoy. Celebra sus hábitos de mañana.")
                     : page === "wallets"
-                      ? "Más autonomía, con alguien cerca para acompañar."
+                      ? t("Más autonomía, con alguien cerca para acompañar.")
                       : page === "learn"
-                        ? "Aprender sobre dinero también puede ser una pequeña aventura."
+                        ? t("Aprender sobre dinero también puede ser una pequeña aventura.")
                         : page === "activity"
-                          ? "Una mirada compartida a sus decisiones de práctica."
-                          : "Un espacio simple para cada persona de tu círculo."}
+                          ? t("Una mirada compartida a sus decisiones de práctica.")
+                          : t("Un espacio simple para cada persona de tu círculo.")}
               </p>
             </div>
             <span className="network-badge">
               <i />
-              {mode === "crypto" ? "Solana mainnet" : "Brote · demo web"}
+              {mode === "crypto" ? "Solana mainnet" : t("Brote · demo web")}
             </span>
           </div>
           {mode === "crypto" ? (
@@ -660,16 +660,16 @@ export default function App() {
                   <section className="welcome-banner">
                     <div className="welcome-copy">
                       <span className="eyebrow">
-                        APRENDER, EN BUENA COMPAÑÍA
+                        {t("APRENDER, EN BUENA COMPAÑÍA")}
                       </span>
                       <h2>
-                        Tu próxima aventura
+                        {t("Tu próxima aventura")}
                         <br />
-                        empieza aquí<span>.</span>
+                        {t("empieza aquí")}<span>.</span>
                       </h2>
                       <p>
-                        Un lugar para aprender a cuidar el dinero.
-                        <br />Y a las personas que más quieres.
+                        {t("Un lugar para aprender a cuidar el dinero.")}
+                        <br />{t("Y a las personas que más quieres.")}
                       </p>
                       <div className="banner-actions">
                         <button
@@ -683,19 +683,19 @@ export default function App() {
                           ) : (
                             <WalletIcon size={17} />
                           )}{" "}
-                          {isGuardian ? "Asignar Brotes" : "Mi wallet"}
+                          {isGuardian ? t("Asignar Brotes") : t("Mi wallet")}
                         </button>
                         <button
                           className="button button-ghost"
                           onClick={() => go("learn")}
                         >
-                          Explorar aventuras <ArrowRight size={17} />
+                          {t("Explorar aventuras")} <ArrowRight size={17} />
                         </button>
                       </div>
                     </div>
                     <Plant />
                     <div className="hero-caption">
-                      <Leaf size={13} /> Juntos, al siguiente nivel
+                      <Leaf size={13} /> {t("Juntos, al siguiente nivel")}
                     </div>
                   </section>
                   <div className="stats-grid">
@@ -704,14 +704,14 @@ export default function App() {
                         <WalletIcon size={20} />
                       </span>
                       <div>
-                        <span>Disponible para practicar</span>
+                        <span>{t("Disponible para practicar")}</span>
                         <strong>
                           {moneyNumber(
                             wallets.reduce((s, w) => s + w.practiceBalance, 0),
                           )}
                           <small> B</small>
                         </strong>
-                        <p>Brotes sin valor monetario</p>
+                        <p>{t("Brotes sin valor monetario")}</p>
                       </div>
                     </div>
                     <div className="stat-card">
@@ -719,14 +719,13 @@ export default function App() {
                         <Target size={20} />
                       </span>
                       <div>
-                        <span>Ahorro en sus metas</span>
+                        <span>{t("Ahorro en sus metas")}</span>
                         <strong>
                           {moneyNumber(savings)}
                           <small> B</small>
                         </strong>
                         <p>
-                          {wallets.reduce((s, w) => s + w.goals.length, 0)}{" "}
-                          sueños en camino
+                          {t("{count} sueños en camino", { count: wallets.reduce((s, w) => s + w.goals.length, 0) })}
                         </p>
                       </div>
                     </div>
@@ -735,12 +734,12 @@ export default function App() {
                         <Sparkles size={20} />
                       </span>
                       <div>
-                        <span>Aventuras completadas</span>
+                        <span>{t("Aventuras completadas")}</span>
                         <strong>
                           {completed}
-                          <small> pasos</small>
+                          <small> {t("pasos")}</small>
                         </strong>
-                        <p>Hábitos que van creciendo</p>
+                        <p>{t("Hábitos que van creciendo")}</p>
                       </div>
                     </div>
                   </div>
@@ -749,8 +748,8 @@ export default function App() {
                       <div>
                         <h2>
                           {isGuardian
-                            ? "Cada persona, su propio camino"
-                            : "Tu pequeño universo"}{" "}
+                            ? t("Cada persona, su propio camino")
+                            : t("Tu pequeño universo")}{" "}
                           <span className="count-badge">{wallets.length}</span>
                         </h2>
                       </div>
@@ -760,7 +759,7 @@ export default function App() {
                           onClick={() => setCreate(true)}
                         >
                           <Plus size={16} />
-                          Crear wallet
+                          {t("Crear wallet")}
                         </button>
                       )}
                     </div>
@@ -769,12 +768,12 @@ export default function App() {
                   <div className="dashboard-bottom">
                     <section className="card recent-card">
                       <div className="section-heading">
-                        <h2>Sus últimos pasos</h2>
+                        <h2>{t("Sus últimos pasos")}</h2>
                         <button
                           className="text-button"
                           onClick={() => go("activity")}
                         >
-                          Ver todos <ArrowRight size={14} />
+                          {t("Ver todos")} <ArrowRight size={14} />
                         </button>
                       </div>
                       <TransactionList
@@ -793,9 +792,9 @@ export default function App() {
                             <ShieldCheck size={17} />
                             {pending.length}{" "}
                             {pending.length === 1
-                              ? "decisión espera"
-                              : "decisiones esperan"}{" "}
-                            tu acompañamiento
+                              ? t("decisión espera")
+                              : t("decisiones esperan")}{" "}
+                            {t("tu acompañamiento")}
                           </span>
                           <ArrowRight size={16} />
                         </button>
@@ -804,8 +803,8 @@ export default function App() {
                     <section className="card rhythm-card">
                       <div className="section-heading">
                         <div>
-                          <h2>El ritmo de la semana</h2>
-                          <p>Últimos 7 días · práctica</p>
+                          <h2>{t("El ritmo de la semana")}</h2>
+                          <p>{t("Últimos 7 días · práctica")}</p>
                         </div>
                         <span className="tiny-icon">
                           <Leaf size={18} />
@@ -815,11 +814,11 @@ export default function App() {
                       <div className="chart-legend">
                         <span>
                           <i className="legend-income" />
-                          Brotes recibidos
+                          {t("Brotes recibidos")}
                         </span>
                         <span>
                           <i className="legend-expense" />
-                          Brotes gastados
+                          {t("Brotes gastados")}
                         </span>
                       </div>
                     </section>
@@ -830,19 +829,18 @@ export default function App() {
                     </div>
                     <div>
                       <span className="eyebrow">
-                        HOY PUEDE SER UN BUEN COMIENZO
+                        {t("HOY PUEDE SER UN BUEN COMIENZO")}
                       </span>
-                      <h3>¿Y si aprender a ahorrar fuera una aventura?</h3>
+                      <h3>{t("¿Y si aprender a ahorrar fuera una aventura?")}</h3>
                       <p>
-                        Una canasta, un presupuesto y muchas pequeñas
-                        decisiones.
+                        {t("Una canasta, un presupuesto y muchas pequeñas decisiones.")}
                       </p>
                     </div>
                     <button
                       className="button button-secondary"
                       onClick={() => go("learn")}
                     >
-                      Vamos a jugar <ArrowRight size={16} />
+                      {t("Vamos a jugar")} <ArrowRight size={16} />
                     </button>
                   </section>
                 </>
@@ -861,8 +859,8 @@ export default function App() {
               {page === "learn" && (
                 <>
                   {isGuardian && (
-                    <div className="learner-select" role="group" aria-label="Perfil para aprender">
-                      <span>Explorando con</span>
+                    <div className="learner-select" role="group" aria-label={t("Perfil para aprender")}>
+                      <span>{t("Explorando con")}</span>
                       {store.state.wallets.map((w) => (
                         <button
                           className={selected.id === w.id ? "active" : ""}
@@ -900,41 +898,35 @@ export default function App() {
                   )}
                   <section className="card settings-card">
                     <ShieldCheck size={26} />
-                    <h2>Una demo que puedes explorar</h2>
+                    <h2>{t("Una demo que puedes explorar")}</h2>
                     <p>
-                      Los perfiles y Brotes se guardan en este navegador. Puedes
-                      cambiar de vista para conocer la experiencia de cada
-                      persona.
+                      {t("Los perfiles y Brotes se guardan en este navegador. Puedes cambiar de vista para conocer la experiencia de cada persona.")}
                     </p>
                     <p>
-                      Las vistas de demo no son sesiones autenticadas. En
-                      Solana, la wallet conectada autoriza las operaciones
-                      reales.
+                      {t("Las vistas de demo no son sesiones autenticadas. En Solana, la wallet conectada autoriza las operaciones reales.")}
                     </p>
                     <button
                       className="button button-secondary"
                       onClick={() => setHelp(true)}
                     >
-                      Cómo funciona Brote <ArrowRight size={16} />
+                      {t("Cómo funciona Brote")} <ArrowRight size={16} />
                     </button>
                   </section>
                   {isGuardian && (
                     <section className="card settings-card">
                       <LogOut size={26} />
-                      <h2>Empezar de nuevo</h2>
+                      <h2>{t("Empezar de nuevo")}</h2>
                       <p>
-                        Reinicia los perfiles y el dinero de práctica. Las
-                        cuentas y los fondos Solana siguen en la red.
+                        {t("Reinicia los perfiles y el dinero de práctica. Las cuentas y los fondos Solana siguen en la red.")}
                       </p>
                       <p className="form-note">
-                        Antes de reiniciar, conserva los IDs de perfiles nuevos
-                        si creaste sus cuentas Solana.
+                        {t("Antes de reiniciar, conserva los IDs de perfiles nuevos si creaste sus cuentas Solana.")}
                       </p>
                       <button
                         className="button button-secondary"
                         onClick={() => setReset(true)}
                       >
-                        Reiniciar práctica
+                        {t("Reiniciar práctica")}
                       </button>
                     </section>
                   )}
@@ -944,12 +936,12 @@ export default function App() {
           )}
           <footer className="app-footer">
             <span>
-              <LeafLogo size={16} /> Brote. Crecemos juntos.
+              <LeafLogo size={16} /> {t("Brote. Crecemos juntos.")}
             </span>
             <span>
               {mode === "practice"
-                ? "B = Brotes de práctica · sin valor monetario"
-                : "SOL real · Solana mainnet"}
+                ? t("B = Brotes de práctica · sin valor monetario")
+                : t("SOL real · Solana mainnet")}
             </span>
           </footer>
         </main>
@@ -961,7 +953,7 @@ export default function App() {
           onCreated={(w) => {
             setSelectedId(w.id);
             go("wallets");
-            notify(`¡Bienvenido, ${w.name}! Su próximo paso empieza aquí.`);
+            notify(t("¡Bienvenido, {name}! Su próximo paso empieza aquí.", { name: w.name }));
           }}
         />
       )}
@@ -976,7 +968,7 @@ export default function App() {
       )}
       {help && (
         <Modal
-          title="Un lugar para crecer juntos"
+          title={t("Un lugar para crecer juntos")}
           onClose={() => setHelp(false)}
         >
           <div className="help-content">
@@ -984,38 +976,32 @@ export default function App() {
               <LeafLogo size={44} />
             </span>
             <p>
-              Brote ayuda a una persona responsable a acompañar el aprendizaje
-              financiero de niños, adultos y personas mayores.
+              {t("Brote ayuda a una persona responsable a acompañar el aprendizaje financiero de niños, adultos y personas mayores.")}
             </p>
             <div>
               <Sparkles size={21} />
               <section>
-                <h3>Primero, practica</h3>
+                <h3>{t("Primero, practica")}</h3>
                 <p>
-                  Asigna Brotes, completa misiones y ahorra para una meta. Los
-                  Brotes son ficticios y no se convierten en SOL.
+                  {t("Asigna Brotes, completa misiones y ahorra para una meta. Los Brotes son ficticios y no se convierten en SOL.")}
                 </p>
               </section>
             </div>
             <div>
               <WalletIcon size={21} />
               <section>
-                <h3>Después, conecta con Solana</h3>
+                <h3>{t("Después, conecta con Solana")}</h3>
                 <p>
-                  Conecta Phantom o Solflare. Las cuentas del círculo se derivan
-                  de la wallet del responsable, quien firma cada movimiento
-                  real.
+                  {t("Conecta Phantom o Solflare. Las cuentas del círculo se derivan de la wallet del responsable, quien firma cada movimiento real.")}
                 </p>
               </section>
             </div>
             <div>
               <ShieldCheck size={21} />
               <section>
-                <h3>Acompaña con claridad</h3>
+                <h3>{t("Acompaña con claridad")}</h3>
                 <p>
-                  Revisa actividad de práctica y transacciones en la red. Las
-                  categorías de compra las registra la persona; la blockchain no
-                  revela qué compró.
+                  {t("Revisa actividad de práctica y transacciones en la red. Las categorías de compra las registra la persona; la blockchain no revela qué compró.")}
                 </p>
               </section>
             </div>
@@ -1023,38 +1009,35 @@ export default function App() {
               className="button button-primary full-width"
               onClick={() => setHelp(false)}
             >
-              Empecemos a crecer <ArrowRight size={16} />
+              {t("Empecemos a crecer")} <ArrowRight size={16} />
             </button>
           </div>
         </Modal>
       )}
       {reset && (
         <Modal
-          title="¿Volvemos al primer paso?"
+          title={t("¿Volvemos al primer paso?")}
           onClose={() => setReset(false)}
         >
           <p className="muted modal-intro">
-            Se reemplazarán los perfiles y la actividad de práctica de este
-            navegador por los ejemplos iniciales. Los fondos Solana no se
-            mueven.
+            {t("Se reemplazarán los perfiles y la actividad de práctica de este navegador por los ejemplos iniciales. Los fondos Solana no se mueven.")}
           </p>
           <p className="form-note">
-            Los IDs de perfiles creados determinan sus direcciones Solana.
-            Guarda una copia antes de reiniciar si creaste cuentas reales.
+            {t("Los IDs de perfiles creados determinan sus direcciones Solana. Guarda una copia antes de reiniciar si creaste cuentas reales.")}
           </p>
           <div className="modal-actions">
             <button
               className="button button-secondary"
               onClick={() => setReset(false)}
             >
-              Conservar mis pasos
+              {t("Conservar mis pasos")}
             </button>
             <button
               className="button button-primary"
               onClick={() => {
                 try {
                   if (chain.operationError || chain.busy || chain.operations.some(operation => operation.state === "pending"))
-                    throw Error("Resuelve la operación Solana pendiente antes de reiniciar perfiles.");
+                    throw Error(t("Resuelve la operación Solana pendiente antes de reiniciar perfiles."));
                   downloadBackup(store.state);
                   chain.invalidateSigningSession();
                   store.resetDemo();
@@ -1062,13 +1045,13 @@ export default function App() {
                   setRole("guardian");
                   go("home");
                   setReset(false);
-                  notify("La práctica empieza de nuevo.");
+                  notify(t("La práctica empieza de nuevo."));
                 } catch (error) {
-                  notify(error instanceof Error ? error.message : "No pudimos reiniciar los datos.");
+                  notify(error instanceof Error ? t(error.message) : t("No pudimos reiniciar los datos."));
                 }
               }}
             >
-              Guardar copia y reiniciar
+              {t("Guardar copia y reiniciar")}
             </button>
           </div>
         </Modal>
@@ -1076,8 +1059,8 @@ export default function App() {
       {toast && (
         <div className="toast" role="status">
           <CheckCircle2 size={20} />
-          <span>{toast}</span>
-          <button onClick={() => setToast("")} aria-label="Cerrar mensaje">
+          <span>{t(toast)}</span>
+          <button onClick={() => setToast("")} aria-label={t("Cerrar mensaje")}>
             <X size={16} />
           </button>
         </div>
