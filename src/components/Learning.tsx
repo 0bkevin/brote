@@ -21,6 +21,7 @@ type Props = {
   wallet: Wallet;
   store: StoreAPI;
   notify: (message: string) => void;
+  simple?: boolean;
 };
 type MissionId = "smart-shop" | "spot-the-scam" | "rainy-day";
 type Mission = {
@@ -152,12 +153,19 @@ const shopItems = [
 
 const money = (value: number) => `${value} B`;
 
-export default function Learning({ wallet, store, notify }: Props) {
+export default function Learning({
+  wallet,
+  store,
+  notify,
+  simple = false,
+}: Props) {
   const [active, setActive] = useState<MissionId | null>(null);
   const [shopSelected, setShopSelected] = useState<string[]>([]);
   const [shopChecked, setShopChecked] = useState(false);
   const [quizAnswers, setQuizAnswers] = useState<number[]>([]);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
+  const [quizStep, setQuizStep] = useState(0);
+  const [speechMessage, setSpeechMessage] = useState("");
   const [allocations, setAllocations] = useState([10, 6, 4]);
   const [allocationChecked, setAllocationChecked] = useState(false);
   const [justCompleted, setJustCompleted] = useState(false);
@@ -197,6 +205,8 @@ export default function Learning({ wallet, store, notify }: Props) {
     setShopChecked(false);
     setQuizAnswers([]);
     setQuizSubmitted(false);
+    setQuizStep(0);
+    setSpeechMessage("");
     setAllocations([10, 6, 4]);
     setAllocationChecked(false);
   };
@@ -246,6 +256,26 @@ export default function Learning({ wallet, store, notify }: Props) {
         i === index ? Math.max(0, Math.min(20, value + amount)) : value,
       ),
     );
+  };
+  const speakCurrentQuestion = () => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+      setSpeechMessage(
+        "La lectura en voz alta no está disponible en este navegador.",
+      );
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const question = quiz[quizStep];
+    const utterance = new SpeechSynthesisUtterance(
+      `${question.prompt} ${question.options.map((option, index) => `Opción ${index + 1}: ${option}`).join(". ")}`,
+    );
+    utterance.lang = "es-VE";
+    utterance.onstart = () => setSpeechMessage("Leyendo en voz alta…");
+    utterance.onend = () => setSpeechMessage("Lectura terminada.");
+    utterance.onerror = () =>
+      setSpeechMessage("No se pudo iniciar la lectura en voz alta.");
+    setSpeechMessage("Preparando lectura…");
+    window.speechSynthesis.speak(utterance);
   };
 
   const renderMission = () => {
@@ -310,8 +340,9 @@ export default function Learning({ wallet, store, notify }: Props) {
                 </div>
               </div>
               <p className="learning-instruction">
-                Elige lo que comprarías para cubrir las necesidades del día. Si
-                queda espacio, puedes sumar un deseo.
+                {simple
+                  ? "Elige primero lo que necesitas. Si alcanza, suma un gusto."
+                  : "Elige lo que comprarías para cubrir las necesidades del día. Si queda espacio, puedes sumar un deseo."}
               </p>
               <div
                 className="learning-choice-list"
@@ -384,52 +415,125 @@ export default function Learning({ wallet, store, notify }: Props) {
               {!quizSubmitted ? (
                 <>
                   <p className="learning-instruction">
-                    Elige la respuesta más segura en cada situación. Puedes
-                    cambiar tus respuestas antes de revisar.
+                    {simple
+                      ? "Lee o escucha. Elige la respuesta más segura."
+                      : "Elige la respuesta más segura en cada situación. Puedes cambiar tus respuestas antes de revisar."}
                   </p>
-                  {quiz.map((question, index) => (
-                    <fieldset
-                      className="learning-question"
-                      key={question.prompt}
-                    >
-                      <legend>
-                        <span className="learning-question-number">
-                          0{index + 1}
-                        </span>
-                        {question.prompt}
-                      </legend>
-                      <div className="learning-options">
-                        {question.options.map((option, optionIndex) => (
-                          <label key={option}>
-                            <input
-                              type="radio"
-                              name={`quiz-${index}`}
-                              checked={quizAnswers[index] === optionIndex}
-                              onChange={() =>
-                                setQuizAnswers((current) => {
-                                  const next = [...current];
-                                  next[index] = optionIndex;
-                                  return next;
-                                })
-                              }
-                            />
-                            <span>{option}</span>
-                          </label>
-                        ))}
+                  {simple ? (
+                    <>
+                      <div
+                        className="learning-simple-progress"
+                        aria-live="polite"
+                      >
+                        Pregunta {quizStep + 1} de {quiz.length}
                       </div>
-                    </fieldset>
-                  ))}
+                      <fieldset
+                        className="learning-question learning-question-simple"
+                        key={quiz[quizStep].prompt}
+                      >
+                        <legend>
+                          <span className="learning-question-number">
+                            0{quizStep + 1}
+                          </span>
+                          {quiz[quizStep].prompt}
+                        </legend>
+                        <div className="learning-options">
+                          {quiz[quizStep].options.map((option, optionIndex) => (
+                            <label key={option}>
+                              <input
+                                type="radio"
+                                name={`quiz-${quizStep}`}
+                                checked={quizAnswers[quizStep] === optionIndex}
+                                onChange={() =>
+                                  setQuizAnswers((current) => {
+                                    const next = [...current];
+                                    next[quizStep] = optionIndex;
+                                    return next;
+                                  })
+                                }
+                              />
+                              <span>{option}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </fieldset>
+                      <div className="learning-simple-tools">
+                        <button
+                          type="button"
+                          className="button button-secondary learning-listen-button"
+                          onClick={speakCurrentQuestion}
+                        >
+                          <span aria-hidden="true">🔊</span> Escuchar pregunta
+                        </button>
+                        <span className="learning-speech-status" role="status">
+                          {speechMessage}
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    quiz.map((question, index) => (
+                      <fieldset
+                        className="learning-question"
+                        key={question.prompt}
+                      >
+                        <legend>
+                          <span className="learning-question-number">
+                            0{index + 1}
+                          </span>
+                          {question.prompt}
+                        </legend>
+                        <div className="learning-options">
+                          {question.options.map((option, optionIndex) => (
+                            <label key={option}>
+                              <input
+                                type="radio"
+                                name={`quiz-${index}`}
+                                checked={quizAnswers[index] === optionIndex}
+                                onChange={() =>
+                                  setQuizAnswers((current) => {
+                                    const next = [...current];
+                                    next[index] = optionIndex;
+                                    return next;
+                                  })
+                                }
+                              />
+                              <span>{option}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </fieldset>
+                    ))
+                  )}
                   <div className="learning-modal-actions">
+                    {simple
+                      ? quizStep > 0 && (
+                          <button
+                            type="button"
+                            className="button button-secondary"
+                            onClick={() => setQuizStep((step) => step - 1)}
+                          >
+                            Anterior
+                          </button>
+                        )
+                      : null}
                     <button
                       className="button button-primary"
                       disabled={
-                        !quiz.every(
-                          (_, index) => quizAnswers[index] !== undefined,
-                        )
+                        simple
+                          ? quizAnswers[quizStep] === undefined
+                          : !quiz.every(
+                              (_, index) => quizAnswers[index] !== undefined,
+                            )
                       }
-                      onClick={() => setQuizSubmitted(true)}
+                      onClick={() => {
+                        if (simple && quizStep < quiz.length - 1)
+                          setQuizStep((step) => step + 1);
+                        else setQuizSubmitted(true);
+                      }}
                     >
-                      Revisar respuestas
+                      {simple && quizStep < quiz.length - 1
+                        ? "Siguiente pregunta"
+                        : "Revisar respuestas"}
                     </button>
                   </div>
                 </>
@@ -511,9 +615,9 @@ export default function Learning({ wallet, store, notify }: Props) {
                 </strong>
               </div>
               <p className="learning-instruction">
-                Piensa en las necesidades de hoy y también en un gasto
-                inesperado que podría aparecer. No hay una única respuesta para
-                la vida real.
+                {simple
+                  ? "Reparte los Brotes entre hoy, imprevistos y algo que disfrutas."
+                  : "Piensa en las necesidades de hoy y también en un gasto inesperado que podría aparecer. No hay una única respuesta para la vida real."}
               </p>
               <div className="learning-allocations">
                 {[
@@ -603,8 +707,8 @@ export default function Learning({ wallet, store, notify }: Props) {
     <section className="learning-page" aria-labelledby="learning-title">
       <div className="learning-hero">
         <div className="learning-hero-copy">
-          <span className="learning-eyebrow">APRENDER HACIENDO</span>
-          <h2 id="learning-title">Pequeños pasos, grandes ideas</h2>
+          <span className="learning-eyebrow">B R O T E · ZONA DE PRÁCTICA</span>
+          <h2 id="learning-title">Misiones para tu vida real</h2>
           <p>
             Practica decisiones cotidianas a tu ritmo. Cada misión enseña algo
             útil y celebra lo que vas aprendiendo.
