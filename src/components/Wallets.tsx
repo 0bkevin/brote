@@ -18,6 +18,7 @@ import type {
   Wallet,
 } from "../types";
 import { formatMoney, levelFor } from "../format";
+import { goalProgress } from "../goals";
 import Avatar from "./Avatar";
 import Modal from "./Modal";
 
@@ -64,13 +65,13 @@ export function WalletCards({
                     <Target size={13} />
                     {goal.title}
                   </span>
-                  <b>{Math.round((goal.saved / goal.target) * 100)}%</b>
+                  <b>{goalProgress(goal).percent}%</b>
                 </div>
                 <div className="progress-track">
                   <div
                     className="progress-fill"
                     style={{
-                      width: `${Math.min(100, (goal.saved / goal.target) * 100)}%`,
+                      width: `${goalProgress(goal).percent}%`,
                     }}
                   />
                 </div>
@@ -149,7 +150,10 @@ export function CreateWalletModal({
               autoComplete="off"
               maxLength={30}
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e) => {
+                setConsent(false);
+                setForm({ ...form, name: e.target.value });
+              }}
               placeholder="¿Cómo se llama?"
               required
             />
@@ -159,9 +163,10 @@ export function CreateWalletModal({
             <input
               value={form.relationship}
               maxLength={40}
-              onChange={(e) =>
-                setForm({ ...form, relationship: e.target.value })
-              }
+              onChange={(e) => {
+                setConsent(false);
+                setForm({ ...form, relationship: e.target.value });
+              }}
               placeholder="Hija, papá, estudiante…"
               required
             />
@@ -171,9 +176,10 @@ export function CreateWalletModal({
           ¿A quién acompañas?
           <select
             value={form.kind}
-            onChange={(e) =>
-              setForm({ ...form, kind: e.target.value as NewWallet["kind"] })
-            }
+            onChange={(e) => {
+              setConsent(false);
+              setForm({ ...form, kind: e.target.value as NewWallet["kind"] });
+            }}
           >
             <option value="child">Niño o adolescente</option>
             <option value="adult">Persona adulta</option>
@@ -408,7 +414,7 @@ function GoalCard({
   const [amount, setAmount] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
-  const percent = Math.round((goal.saved / goal.target) * 100);
+  const { complete, percent } = goalProgress(goal);
   function submit(e: FormEvent) {
     e.preventDefault();
     try {
@@ -438,11 +444,11 @@ function GoalCard({
         </div>
         <div className="goal-bottom">
           <span>
-            {percent >= 100 ? "¡Lo lograste!" : `${percent}% del camino`}
+            {complete ? "¡Lo lograste!" : `${percent}% del camino`}
           </span>
           <button
             className="text-button"
-            disabled={wallet.paused || percent >= 100}
+            disabled={wallet.paused || complete}
             onClick={() => setSaving(!saving)}
           >
             {saving ? "Cancelar" : "Añadir a mi ahorro"} <Plus size={14} />
