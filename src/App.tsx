@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  Accessibility,
   ArrowDownLeft,
   ArrowRight,
   ArrowUpRight,
@@ -323,8 +324,30 @@ function WeekChart({ transactions }: { transactions: Transaction[] }) {
 export default function App() {
   const store = useStore();
   const chain = useSolana();
-  const [page, setPage] = useState<Page>("home");
-  const [mode, setMode] = useState<Mode>("practice");
+  const [page, setPage] = useState<Page>(() =>
+    new URLSearchParams(location.search).get("view") === "learn"
+      ? "learn"
+      : "home",
+  );
+  const [mode, setMode] = useState<Mode>(() =>
+    new URLSearchParams(location.search).get("mode") === "crypto"
+      ? "crypto"
+      : "practice",
+  );
+  const [simple, setSimple] = useState(() => {
+    try {
+      return localStorage.getItem("brote-simple-mode") === "true";
+    } catch {
+      return false;
+    }
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem("brote-simple-mode", String(simple));
+    } catch {
+      /* Keep the preference in memory. */
+    }
+  }, [simple]);
   const [selectedId, setSelectedId] = useState(
     store.state.wallets[0]?.id || "sofia",
   );
@@ -374,7 +397,7 @@ export default function App() {
     { id: "activity" as Page, label: "Actividad", icon: ArrowUpRight },
   ];
   return (
-    <div className="app-shell">
+    <div className={`app-shell${simple ? " simple-mode" : ""}`}>
       <aside className="sidebar">
         <a
           className="brand"
@@ -419,11 +442,11 @@ export default function App() {
           <div className="sidebar-note">
             <LeafLogo size={29} />
             <strong>
-              El futuro se cultiva
+              Aprende a tu ritmo.
               <br />
-              un paso a la vez.
+              Avanza en compañía.
             </strong>
-            <span>Y en compañía, florece mejor.</span>
+            <span>Tu próxima aventura te espera.</span>
           </div>
           <button
             className={`nav-link ${page === "settings" ? "active" : ""}`}
@@ -432,15 +455,30 @@ export default function App() {
             <Settings2 size={19} />
             Preferencias
           </button>
+          <button
+            className="nav-link simple-toggle"
+            aria-pressed={simple}
+            onClick={() => setSimple((value) => !value)}
+          >
+            <Accessibility size={19} />
+            Modo simple{" "}
+            <span className={`toggle-indicator ${simple ? "on" : ""}`} />
+          </button>
           <button className="nav-link" onClick={() => setHelp(true)}>
             <CircleHelp size={19} />
             Conoce Brote
           </button>
           <div className="sidebar-user">
-            <span className="human-avatar">CG</span>
+            <span className="human-avatar">
+              {isGuardian ? "CG" : selected.name.slice(0, 2).toUpperCase()}
+            </span>
             <div>
-              <strong>Carolina García</strong>
-              <span>Persona responsable · demo</span>
+              <strong>{isGuardian ? "Carolina García" : selected.name}</strong>
+              <span>
+                {isGuardian
+                  ? "Persona responsable · demo"
+                  : "Espacio personal · demo"}
+              </span>
             </div>
             <ShieldCheck size={18} />
           </div>
@@ -573,9 +611,9 @@ export default function App() {
                         APRENDER, EN BUENA COMPAÑÍA
                       </span>
                       <h2>
-                        Pequeños pasos,
+                        Tu próxima aventura
                         <br />
-                        grandes futuros<span>.</span>
+                        empieza aquí<span>.</span>
                       </h2>
                       <p>
                         Un lugar para aprender a cuidar el dinero.
@@ -605,7 +643,7 @@ export default function App() {
                     </div>
                     <Plant />
                     <div className="hero-caption">
-                      <Leaf size={13} /> Crecer es mejor juntos
+                      <Leaf size={13} /> Juntos, al siguiente nivel
                     </div>
                   </section>
                   <div className="stats-grid">
@@ -786,6 +824,7 @@ export default function App() {
                     </div>
                   )}
                   <Learning
+                    simple={simple}
                     key={selected.id}
                     wallet={selected}
                     store={store}
