@@ -1,8 +1,8 @@
-# Historial de commits de Brote
+# Brote commit history
 
-Estos commits ya existen en la rama `main`. Están ordenados desde la estructura inicial hasta las auditorías, las correcciones y la interfaz web compacta. Cada entrada explica el cambio y su propósito.
+These commits already exist on the `main` branch. They are ordered from the initial project setup through the audits, fixes, and compact responsive web interface. Each entry explains the change and its purpose.
 
-Para ver el historial completo en el repositorio:
+To inspect the complete repository history:
 
 ```sh
 git log --reverse --oneline
@@ -131,68 +131,72 @@ Record automated checks, tested practice flows, real mainnet reads, screenshots 
 
 ## 31. `e499590` — docs: index the complete implementation commit history
 
-Documenta cada hito real de implementación con su hash, propósito y comandos para inspeccionar los cambios.
+Document each actual implementation milestone with its hash, purpose, and commands for inspecting the changes.
 
 ## 32. `3aafb4c` — docs: add an interactive product and roadmap overview
 
-Añade un resumen interactivo del producto, capturas, roadmap e historial para revisar la entrega.
+Add an interactive product summary, screenshots, roadmap, and history to review the submission.
 
 ## 33. `46d6a3e` — fix(learning): stop quiz narration when its context closes
 
-Detiene la voz del quiz al cerrar, cambiar de pregunta o salir del perfil. Desconecta callbacks y comprueba la cancelación con un stub.
+Stop quiz narration when it closes, the question changes, or the learner profile changes. Detach callbacks and verify cancellation with a stub.
 
 ## 34. `5236f67` — fix(wallets): bind consent to identity and complete goals at their exact target
 
-Vuelve a pedir consentimiento al editar identidad y permite ahorrar el último centavo de una meta; se prueba 1,99 de 2 antes de completar.
+Require consent again after an identity edit, and allow saving the final cent toward a goal; test 1.99 of 2 before completion.
 
 ## 35. `91df8fd` — fix(ledger): preserve exact cents and record purchase review dates
 
-Convierte decimales a centavos exactos, valida movimientos positivos y registra la fecha de resolución de cada gasto.
+Convert decimal amounts to exact cents, validate positive ledger entries, and record when each purchase is resolved.
 
 ## 36. `59df3f1` — fix(a11y): isolate dialogs from background navigation
 
-Aísla el fondo de los diálogos, filtra controles visibles habilitados y devuelve el foco al cerrar. Se comprueba Tab, Shift+Tab y Escape en Chrome.
+Isolate the background while dialogs are open, limit focus to visible enabled controls, and restore focus on close. Verify Tab, Shift+Tab, and Escape in Chrome.
 
 ## 37. `d0699ae` — fix(solana): journal signed operations and retry identical transactions
 
-Guarda firmas y bytes antes de enviar, bloquea resultados inciertos y reintenta la misma transacción. Valida identidad, firmas y estados terminales sin perder pendientes.
+Persist signatures and bytes before sending, block uncertain outcomes, and retry the identical transaction. Validate identity, signatures, and terminal states while retaining pending records.
 
 ## 38. `f3edd5a` — fix(storage): serialize durable writes and preserve recovery identities
 
-Coordina un único escritor entre pestañas, guarda antes de confirmar y conserva registros dañados. Las copias retienen identidades, responsables y operaciones firmadas.
+Coordinate a single writer across tabs, persist before confirming, and retain damaged records. Backups preserve identities, guardians, and signed operations.
 
 ## 39. `92d1515` — fix(solana): guard wallet sessions, verified reads and operation handoff
 
-Protege sesiones y perfiles durante la firma, sincroniza el journal al cambiar de pestaña y conserva lecturas conocidas al usar el RPC de respaldo.
+Protect wallet sessions and profiles during signing, synchronize the journal when switching tabs, and retain known reads when using the fallback RPC.
 
 ## 40. `823c7a1` — fix(export): escape spreadsheet formulas behind leading whitespace
 
-Neutraliza fórmulas en CSV incluso después de espacios, tabulaciones o saltos. Comprueba comillas, Unicode y documentos exportados.
+Neutralize CSV formulas even after spaces, tabs, or line breaks. Check quoting, Unicode, and exported files.
 
 ## 41. `73ad4fc` — fix(recovery): carry pending signatures and cancel stale restores
 
-Exporta las firmas pertinentes y valida la derivación al restaurar. Detiene restauraciones canceladas o desactualizadas y conserva originales recuperables.
+Export relevant signatures and validate derivation during restore. Stop cancelled or stale restores and preserve recoverable originals.
 
 ## 42. `47cf807` — fix(app): expose persistence state and clarify guardian actions
 
-Muestra los estados de persistencia, limita los avisos de aprobación a responsables y usa fechas de resolución en el historial. La landing deja libre el bloqueo de edición.
+Show persistence status, limit approval prompts to guardians, and use resolution dates in activity. Keep the landing page from holding the editing lock.
 
 ## 43. `a01b0b3` — style(web): remove decorative card borders and compact the responsive layout
 
-Elimina contornos y franjas de las tarjetas, compacta la barra de escritorio a 62 px y ajusta formularios, juegos, landing y Solana en pantallas estrechas.
+Remove card outlines and stripes, compact the desktop bar to 62 px, and adapt forms, games, the landing page, and Solana views for narrow screens.
 
 ## 44. `234ee32` — feat(navigation): move mobile controls into a full-height side sheet
 
-Sustituye las barras móviles por un header y un panel lateral desde la derecha, a toda la altura. Reutiliza las acciones de escritorio y conserva el manejo de foco.
+Replace mobile bars with a header and a full-height side sheet that enters from the right. Reuse desktop actions and preserve focus handling.
 
 ## 45. `27e36eb` — style(mobile): size compact controls and icons around 34px
 
-Reduce el header móvil a 48 px y los controles a unos 34 px. Mantiene texto legible y altura flexible para contenidos con varias líneas.
+Reduce the mobile header to 48 px and controls to about 34 px. Keep text legible and allow multi-line content to grow vertically.
 
 ## 46. `030244a` — docs(quality): record independent audits and responsive browser evidence
 
-Registra la auditoría por función, las 53 pruebas y los recorridos de navegador. Incluye capturas y límites explícitos de firma real y dispositivos físicos.
+Record the function-by-function audit, 53 tests, and browser flows. Include screenshots and explicit limits around real signing and physical-device checks.
 
-## Actualización de este índice
+## 47. `cfdd2ef` — docs: extend the complete change history after audits and mobile refinements
 
-El commit `docs: extend the complete change history after audits and mobile refinements` añade esta versión del índice y actualiza el resumen interactivo. Su hash se consulta con `git log` para evitar una referencia al propio hash dentro de su contenido. El historial conserva los commits separados y no se ha reescrito en un único commit.
+Extend this index through the audit and responsive mobile refinements, and update the interactive product overview.
+
+## Updating this index
+
+The history retains the individual commits and has not been rewritten as a single commit. To keep this index current, append each new commit with its hash, subject, and a concise summary.

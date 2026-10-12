@@ -4,7 +4,7 @@ This integration uses **real SOL on Solana mainnet**. Brote's practice balances 
 
 ## Dependency and parent integration
 
-Add exactly one runtime dependency to `package.json`: `@solana/web3.js` **1.x** (for example `^1.98.4`). It is the stable class-based API used by the injected Phantom and Solflare transaction providers here. No wallet adapter, keypair storage, token library, or backend is required. The Solana Foundation now recommends web3.js 3 for new code, but its async transaction and signer API is a different integration from these wallets' documented legacy `Transaction` interface; this module intentionally uses the maintained 1.x API for compatible browser wallet signing.
+The integration uses `@solana/web3.js` **1.x** and the injected Phantom and Solflare providers’ legacy `Transaction` signing interface. It requires no wallet adapter, keypair storage, token library, or backend. Migration to a newer SDK remains a separate compatibility review.
 
 In the parent app:
 

@@ -1,10 +1,23 @@
-# Brote implementation contract
+# Brote component contract
 
-The user explicitly requested parallel agents using GPT-6/Luna, High, Fast. This app is a hackathon project on **Solana mainnet**. Testnet was not required, and the user asked not to use it unless required. Practice money is entirely separate and must NEVER be represented as real SOL. No Visa in MVP. Language Spanish; docs/pitch can be English.
+The interface is Spanish; repository documentation is English. Practice Brotes are fictional and remain separate from real SOL on Solana mainnet. The prototype has no backend or custom deployed Solana program.
 
-Root owns App.tsx, main.tsx, styles.css, components/Avatar.tsx, components/Modal.tsx, components/Wallets.tsx and docs.
-Domain agent owns domain.ts, store.tsx, domain.test.ts. Export useStore() and StoreProvider from store.tsx. Implement the interface in types.ts. Reject all mode=crypto ledger mutations (real actions handled exclusively by Solana integration). cryptoBalance is an unused compatibility field initialized to 0 and must not be presented as real. Seed three profiles: Sofía (child, fox, mint, Hija · 12 años), Mateo (child, bear, peach, Hijo · 9 años), Elena (senior, owl, lavender, Mamá). Practice goals and balances, realistic seeded activity incl. one pending practice purchase. Use localStorage key brote-demo-v1 with schema validation. No changes to types.ts without parent coordination.
-Learning agent owns components/Learning.tsx and learning.css. Export Learning default with props { wallet: Wallet; store: StoreAPI; notify: (message: string) => void }. Interactive games with XP + practice rewards once per wallet/mission. All game balances practice. Parent imports CSS. Shared Avatar export default props { kind: AvatarKind; color?: ColorKind; size?: number }. Shared Modal export default props { title:string; onClose:()=>void; children:ReactNode }.
-Solana agent owns solana.tsx and components/SolanaPanel.tsx plus solana.css and SOLANA.md. Export SolanaProvider (wrapping required provider) and useSolana() API chosen by you; write a brief API document for parent. SolanaPanel default props {wallets:Wallet[]; selectedWalletId?:string; notify:(message:string)=>void}. Guardian signs actual mainnet transactions only after clear user action/amount confirmation. Derived System Program createWithSeed accounts tied to guardian wallet provide no child keys; use transferWithSeed for outbound only guardian signing. On-chain receipts/history must be verified from RPC and links to explorer. No fake balances/transactions. Connect installed standard wallets incl Phantom/Solflare. RPC env override VITE_SOLANA_RPC_URL; mainnet only. Public RPC fallback if necessary, explicit connection errors. No private keys saved. Keep React deps minimal, coordinate additions via parent (do not run installers). If no wallet installed, provide useful connect help and real chain observation. Don't deploy a contract or spend money yourself. Explain MVP custody limitations: learner proposes, guardian executes; adult consent necessary, merchant data entered by user, no automatic purchase inference.
+## Entry points and providers
 
-Common CSS classes available from root: button, button-primary, button-secondary, button-ghost, card, section-heading, eyebrow, muted, tag, tag-green, tag-orange, field, form-grid, progress-track, progress-fill. Buttons use lucide-react 18px, rounded corners 10px. Color: page #f6f7f3, white cards, dark #233d33, green #23664d, mint #e3f3dd, peach #f9e6d8, lavender #eee8f8. Design spacious, calm, friendly. No neon/tech visuals.
+`main.tsx` renders `Landing` at `/` and wraps `App` in `StoreProvider` and `SolanaProvider` at `/app` or `/app/`. The landing page does not hold the storage writer lease. Query parameters can open learning or Solana mode directly.
+
+`types.ts` defines profiles, goals, practice transactions, and `StoreAPI`. `useStore()` exposes validated state, persistence status, and synchronous mutations. Success means the change was saved. A Web Locks lease keeps secondary tabs read-only; corrupt records are retained until explicit recovery. The compatibility field `cryptoBalance` is unused and must never be displayed as a real balance.
+
+`useSolana()` supplies injected wallet connection, read-only observation, verified RPC state, derived profile accounts, signed operations, and recovery methods. Its interface and custody rules are documented in [SOLANA.md](../SOLANA.md). All real writes require a durable profile, an active guardian signing session, and no unresolved signed operation.
+
+## Shared components
+
+- `Learning`: `{ wallet, store, notify }`. Shopping, phishing, and emergency missions grant practice rewards and XP once per profile. Optional narration starts only on explicit action and stops when its context closes.
+- `SolanaPanel`: `{ wallets, selectedWalletId?, notify }`. Reads mainnet accounts and activity; prepares guardian-reviewed creation, deposits, and withdrawals. Unknown balances remain unknown.
+- `Avatar`: `{ kind, color?, size? }`. Original SVG animal companions use unique gradient IDs.
+- `Modal`: accessible dialogs and side-sheet presentation through a body portal. Background content is inert, focus stays within visible enabled controls, Escape closes, and focus returns to the opener.
+- `MobileNav`: shared navigation handlers in a full-height right-side sheet. Mobile controls are approximately 34 px; wrapped text may grow for readability.
+
+## UI conventions
+
+Vivid purple, blue, lime, and coral accents pair with borderless cards and subtle depth. Desktop navigation is compact; mobile uses a 48 px header. Simple mode emphasizes readable instructions and fewer distractions. Real transaction status must describe verified RPC evidence; local view switches, consent prompts, and practice limits do not provide production authorization or on-chain enforcement.

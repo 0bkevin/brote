@@ -2,7 +2,7 @@
 
 **Name:** Brote. **Tagline:** Crecemos juntos. The user confirmed the name; the new direction changes the visual identity.
 
-Brote introduces money decisions as an adventure taken with someone you trust. It welcomes children from their first steps, adults who are new to crypto, and seniors who prefer a slower pace. Simple mode is a preference for anyone, not an age label.
+Brote makes money decisions an adventure to share with someone you trust. It welcomes children taking their first steps, adults new to crypto, and seniors who prefer a slower pace. Simple mode is an option for anyone, not an age label.
 
 ## Visual identity
 
@@ -13,6 +13,6 @@ Brote introduces money decisions as an adventure taken with someone you trust. I
 
 ## Voice
 
-Encouraging and direct: “Tu próxima aventura empieza aquí.” For adults and seniors, the same tools teach at their own pace without treating them as children. Brotes are always identified as fictitious; SOL is always identified as real mainnet money.
+Encouraging and direct: “Tu próxima aventura empieza aquí” (“Your next adventure starts here”). Adults and seniors can learn at their own pace without being treated like children. Brotes are always identified as fictional; SOL is always identified as real mainnet money.
 
 The name is retained for the prototype. Trademark and domain availability have not been verified.
