@@ -1,0 +1,331 @@
+.solana-panel {
+  display: grid;
+  gap: 1.5rem;
+}
+.solana-panel__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.solana-panel__head h2 {
+  margin: 0.35rem 0 0.45rem;
+  color: #233d33;
+}
+.solana-panel__head p {
+  margin: 0;
+  max-width: 45rem;
+}
+.solana-network {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+  background: #e3f3dd;
+  color: #23664d;
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.solana-network__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #278d61;
+}
+.solana-status {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid #e1e9dd;
+  border-radius: 16px;
+  background: #f8fbf6;
+}
+.solana-status__icon {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  flex: none;
+  border-radius: 12px;
+  background: #e3f3dd;
+  color: #23664d;
+}
+.solana-status__body {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+  flex: 1;
+}
+.solana-status__body strong {
+  color: #233d33;
+}
+.solana-status__body span {
+  color: #5d7065;
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+.solana-connect {
+  display: grid;
+  gap: 1rem;
+}
+.solana-connect__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.solana-connect p {
+  margin: 0;
+  line-height: 1.55;
+}
+.solana-panel a {
+  color: #23664d;
+  font-weight: 650;
+}
+.solana-panel a:hover {
+  text-decoration: underline;
+}
+.solana-watch {
+  display: grid;
+  gap: 0.45rem;
+  max-width: 44rem;
+}
+.solana-watch label,
+.solana-action label,
+.solana-profilebar label {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #345548;
+}
+.solana-watch > div {
+  display: flex;
+  gap: 0.6rem;
+}
+.solana-watch input {
+  flex: 1;
+  min-width: 0;
+}
+.solana-note,
+.solana-error,
+.solana-success {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.solana-note {
+  background: #fff4df;
+  color: #715429;
+}
+.solana-error {
+  background: #fff0ed;
+  color: #a23d31;
+}
+.solana-success {
+  background: #e3f3dd;
+  color: #23664d;
+}
+.solana-success a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.solana-profilebar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+.solana-profilebar select {
+  min-width: 12rem;
+}
+.solana-profilebar button {
+  margin-left: auto;
+}
+.solana-account {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.8fr) minmax(0, 1.2fr);
+  gap: 1rem;
+  padding: 1.35rem;
+  border-radius: 18px;
+  background: #e3f3dd;
+}
+.solana-account__balance,
+.solana-account__address {
+  display: grid;
+  align-content: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.solana-account__balance > strong {
+  color: #233d33;
+  font-size: clamp(1.9rem, 4vw, 2.7rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.solana-account__balance small {
+  font-size: 0.43em;
+}
+.solana-account__state {
+  color: #23664d;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.solana-account__address code {
+  padding: 0.5rem;
+  border-radius: 8px;
+  background: #ffffffa8;
+  color: #233d33;
+  font-size: 0.83rem;
+  overflow-wrap: anywhere;
+}
+.solana-account__address a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+}
+.solana-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.solana-action {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.55rem;
+  padding: 1.2rem;
+  border: 1px solid #e1e9dd;
+  border-radius: 16px;
+  background: #fff;
+}
+.solana-action__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #23664d;
+}
+.solana-action h3 {
+  margin: 0;
+  color: #233d33;
+  font-size: 1rem;
+}
+.solana-action p {
+  margin: 0.15rem 0 0.4rem;
+  color: #64766c;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.solana-action .button {
+  align-self: flex-start;
+  margin-top: auto;
+}
+.solana-action input {
+  width: 100%;
+}
+.solana-history {
+  display: grid;
+  gap: 0.75rem;
+}
+.solana-history__heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+.solana-history h3 {
+  margin: 0;
+  color: #233d33;
+  font-size: 1rem;
+}
+.solana-history__heading span {
+  font-size: 0.78rem;
+}
+.solana-history p {
+  margin: 0;
+}
+.solana-history ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid #e1e9dd;
+}
+.solana-history li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.75rem 0.2rem;
+  border-bottom: 1px solid #e1e9dd;
+}
+.solana-history__mark {
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex: none;
+  border-radius: 50%;
+  background: #e3f3dd;
+  color: #23664d;
+  font-weight: 700;
+}
+.solana-history li > span:nth-child(2) {
+  display: grid;
+  gap: 0.1rem;
+  flex: 1;
+  min-width: 0;
+}
+.solana-history li strong {
+  color: #233d33;
+  font-size: 0.85rem;
+}
+.solana-history li small {
+  color: #64766c;
+  font-size: 0.75rem;
+}
+.solana-history li > strong {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.solana-history li a {
+  display: grid;
+  place-items: center;
+  padding: 0.35rem;
+}
+.solana-footnote {
+  margin: 0;
+  color: #64766c;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+@media (max-width: 700px) {
+  .solana-panel__head {
+    flex-direction: column;
+  }
+  .solana-status {
+    flex-wrap: wrap;
+  }
+  .solana-status > button {
+    margin-left: 3.5rem;
+  }
+  .solana-account,
+  .solana-actions {
+    grid-template-columns: 1fr;
+  }
+  .solana-history__heading {
+    display: grid;
+    gap: 0.25rem;
+  }
+  .solana-history li {
+    flex-wrap: wrap;
+  }
+  .solana-watch > div {
+    flex-direction: column;
+  }
+}
