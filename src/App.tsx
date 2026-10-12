@@ -27,6 +27,8 @@ import { useSolana } from "./solana";
 import Recovery, { downloadBackup } from "./components/Recovery";
 import type { StoreAPI, Transaction, Wallet, Mode } from "./types";
 import { formatMoney, moneyNumber } from "./format";
+import { activityDate } from "./activity";
+import { csvDocument } from "./csv";
 import Avatar from "./components/Avatar";
 import Plant, { LeafLogo } from "./components/Plant";
 import Modal from "./components/Modal";
@@ -53,7 +55,7 @@ function TransactionList({
   compact?: boolean;
 }) {
   const sorted = [...transactions].sort(
-    (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt),
+    (a, b) => Date.parse(activityDate(b)) - Date.parse(activityDate(a)),
   );
   return (
     <div className="transaction-list">
@@ -83,7 +85,7 @@ function TransactionList({
                 {new Intl.DateTimeFormat("es", {
                   day: "numeric",
                   month: "short",
-                }).format(new Date(t.createdAt))}
+                }).format(new Date(activityDate(t)))}
               </span>
             </div>
             <div className="tx-amount">
@@ -173,11 +175,10 @@ function Activity({
       (status === "all" || t.status === status),
   );
   const exportCSV = () => {
-    const escape = (x: string) =>
-      `"${/^[=+@-]/.test(x) ? "\t" : ""}${x.replaceAll('"', '""')}"`;
     const rows = [
-      ["Fecha", "Persona", "Concepto", "Categoría", "Brotes", "Tipo", "Estado"],
+      ["Fecha de actividad", "Fecha de solicitud", "Persona", "Concepto", "Categoría", "Brotes", "Tipo", "Estado"],
       ...list.map((t) => [
+        activityDate(t),
         t.createdAt,
         store.state.wallets.find((w) => w.id === t.walletId)?.name || "",
         t.title,
@@ -189,7 +190,7 @@ function Activity({
     ];
     const url = URL.createObjectURL(
       new Blob(
-        ["\uFEFF" + rows.map((r) => r.map(escape).join(",")).join("\r\n")],
+        [csvDocument(rows)],
         { type: "text/csv;charset=utf-8;" },
       ),
     );
@@ -197,7 +198,7 @@ function Activity({
     a.href = url;
     a.download = "brote-actividad-practica.csv";
     a.click();
-    URL.revokeObjectURL(url);
+    window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
     notify("Actividad de práctica exportada.");
   };
   return (
@@ -269,7 +270,7 @@ function WeekChart({ transactions }: { transactions: Transaction[] }) {
     const tx = transactions.filter(
       (t) =>
         t.status === "completed" &&
-        new Date(t.createdAt).toDateString() === d.toDateString(),
+        new Date(activityDate(t)).toDateString() === d.toDateString(),
     );
     return {
       day: new Intl.DateTimeFormat("es", { weekday: "short" })
@@ -358,6 +359,12 @@ export default function App() {
   const [reset, setReset] = useState(false);
   const [toast, setToast] = useState("");
   const isGuardian = role === "guardian";
+  useEffect(() => {
+    const first = store.state.wallets[0]?.id;
+    if (!first) return;
+    if (!store.state.wallets.some(wallet => wallet.id === selectedId)) setSelectedId(first);
+    if (role !== "guardian" && !store.state.wallets.some(wallet => wallet.id === role)) setRole(first);
+  }, [store.state.wallets, selectedId, role]);
   const selected =
     store.state.wallets.find(
       (w) => w.id === (isGuardian ? selectedId : role),
@@ -432,7 +439,7 @@ export default function App() {
             >
               <n.icon size={20} />
               <span>{n.label}</span>
-              {n.id === "activity" && pending.length > 0 && (
+              {isGuardian && n.id === "activity" && pending.length > 0 && (
                 <b>{pending.length}</b>
               )}
             </button>
@@ -493,9 +500,10 @@ export default function App() {
             </strong>
           </div>
           <div className="topbar-actions">
-            <div className="mode-switch" aria-label="Tipo de dinero">
+            <div className="mode-switch" role="group" aria-label="Tipo de dinero">
               <button
                 className={mode === "practice" ? "active" : ""}
+                aria-pressed={mode === "practice"}
                 onClick={() => setMode("practice")}
               >
                 <Sparkles size={14} />
@@ -503,6 +511,7 @@ export default function App() {
               </button>
               <button
                 className={mode === "crypto" ? "active" : ""}
+                aria-pressed={mode === "crypto"}
                 onClick={() => {
                   setMode("crypto");
                   if (page === "learn" || page === "settings")
@@ -540,18 +549,28 @@ export default function App() {
             </label>
             <button
               className="bell-button"
-              aria-label="Ver aprobaciones"
+              aria-label={isGuardian ? "Ver aprobaciones" : "Ver mi actividad"}
               onClick={() => {
                 setMode("practice");
                 go("activity");
               }}
             >
               <Bell size={20} />
-              {pending.length > 0 && <i />}
+              {isGuardian && pending.length > 0 && <i />}
             </button>
           </div>
         </header>
         <main className="main-content">
+          {(store.persistence.loading || !store.persistence.writable) && (
+            <div className="form-note persistence-notice" role="status">
+              <ShieldCheck size={20} />
+              <span>{store.persistence.loading
+                ? "Comprobando los datos guardados…"
+                : store.persistence.error ?? "Esta pestaña está en modo lectura. Los cambios de la pestaña activa aparecerán aquí."}
+                {store.persistence.corruptRaw && " Abre Preferencias para descargar el registro original o restaurar una copia."}
+              </span>
+            </div>
+          )}
           <div className="page-intro">
             <div>
               <span className="eyebrow">
@@ -732,7 +751,7 @@ export default function App() {
                         notify={notify}
                         compact
                       />
-                      {pending.length > 0 && (
+                      {isGuardian && pending.length > 0 && (
                         <button
                           className="approval-nudge"
                           onClick={() => go("activity")}
@@ -809,11 +828,12 @@ export default function App() {
               {page === "learn" && (
                 <>
                   {isGuardian && (
-                    <div className="learner-select">
+                    <div className="learner-select" role="group" aria-label="Perfil para aprender">
                       <span>Explorando con</span>
                       {store.state.wallets.map((w) => (
                         <button
                           className={selected.id === w.id ? "active" : ""}
+                          aria-pressed={selected.id === w.id}
                           onClick={() => setSelectedId(w.id)}
                           key={w.id}
                         >
@@ -999,13 +1019,20 @@ export default function App() {
             <button
               className="button button-primary"
               onClick={() => {
-                downloadBackup(store.state, chain.observedAddress);
-                store.resetDemo();
-                setSelectedId("sofia");
-                setRole("guardian");
-                go("home");
-                setReset(false);
-                notify("La práctica empieza de nuevo.");
+                try {
+                  if (chain.operationError || chain.busy || chain.operations.some(operation => operation.state === "pending"))
+                    throw Error("Resuelve la operación Solana pendiente antes de reiniciar perfiles.");
+                  downloadBackup(store.state);
+                  chain.invalidateSigningSession();
+                  store.resetDemo();
+                  setSelectedId("sofia");
+                  setRole("guardian");
+                  go("home");
+                  setReset(false);
+                  notify("La práctica empieza de nuevo.");
+                } catch (error) {
+                  notify(error instanceof Error ? error.message : "No pudimos reiniciar los datos.");
+                }
               }}
             >
               Guardar copia y reiniciar

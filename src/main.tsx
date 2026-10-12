@@ -11,15 +11,13 @@ import "./gaming.css";
 import "./landing.css";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <StoreProvider>
-      <SolanaProvider>
-        {window.location.pathname === "/app" ||
-        window.location.pathname === "/app/" ? (
+    {window.location.pathname === "/app" ||
+      window.location.pathname === "/app/" ? (
+      <StoreProvider>
+        <SolanaProvider>
           <App />
-        ) : (
-          <Landing />
-        )}
-      </SolanaProvider>
-    </StoreProvider>
+        </SolanaProvider>
+      </StoreProvider>
+    ) : <Landing />}
   </StrictMode>,
 );
