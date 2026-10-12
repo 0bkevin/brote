@@ -86,7 +86,7 @@ export default function MobileNav({
           className="mobile-menu-trigger"
           type="button"
           aria-label={guardian && pendingCount > 0
-            ? t("Abrir menú · {count} aprobaciones pendientes", { count: pendingCount })
+            ? t(pendingCount === 1 ? "Abrir menú · {count} aprobación pendiente" : "Abrir menú · {count} aprobaciones pendientes", { count: pendingCount })
             : t("Abrir menú")}
           aria-expanded={open}
           onClick={() => setOpen(true)}

@@ -11,7 +11,7 @@ export const landingMessages: TranslationMessages = {
   "Probar la demo": { en: "Try the demo", pt: "Experimente a demo" },
   "Demo": { en: "Demo", pt: "Demo" },
   "UNA NUEVA FORMA DE CRECER JUNTOS": { en: "A NEW WAY TO GROW TOGETHER", pt: "UM NOVO JEITO DE CRESCER JUNTOS" },
-  "El dinero se aprende.": { en: "Money is learned.", pt: "Aprender sobre dinheiro é possível." },
+  "El dinero se aprende.": { en: "Learn about money.", pt: "Aprender sobre dinheiro é possível." },
   "En equipo.": { en: "Together.", pt: "Em equipe." },
   "Un espacio para practicar, jugar y tomar mejores decisiones con alguien a tu lado. Desde la primera alcancía hasta una nueva etapa de vida.": { en: "A space to practice, play, and make better decisions with someone by your side. From the first piggy bank to a new stage of life.", pt: "Um espaço para praticar, brincar e tomar decisões melhores com alguém ao seu lado. Da primeira poupança a uma nova fase da vida." },
   "Entrar a la demo": { en: "Enter the demo", pt: "Acessar a demo" },

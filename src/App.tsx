@@ -725,7 +725,7 @@ export default function App() {
                           <small> B</small>
                         </strong>
                         <p>
-                          {t("{count} sueños en camino", { count: wallets.reduce((s, w) => s + w.goals.length, 0) })}
+                          {t(wallets.reduce((s, w) => s + w.goals.length, 0) === 1 ? "{count} sueño en camino" : "{count} sueños en camino", { count: wallets.reduce((s, w) => s + w.goals.length, 0) })}
                         </p>
                       </div>
                     </div>

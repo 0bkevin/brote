@@ -2,6 +2,9 @@ import type { TranslationMessages } from "./types";
 
 // UI copy owned by the app shell, wallet, recovery, navigation, and modal views.
 export const appMessages: TranslationMessages = {
+  "{count} sueño en camino": { en: "{count} dream in progress", pt: "{count} sonho a caminho" },
+  "{xp} XP · {count} aventura completada": { en: "{xp} XP · {count} adventure completed", pt: "{xp} XP · {count} aventura concluída" },
+  "Abrir menú · {count} aprobación pendiente": { en: "Open menu · {count} pending approval", pt: "Abrir menu · {count} aprovação pendente" },
   "Recompensa de misión": { en: "Mission reward", pt: "Recompensa da missão" },
   "Recarga de práctica": { en: "Practice top-up", pt: "Recarga de prática" },
   "Ahorro para {title}": { en: "Savings for {title}", pt: "Economia para {title}" },

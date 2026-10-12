@@ -542,7 +542,7 @@ export default function Wallets({
             <div>
               <h2>{t("El espacio de {name}", { name: wallet.name })}</h2>
               <p className="muted">
-                {t("{xp} XP · {count} aventuras completadas", { xp: wallet.xp, count: wallet.completedMissions.length })}
+                {t(wallet.completedMissions.length === 1 ? "{xp} XP · {count} aventura completada" : "{xp} XP · {count} aventuras completadas", { xp: wallet.xp, count: wallet.completedMissions.length })}
               </p>
             </div>
           </div>
