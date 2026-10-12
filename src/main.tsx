@@ -9,6 +9,7 @@ import "./learning.css";
 import "./solana.css";
 import "./gaming.css";
 import "./landing.css";
+import "./mobile-nav.css";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     {window.location.pathname === "/app" ||

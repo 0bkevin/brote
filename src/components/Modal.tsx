@@ -5,10 +5,12 @@ export default function Modal({
   title,
   onClose,
   children,
+  variant,
 }: {
   title: string;
   onClose: () => void;
   children: ReactNode;
+  variant?: "sheet";
 }) {
   const dialog = useRef<HTMLDivElement>(null);
   const close = useRef(onClose);
@@ -62,14 +64,14 @@ export default function Modal({
   }, []);
   return createPortal(
     <div
-      className="modal-backdrop"
+      className={`modal-backdrop${variant === "sheet" ? " mobile-sheet-backdrop" : ""}`}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
       <div
         ref={dialog}
-        className="modal"
+        className={`modal${variant === "sheet" ? " mobile-sheet" : ""}`}
         role="dialog"
         aria-modal="true"
         aria-label={title}

@@ -32,6 +32,7 @@ import { csvDocument } from "./csv";
 import Avatar from "./components/Avatar";
 import Plant, { LeafLogo } from "./components/Plant";
 import Modal from "./components/Modal";
+import MobileNav, { type Page } from "./components/MobileNav";
 import Wallets, {
   CreateWalletModal,
   WalletActionModal,
@@ -39,7 +40,6 @@ import Wallets, {
 } from "./components/Wallets";
 import Learning from "./components/Learning";
 import SolanaPanel from "./components/SolanaPanel";
-type Page = "home" | "wallets" | "learn" | "activity" | "settings";
 
 function TransactionList({
   transactions,
@@ -343,6 +343,13 @@ export default function App() {
     }
   });
   useEffect(() => {
+    const wasSimple = document.body.classList.contains("simple-mode");
+    document.body.classList.toggle("simple-mode", simple);
+    return () => {
+      document.body.classList.toggle("simple-mode", wasSimple);
+    };
+  }, [simple]);
+  useEffect(() => {
     try {
       localStorage.setItem("brote-simple-mode", String(simple));
     } catch {
@@ -389,6 +396,19 @@ export default function App() {
     setPage(next);
     if (next === "learn" || next === "settings") setMode("practice");
   };
+  const changeMode = (next: Mode) => {
+    setMode(next);
+    if (next === "crypto" && (page === "learn" || page === "settings"))
+      setPage("wallets");
+  };
+  const changeRole = (next: string) => {
+    setRole(next);
+    if (next !== "guardian") {
+      setSelectedId(next);
+      setMode("practice");
+      setPage("home");
+    }
+  };
   const openWallet = (id: string) => {
     setSelectedId(id);
     setPage("wallets");
@@ -405,6 +425,22 @@ export default function App() {
   ];
   return (
     <div className={`app-shell${simple ? " simple-mode" : ""}`}>
+      <MobileNav
+        nav={nav}
+        page={page}
+        mode={mode}
+        role={role}
+        selectedId={selectedId}
+        people={store.state.wallets}
+        simple={simple}
+        pendingCount={isGuardian ? pending.length : 0}
+        onNavigate={go}
+        onModeChange={changeMode}
+        onRoleChange={changeRole}
+        onPersonChange={setSelectedId}
+        onSimpleChange={() => setSimple((value) => !value)}
+        onHelp={() => setHelp(true)}
+      />
       <aside className="sidebar">
         <a
           className="brand"
@@ -504,7 +540,7 @@ export default function App() {
               <button
                 className={mode === "practice" ? "active" : ""}
                 aria-pressed={mode === "practice"}
-                onClick={() => setMode("practice")}
+                onClick={() => changeMode("practice")}
               >
                 <Sparkles size={14} />
                 Práctica
@@ -512,11 +548,7 @@ export default function App() {
               <button
                 className={mode === "crypto" ? "active" : ""}
                 aria-pressed={mode === "crypto"}
-                onClick={() => {
-                  setMode("crypto");
-                  if (page === "learn" || page === "settings")
-                    setPage("wallets");
-                }}
+                onClick={() => changeMode("crypto")}
               >
                 <span className="solana-mark" aria-hidden="true">
                   <i />
@@ -530,14 +562,7 @@ export default function App() {
               <span className="sr-only">Cambiar vista de demo</span>
               <select
                 value={role}
-                onChange={(e) => {
-                  setRole(e.target.value);
-                  if (e.target.value !== "guardian") {
-                    setSelectedId(e.target.value);
-                    setMode("practice");
-                    setPage("home");
-                  }
-                }}
+                onChange={(e) => changeRole(e.target.value)}
               >
                 <option value="guardian">Vista familiar</option>
                 {store.state.wallets.map((w) => (

@@ -1,0 +1,244 @@
+.mobile-header {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .app-shell .sidebar,
+  .app-shell .topbar {
+    display: none;
+  }
+
+  .app-shell .main-shell {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .mobile-header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 58px;
+    padding: 0 12px 0 16px;
+    background: #fff;
+    box-shadow: 0 1px 0 #e9e6f0;
+  }
+
+  .mobile-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    color: #25214f;
+    font-family: "Outfit", sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    text-decoration: none;
+  }
+
+  .mobile-brand > svg,
+  .mobile-brand-dot {
+    color: #84a940;
+  }
+
+  .mobile-menu-trigger {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex: none;
+    border-radius: 12px;
+    color: #25214f;
+  }
+
+  .mobile-menu-trigger:hover {
+    background: #f5f3fc;
+  }
+
+  .mobile-menu-dot {
+    position: absolute;
+    top: 8px;
+    right: 7px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ee9f53;
+    box-shadow: 0 0 0 2px #fff;
+  }
+
+  .modal-backdrop.mobile-sheet-backdrop {
+    align-items: stretch;
+    justify-content: flex-end;
+    padding: 0;
+  }
+
+  .modal.mobile-sheet {
+    width: min(100%, 400px);
+    max-width: none;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: max(18px, env(safe-area-inset-top)) 18px max(20px, env(safe-area-inset-bottom));
+    border-radius: 0;
+    box-shadow: -12px 0 48px #1c1a4230;
+    animation: mobile-sheet-enter .2s ease-out;
+    overscroll-behavior: contain;
+  }
+
+  .mobile-sheet .modal-heading {
+    margin-bottom: 12px;
+  }
+
+  .mobile-sheet .modal-heading h2 {
+    font-size: 21px;
+  }
+
+  .mobile-sheet .modal-heading .icon-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .mobile-sheet-content {
+    display: grid;
+    gap: 20px;
+    min-width: 0;
+  }
+
+  .mobile-sheet-section {
+    display: grid;
+    gap: 5px;
+    min-width: 0;
+  }
+
+  .mobile-sheet-label {
+    margin: 0 0 4px;
+    color: #706d87;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .mobile-sheet-field {
+    display: grid;
+    gap: 5px;
+    color: #5e5a78;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .mobile-sheet-field select {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding: 8px 12px;
+    border: 0;
+    border-radius: 11px;
+    background: #f5f3fc;
+    color: #25214f;
+    font-size: 16px;
+  }
+
+  .mobile-sheet-person {
+    margin: 0;
+    padding: 12px;
+    border-radius: 11px;
+    background: #f5f3fc;
+    font-size: 14px;
+  }
+
+  .mobile-sheet-action {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 46px;
+    padding: 9px 12px;
+    border-radius: 11px;
+    color: #343052;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: left;
+  }
+
+  .mobile-sheet-action.active,
+  .mobile-sheet-action:hover {
+    background: #f1edff;
+    color: #6245d1;
+  }
+
+  .mobile-sheet-action > span:nth-child(2) {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mobile-sheet-arrow {
+    margin-left: auto;
+    color: #9c97b5;
+  }
+
+  .mobile-sheet-count,
+  .mobile-sheet-state {
+    color: #75639c;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .mobile-sheet-count {
+    padding: 4px 7px;
+    border-radius: 8px;
+    background: #f9eef0;
+    color: #a95366;
+  }
+
+  .mobile-sheet-modes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    padding: 4px;
+    border-radius: 12px;
+    background: #f5f3fc;
+  }
+
+  .mobile-sheet-modes button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    border-radius: 9px;
+    color: #6a6681;
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .mobile-sheet-modes button.active {
+    background: #fff;
+    box-shadow: 0 1px 5px #25214f16;
+    color: #6245d1;
+  }
+}
+
+@keyframes mobile-sheet-enter {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@media (max-width: 360px) {
+  .modal.mobile-sheet {
+    padding-inline: 14px;
+  }
+
+  .mobile-sheet-action {
+    gap: 9px;
+    padding-inline: 9px;
+    font-size: 14px;
+  }
+
+  .mobile-sheet-count {
+    font-size: 11px;
+  }
+}
