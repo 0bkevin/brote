@@ -1,9 +1,12 @@
 # Brote roadmap
 
-Brote is a family-friendly web app for learning money habits together. The first cohort is supervised teenagers with an adult companion who opts in. Adults and seniors should be able to use the same tools on their own terms; the interface should never treat age as a lack of competence.
+Brote is a family-friendly web app for learners from their first money decisions through adulthood and later life. The UI offers both a vivid game-inspired experience and a calmer simple mode. Brote is a web app for learning money habits together. Validation should include children with a responsible adult, adults new to crypto, and senior learners who opt in. Adults and seniors should be able to use the same tools on their own terms; the interface should never treat age as a lack of competence.
 
 ## Shipped in the prototype
 
+- Separate game-inspired landing page with working links to the demo.
+- User-selected simple mode with larger controls, less dense information and a step-by-step quiz with optional spoken prompts.
+- Profile backup/restore preserving stable Solana IDs.
 - Browser-based family dashboard with individual profiles for children, adults, and seniors.
 - Local practice ledger with balances, goals, activity, spending limits, and guardian review of pending practice purchases.
 - Three learning games: needs vs. wants, spotting suspicious messages, and planning for unexpected expenses. Completion rewards practice points once per mission.

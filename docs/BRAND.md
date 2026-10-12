@@ -1,11 +1,18 @@
 # Brote brand
 
-**Name:** Brote
+**Name:** Brote. **Tagline:** Crecemos juntos. The user confirmed the name; the new direction changes the visual identity.
 
-**Tagline:** _Crecemos juntos_ — “We grow together.”
+Brote introduces money decisions as an adventure taken with someone you trust. It welcomes children from their first steps, adults who are new to crypto, and seniors who prefer a slower pace. Simple mode is a preference for anyone, not an age label.
 
-**Name direction:** Brote suggests a small beginning with room to grow. Other thoughtful options are Nido, Ronda, Semilla, and Miga. No trademark or domain availability has been checked.
+## Visual identity
 
-**Visual direction:** Warm, calm, and optimistic. Use soft greens with peach and lavender accents, generous whitespace, rounded shapes, and a simple sprout/leaf mark. Keep the interface legible and welcoming across ages; avoid babyish mascots, age-based stereotypes, or imagery that frames seniors as children.
+- Electric purple `#6c4bff`, bright blue `#396af4`, lime `#d7ff5c`, coral `#ff926b` and navy `#22264a`.
+- Bold rounded Outfit headings and readable Nunito Sans body text.
+- Original collectible-style SVG animal companions and a cheerful sprout mascot, inspired by modern game energy. No Fortnite assets or characters.
+- Strong cards, visible focus, clear choices and large controls. Simple mode reduces decoration and information density. Respect reduced-motion preferences.
 
-**Voice:** Clear, encouraging, and respectful. Explain practice money and real SOL separately. Celebrate learning and shared decisions without promising returns, financial outcomes, or guaranteed safety.
+## Voice
+
+Encouraging and direct: “Tu próxima aventura empieza aquí.” For adults and seniors, the same tools teach at their own pace without treating them as children. Brotes are always identified as fictitious; SOL is always identified as real mainnet money.
+
+The name is retained for the prototype. Trademark and domain availability have not been verified.

@@ -17,6 +17,8 @@ The web interface is Spanish. The submission documents are English. This project
 
 ## What works
 
+- A separate landing page at `/` leads to the working app at `/app`.
+- Enable simple mode for larger controls, fewer details and a step-by-step scam quiz with optional spoken prompts.
 - Create profiles with their own practice wallet, avatar and relationship. Adult profiles ask for agreement to share activity.
 - Assign fictitious Brotes, record categorized practice expenses, approve or reject requests, and set a per-purchase limit or pause.
 - Create goals and move spendable Brotes into savings. Amounts are checked in integer cents; approval deducts funds once.
@@ -45,6 +47,8 @@ Creation/deposit/withdrawal transaction construction and signer authority are co
 `npm audit` currently reports four moderate findings in the legacy web3.js dependency tree (`jayson`, `stream-json`, `uuid`). A production SDK migration/dependency review remains in the roadmap; do not force a major SDK update without adapting and retesting wallet signing.
 
 ## Project files
+
+- `src/Landing.tsx` — game-inspired product landing and working demo links.
 
 - `src/domain.ts` — practice ledger, rules and validation.
 - `src/store.tsx` — local persistence and React API.
