@@ -1,2 +1,17 @@
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-createRoot(document.getElementById("root")!).render(<main><h1>Brote</h1><p>Crecemos juntos.</p></main>);
+import { StoreProvider } from "./store";
+import { SolanaProvider } from "./solana";
+import App from "./App";
+import "./styles.css";
+import "./learning.css";
+import "./solana.css";
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <StoreProvider>
+      <SolanaProvider>
+        <App />
+      </SolanaProvider>
+    </StoreProvider>
+  </StrictMode>,
+);
