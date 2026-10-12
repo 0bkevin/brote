@@ -1765,3 +1765,6 @@
   z-index: auto;
   object-fit: contain;
 }
+
+/* Keep CTA labels readable inside dark and saturated sections. */
+.landing a.landing-link { color: var(--l-ink); }
