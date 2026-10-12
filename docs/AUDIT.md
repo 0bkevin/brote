@@ -67,3 +67,20 @@ Reviewed October 12, 2026, starting from `3aafb4c`. Independent GPT-6 and Luna a
 ## Practical limits
 
 The app is still a browser-local hackathon prototype. Demo roles are not authentication. Practice limits are not an on-chain spending program. A user-led Phantom/Solflare connection and confirmed create/deposit/withdrawal remain untested. Mocked signing tests validate construction and lifecycle behavior; they do not prove a live extension or RPC transfer works. Expired signatures with no definitive historical result remain blocked deliberately. A backup made before a signature cannot know about that later operation. Physical-device and physical screen-reader testing, as well as usability sessions across the intended ages, remain future validation.
+
+## Localization and Solana follow-up
+
+Independent Luna localization reviews covered source catalogs, runtime errors, accessibility copy, preserved IDs, and live language changes. Root browser checks and fixes are recorded in [LOCALIZATION.md](LOCALIZATION.md).
+
+Solana rounds 7–12 found and corrected:
+
+- Imported JSON claimed terminal transaction states without chain evidence. Imported signatures now remain pending until reconciliation.
+- Profile withdrawals could leave a nonzero account below its rent-exempt minimum. Such withdrawals are rejected.
+- Fixed fee buffers could misclassify available funds. Fees now come from the RPC's exact prepared message, including the final signing blockhash.
+- A second blockhash could change the fee after the earlier preflight. The final before-sign check quotes that exact message, re-reads funds, and rejects message or session changes.
+- Guardian fee/debit remainders could violate rent transitions. Both the post-fee and post-instruction balances are checked against the current RPC minimum, including withdrawals credited to the guardian.
+- Decimal comma inputs could fail in Spanish or Portuguese. Exact lamport parsing accepts one comma or point and rejects mixed separators.
+
+The final independent review reported no additional actionable findings. The expanded suite passes **73 tests**, including unknown fees, blockhash changes, guardian rent boundaries, session changes during RPC checks, imported signatures, and localized dynamic labels. These checks do not replace funded extension and network execution tests.
+
+A read-only mainnet RPC check at **2026-10-12 23:41:06 UTC** verified the mainnet genesis hash and quoted a zero-data `CreateAccountWithSeed` message: rent minimum **650,240 lamports**, fee **5,000 lamports**, one required signature. The payer was an ephemeral unfunded public key; no signature or broadcast occurred. These are observed values, not constants embedded in the app.

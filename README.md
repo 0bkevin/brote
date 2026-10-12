@@ -2,7 +2,7 @@
 
 **Learn money skills together. Start with practice. Explore Solana with someone you trust.**
 
-Brote is a responsive web app where a guardian creates profiles for children, adults, or seniors, reviews practice spending, and helps them learn through savings goals and short games. The interface is Spanish; repository documentation is English.
+Brote is a responsive web app where a guardian creates profiles for children, adults, or seniors, reviews practice spending, and helps them learn through savings goals and short games. The interface supports **Spanish, English, and Brazilian Portuguese**; repository documentation is English.
 
 ## Try it
 
@@ -22,7 +22,7 @@ Practice mode works without a wallet: create a profile, assign fictional **Brote
 
 Signed transaction bytes are saved locally **before broadcast**. Uncertain outcomes block new signatures; recovery checks chain status or explicitly rebroadcasts the same bytes. RPC endpoints are verified against **Solana mainnet**. Practice Brotes have no monetary value and never become SOL.
 
-See [the Solana integration](SOLANA.md) and [interactive architecture diagram](https://brote-three.vercel.app/architecture/) for details.
+See [the Solana integration](SOLANA.md), [localization](docs/LOCALIZATION.md), and [interactive architecture diagram](https://brote-three.vercel.app/architecture/) for details.
 
 ## Run locally
 

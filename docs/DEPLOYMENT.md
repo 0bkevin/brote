@@ -16,7 +16,7 @@ The project belongs to **mustafinho's projects** and is connected to `0bkevin/br
 
 `scripts/build-routes.mjs` creates a static `/app/` entry and publishes the self-contained architecture page. Explicit Vercel rewrites support both trailing-slash and non-trailing-slash URLs. The landing page remains at `/`.
 
-GitHub pushes trigger Vercel deployments. The `Validate Brote` workflow runs the 53 regression tests and production build. To deploy from an authenticated local checkout instead:
+GitHub pushes trigger Vercel deployments. The `Validate Brote` workflow runs the regression suite and production build. To deploy from an authenticated local checkout instead:
 
 ```sh
 vercel link --yes --scope mustafinhos-projects --project brote

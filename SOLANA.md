@@ -58,6 +58,16 @@ Read-only observation shows the RPC balance for the observed public address sepa
 
 If two extension approvals overlap, only the newest connection request can become active. Disconnecting cancels pending approvals, and late events from an older provider cannot replace the current wallet. Automatic and manual refreshes likewise display results and loading state only for the newest request. An existing account with an incompatible owner or data is labeled incompatible and its write controls remain hidden.
 
+## Fee, rent, and restored-operation checks
+
+Before wallet signing, Brote quotes `getFeeForMessage` for the final message, including the blockhash that will actually be signed, and reads the guardian's confirmed balance again. Creation and deposits require their funding amount plus that fee; withdrawals require the guardian's fee balance. The final guard also checks the guardian's balance after fee collection and after the instruction: each remainder must be zero or meet the RPC's current zero-data rent-exempt minimum. A withdrawal to the guardian includes its incoming credit in the final check. The profile account's withdrawal remainder must likewise be zero or rent-exempt.
+
+The checked message cannot change before signing. Null or invalid fee/rent responses, insufficient funds, or a changed signing session stop the operation before the extension prompt. These are point-in-time checks; the network still determines the execution outcome if account balances change afterward.
+
+Imported backups cannot establish transaction success. Every imported signed record starts pending until RPC reconciliation, even if the JSON claims it is confirmed, failed, or expired. Existing local evidence merges conservatively and unresolved signatures continue to block fresh writes.
+
+SOL inputs accept a single decimal point or comma with up to nine decimal places. Parsing uses integer lamports; mixed separators and fractional lamports are rejected. Display formatting and native review prompts follow the selected interface language without changing addresses or signed bytes.
+
 ## RPC configuration
 
 `VITE_SOLANA_RPC_URL` may specify a dedicated **HTTPS Solana mainnet** RPC endpoint. The app calls `getGenesisHash` and accepts only mainnet's genesis hash before using it. If no override is set, it starts with `https://api.mainnet.solana.com` (Solana's documented public mainnet endpoint); if that public endpoint fails, it tries `https://solana-rpc.publicnode.com` (PublicNode's documented Solana mainnet endpoint), verifies the same genesis hash, and displays the fallback. RPC HTTP calls have a 15-second timeout. A failed configured endpoint is surfaced as an error. The app never falls back to devnet or testnet. For a deployed product, provide a dedicated mainnet RPC with adequate rate limits and browser CORS support.

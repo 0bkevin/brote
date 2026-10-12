@@ -87,3 +87,7 @@ This verifies deployment routing and browser behavior, not a funded mainnet sign
 ## Form alignment and full responsive review
 
 The latest [responsive review](RESPONSIVE_QA.md) extends coverage to ten presets from 320 × 780 through 1920 × 1080. It records matched Solana input/action heights, compact savings and amount presets, readable approval rows, medium-width mission cards, game dialog scrolling, short-window navigation, and narrow landing/simple-mode layouts. Independent final reviews found no remaining actionable regressions. All 53 tests and the production build pass; the report includes screenshots and verification limits.
+
+## Three-language and Solana follow-up
+
+The final local suite passes **73 tests** and `npm run build`. See [LOCALIZATION.md](LOCALIZATION.md) for the 120 locale/viewport layout checks, visual captures, translated mission completion, cross-tab form preservation, and dynamic error checks. Solana follow-up findings and the read-only mainnet fee/rent quote are recorded in [AUDIT.md](AUDIT.md). No funded transaction was signed or broadcast. GitHub CI and the production deployment validate the published revision separately.

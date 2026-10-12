@@ -1,6 +1,6 @@
 # Responsive visual review
 
-Reviewed on October 12, 2026 using Chrome viewport emulation, screenshots, DOM measurements, and independent GPT-6 and Luna source reviews. The interface remains in Spanish.
+Reviewed on October 12, 2026 using Chrome viewport emulation, screenshots, DOM measurements, and independent GPT-6 and Luna source reviews. The initial review used Spanish; the later three-language checks are recorded in [LOCALIZATION.md](LOCALIZATION.md).
 
 ## Coverage
 
