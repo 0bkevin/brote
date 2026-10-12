@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import {
   ArrowDownLeft,
   ArrowUpRight,
@@ -9,13 +9,13 @@ import {
   Wallet as WalletIcon,
 } from "lucide-react";
 import {
-  UnconfirmedTransactionError,
   explorerAccount,
   transactionExplorer,
   useSolana,
   type ChainReceipt,
 } from "../solana";
 import type { Wallet } from "../types";
+import { LatestRequest } from "../solana-connection";
 
 type Props = {
   wallets: Wallet[];
@@ -57,12 +57,17 @@ export default function SolanaPanel({
     | (ChainReceipt & { profileId: string; observedAddress: string | null })
     | null
   >(null);
-  const [unconfirmedSignature, setUnconfirmedSignature] = useState<
-    string | null
-  >(null);
+  const [actionMessage, setActionMessage] = useState<{
+    text: string;
+    profileId: string;
+    guardian: string | null;
+  } | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const refreshRequests = useRef(new LatestRequest());
   const profileIds = wallets.map((wallet) => wallet.id).join("|");
+
+  useEffect(() => () => chain.invalidateSigningSession(), [chain.invalidateSigningSession]);
 
   useEffect(() => {
     if (
@@ -75,34 +80,42 @@ export default function SolanaPanel({
   }, [selectedWalletId, profileIds]);
 
   useEffect(() => {
-    if (!chain.observedAddress) return;
+    if (!chain.observedAddress) {
+      refreshRequests.current.cancel();
+      setLoading(false);
+      return;
+    }
+    const request = refreshRequests.current.begin();
     setLoading(true);
     void chain
       .refresh(wallets)
-      .catch((error) =>
-        setMessage(error instanceof Error ? error.message : String(error)),
-      )
-      .finally(() => setLoading(false));
+      .catch((error) => {
+        if (refreshRequests.current.isCurrent(request))
+          setMessage(error instanceof Error ? error.message : String(error));
+      })
+      .finally(() => {
+        if (refreshRequests.current.isCurrent(request)) setLoading(false);
+      });
+    return () => refreshRequests.current.cancel();
   }, [chain.observedAddress, profileIds]);
 
   useEffect(() => {
     setDestination(chain.connectedAddress ?? "");
   }, [chain.connectedAddress]);
 
-  useEffect(() => {
-    setReceipt(null);
-    setUnconfirmedSignature(null);
-  }, [chain.observedAddress, profileId]);
-
   const wallet = wallets.find((item) => item.id === profileId);
-  const account = wallet ? chain.accounts[wallet.id] : undefined;
+  const account = wallet && Object.hasOwn(chain.accounts, wallet.id)
+    ? chain.accounts[wallet.id] : undefined;
+  const pending = chain.operations.filter((item) => item.state === "pending");
+  const visibleOperations = chain.operations.filter(
+    (item) => item.profileId === profileId && item.guardian === chain.observedAddress,
+  );
 
   async function act(action: () => Promise<ChainReceipt>, success: string) {
     const activeProfileId = profileId;
     const activeObservedAddress = chain.observedAddress;
     setMessage(null);
-    setReceipt(null);
-    setUnconfirmedSignature(null);
+    setActionMessage(null);
     try {
       const next = await action();
       setReceipt({
@@ -110,20 +123,20 @@ export default function SolanaPanel({
         profileId: activeProfileId,
         observedAddress: activeObservedAddress,
       });
-      notify(success);
+      notify(`${success} Perfil: ${wallets.find((item) => item.id === activeProfileId)?.name ?? activeProfileId}.`);
       try {
         await chain.refresh(wallets);
       } catch (error) {
-        setMessage(
-          `Transacción confirmada; no se pudo actualizar el saldo: ${error instanceof Error ? error.message : String(error)}`,
-        );
+        setActionMessage({
+          text: `Transacción confirmada; no se pudo actualizar el saldo: ${error instanceof Error ? error.message : String(error)}`,
+          profileId: activeProfileId,
+          guardian: activeObservedAddress,
+        });
       }
     } catch (error) {
-      if (error instanceof UnconfirmedTransactionError)
-        setUnconfirmedSignature(error.signature);
       const text = error instanceof Error ? error.message : String(error);
-      setMessage(text);
-      if (text !== "Operación cancelada.") notify(text);
+      setActionMessage({ text, profileId: activeProfileId, guardian: activeObservedAddress });
+      if (text !== "Operación cancelada.") notify(`Perfil ${wallets.find((item) => item.id === activeProfileId)?.name ?? activeProfileId}: ${text}`);
     }
   }
 
@@ -273,18 +286,35 @@ export default function SolanaPanel({
           {message}
         </p>
       )}
-      {unconfirmedSignature && (
-        <p className="solana-note">
-          Estado pendiente de verificar:{" "}
-          <a
-            href={transactionExplorer(unconfirmedSignature)}
-            target="_blank"
-            rel="noreferrer"
-          >
-            consultar transacción en Solana Explorer{" "}
-            <ExternalLink size={15} aria-hidden="true" />
-          </a>
-        </p>
+      {actionMessage && actionMessage.profileId === profileId &&
+        actionMessage.guardian === chain.observedAddress && (
+          <p className="solana-error" role="alert">{actionMessage.text}</p>
+        )}
+      {chain.operationError && <p className="solana-error" role="alert">{chain.operationError}</p>}
+      {pending.length > 0 && (
+        <div className="solana-note" role="status">
+          <strong>Operaciones pendientes de verificación</strong>
+          <p>Se bloquearon nuevas firmas hasta conocer el resultado. El registro permanece al cambiar de perfil o recargar.</p>
+          {pending.map((item) => (
+            <div className="solana-operation" key={item.signature}>
+              <span>{wallets.find((entry) => entry.id === item.profileId)?.name ?? item.profileId} · representante {short(item.guardian)} · {item.kind === "withdraw" ? "retiro" : item.kind === "deposit" ? "depósito" : "creación"}</span>
+              <a href={transactionExplorer(item.signature)} target="_blank" rel="noreferrer">Ver firma {short(item.signature)}</a>
+              {item.detail && <span>{item.detail}</span>}
+              <button type="button" className="button button-ghost" disabled={chain.busy}
+                onClick={() => void chain.reconcile(item.signature).catch((error) =>
+                  setActionMessage({ text: String(error), profileId: item.profileId, guardian: item.guardian }))}>
+                Verificar estado
+              </button>
+              {chain.connectedAddress === item.guardian && (
+                <button type="button" className="button button-ghost" disabled={chain.busy}
+                  onClick={() => void chain.retrySigned(item.signature).catch((error) =>
+                    setActionMessage({ text: String(error), profileId: item.profileId, guardian: item.guardian }))}>
+                  Reenviar misma firma
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
       )}
 
       {chain.observedAddress && (
@@ -297,7 +327,6 @@ export default function SolanaPanel({
               value={profileId}
               onChange={(event) => {
                 setProfileId(event.target.value);
-                setReceipt(null);
               }}
             >
               {wallets.map((item) => (
@@ -310,11 +339,16 @@ export default function SolanaPanel({
               type="button"
               className="button button-ghost"
               onClick={() => {
+                const request = refreshRequests.current.begin();
                 setLoading(true);
                 void chain
                   .refresh(wallets)
-                  .catch((error) => setMessage(String(error)))
-                  .finally(() => setLoading(false));
+                  .catch((error) => {
+                    if (refreshRequests.current.isCurrent(request)) setMessage(String(error));
+                  })
+                  .finally(() => {
+                    if (refreshRequests.current.isCurrent(request)) setLoading(false);
+                  });
               }}
               disabled={loading || chain.busy}
             >
@@ -333,6 +367,10 @@ export default function SolanaPanel({
                 <span className="solana-account__state">
                   {loading && !account
                     ? "Consultando RPC…"
+                    : account?.error
+                      ? account.exists === true
+                        ? "Cuenta incompatible para operaciones"
+                        : "Estado no disponible"
                     : account?.exists === true
                       ? "Cuenta activa en mainnet"
                       : account?.exists === false
@@ -390,7 +428,7 @@ export default function SolanaPanel({
                     <button
                       type="button"
                       className="button button-primary"
-                      disabled={chain.busy}
+                      disabled={chain.busy || pending.length > 0 || !!chain.operationError}
                       onClick={() =>
                         void act(
                           () => chain.createProfile(wallet),
@@ -437,7 +475,7 @@ export default function SolanaPanel({
                       <button
                         type="submit"
                         className="button button-primary"
-                        disabled={chain.busy}
+                        disabled={chain.busy || pending.length > 0 || !!chain.operationError}
                       >
                         Revisar y depositar
                       </button>
@@ -491,7 +529,7 @@ export default function SolanaPanel({
                       <button
                         type="submit"
                         className="button button-secondary"
-                        disabled={chain.busy}
+                        disabled={chain.busy || pending.length > 0 || !!chain.operationError}
                       >
                         Revisar y retirar
                       </button>
@@ -512,6 +550,12 @@ export default function SolanaPanel({
                 </a>
               </p>
             )}
+          {visibleOperations.filter((item) => item.state !== "pending" && item.signature !== receipt?.signature).map((item) => (
+            <p className={item.state === "confirmed" ? "solana-success" : "solana-error"} key={item.signature} role="status">
+              {item.state === "confirmed" ? "Transacción confirmada" : "Transacción fallida"}.{" "}
+              <a href={transactionExplorer(item.signature)} target="_blank" rel="noreferrer">Ver firma {short(item.signature)}</a>
+            </p>
+          ))}
 
           {account && (
             <div className="solana-history">

@@ -16,7 +16,19 @@ import {
   Transaction,
 } from "@solana/web3.js";
 import type { Wallet } from "./types";
-import { encodeBase58, parseSolLamports, seedFor } from "./solana-utils";
+import { useStore } from "./store";
+import { parseSolLamports, seedFor } from "./solana-utils";
+import { ConnectionRequests, mergeVerifiedReads, retryReadOnVerifiedFallback, verifyMainnetConnection } from "./solana-connection";
+import {
+  OperationJournal,
+  SOLANA_OPERATIONS_KEY,
+  SigningSession,
+  rebroadcastSignedOperation,
+  reconcileOperation,
+  signAndSendOperation,
+  type OperationKind,
+  type SignedOperation,
+} from "./solana-operations";
 
 const MAINNET_RPC = "https://api.mainnet.solana.com";
 const PUBLIC_FALLBACK_RPC = "https://solana-rpc.publicnode.com";
@@ -68,17 +80,7 @@ export type ChainReceipt = {
   address: string;
 };
 
-export class UnconfirmedTransactionError extends Error {
-  constructor(
-    public readonly signature: string,
-    cause: unknown,
-  ) {
-    super(
-      `La transacción fue firmada, pero el RPC no confirmó si se envió o ejecutó: ${errorText(cause)}. Comprueba el enlace antes de volver a intentarlo.`,
-    );
-    this.name = "UnconfirmedTransactionError";
-  }
-}
+export { UnconfirmedTransactionError } from "./solana-operations";
 
 export type SolanaAPI = {
   network: "Solana mainnet";
@@ -92,6 +94,11 @@ export type SolanaAPI = {
   observedBalanceLamports: number | null;
   accounts: Record<string, ProfileAccount>;
   busy: boolean;
+  operations: SignedOperation[];
+  operationError: string | null;
+  reconcile: (signature: string) => Promise<void>;
+  retrySigned: (signature: string) => Promise<void>;
+  invalidateSigningSession: () => void;
   connect: (name: WalletName) => Promise<void>;
   disconnect: () => Promise<void>;
   observeAddress: (address: string) => Promise<void>;
@@ -194,13 +201,7 @@ async function checkedConnection(url: string): Promise<Connection> {
       }
     },
   });
-  const genesis = await connection.getGenesisHash();
-  if (genesis !== MAINNET_GENESIS)
-    throw new Error(
-      `RPC rechazado: el clúster no es Solana mainnet (${genesis}).`,
-    );
-  await connection.getLatestBlockhash(COMMITMENT);
-  return connection;
+  return verifyMainnetConnection(connection, MAINNET_GENESIS);
 }
 
 function explorerAccount(address: string) {
@@ -214,9 +215,13 @@ export function transactionExplorer(signature: string) {
 export { explorerAccount };
 
 export function SolanaProvider({ children }: { children: ReactNode }) {
+  const store = useStore();
+  const storeRef = useRef(store);
+  storeRef.current = store;
   const [availableWallets, setAvailableWallets] =
     useState<WalletName[]>(discoverWallets);
   const [walletName, setWalletName] = useState<WalletName | null>(null);
+  const [connectionEpoch, setConnectionEpoch] = useState(0);
   const [connectedAddress, setConnectedAddress] = useState<string | null>(null);
   const [watchedAddress, setWatchedAddress] = useState<string | null>(null);
   const [observedBalanceLamports, setObservedBalanceLamports] = useState<
@@ -228,11 +233,49 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
   const [rpcError, setRpcError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const providerRef = useRef<InjectedWallet | null>(null);
+  const connectionRequests = useRef(new ConnectionRequests<InjectedWallet>());
   const connectionRef = useRef<Connection | null>(null);
   const connectionPromiseRef = useRef<Promise<Connection> | null>(null);
   const refreshVersion = useRef(0);
   const busyRef = useRef(false);
+  const sessionRef = useRef(new SigningSession());
+  const journalRef = useRef<OperationJournal | null>(null);
+  const [operations, setOperations] = useState<SignedOperation[]>([]);
+  const [operationError, setOperationError] = useState<string | null>(null);
   const observedAddress = connectedAddress ?? watchedAddress;
+
+  const journal = useCallback(() => {
+    if (!journalRef.current) journalRef.current = new OperationJournal(window.localStorage);
+    return journalRef.current;
+  }, []);
+
+  useEffect(() => {
+    sessionRef.current.mount();
+    return () => sessionRef.current.unmount();
+  }, []);
+
+  useEffect(() => {
+    const sync = () => {
+    try {
+      setOperations(journal().read());
+      setOperationError(null);
+    } catch (error) {
+      setOperationError(errorText(error));
+    }
+    };
+    const changed = (event: StorageEvent) => {
+      if (event.key === SOLANA_OPERATIONS_KEY || event.key === null) sync();
+    };
+    sync();
+    window.addEventListener("storage", changed);
+    return () => window.removeEventListener("storage", changed);
+  }, [journal, store.persistence.writable]);
+
+  const saveOperation = useCallback((operation: SignedOperation) => {
+    const next = journal().save(operation);
+    setOperations(next);
+    setOperationError(null);
+  }, [journal]);
 
   useEffect(() => {
     const detect = () => setAvailableWallets(discoverWallets());
@@ -247,14 +290,21 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const provider = providerRef.current;
     if (!provider) return;
+    const epoch = connectionEpoch;
     const changed = (...args: unknown[]) => {
+      if (providerRef.current !== provider || !connectionRequests.current.acceptsEvent(provider, epoch)) return;
       const key = args[0] as { toBase58?: () => string } | null | undefined;
+      const address = key?.toBase58?.() ?? null;
+      sessionRef.current.set(address ? provider : null, address);
       refreshVersion.current++;
-      setConnectedAddress(key?.toBase58?.() ?? null);
+      setConnectedAddress(address);
       setAccounts({});
       setObservedBalanceLamports(null);
     };
     const disconnected = () => {
+      if (providerRef.current !== provider || !connectionRequests.current.acceptsEvent(provider, epoch)) return;
+      connectionRequests.current.cancel();
+      sessionRef.current.set(null, null);
       refreshVersion.current++;
       setConnectedAddress(null);
       setWalletName(null);
@@ -268,7 +318,7 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
       provider.off?.("accountChanged", changed);
       provider.off?.("disconnect", disconnected);
     };
-  }, [walletName]);
+  }, [walletName, connectionEpoch]);
 
   const getConnection = useCallback(async () => {
     if (connectionRef.current) return connectionRef.current;
@@ -318,12 +368,37 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
 
   const connect = useCallback(async (name: WalletName) => {
     const wallet = injected(name);
-    const response = await wallet.connect();
-    const key = response.publicKey ?? wallet.publicKey;
-    if (!key)
-      throw new Error("La billetera no devolvió una dirección pública.");
-    providerRef.current = wallet;
+    const request = connectionRequests.current.begin();
+    sessionRef.current.set(null, null);
+    providerRef.current = null;
     refreshVersion.current++;
+    setWalletName(null);
+    setConnectedAddress(null);
+    setAccounts({});
+    setObservedBalanceLamports(null);
+    let response: { publicKey: PublicKey };
+    try {
+      response = await wallet.connect();
+    } catch (error) {
+      if (!connectionRequests.current.isCurrent(request)) return;
+      connectionRequests.current.fail(request);
+      throw error;
+    }
+    if (!connectionRequests.current.isCurrent(request)) return;
+    const key = response.publicKey ?? wallet.publicKey;
+    if (!key) {
+      connectionRequests.current.fail(request);
+      throw new Error("La billetera no devolvió una dirección pública.");
+    }
+    if (wallet.publicKey && !wallet.publicKey.equals(key)) {
+      connectionRequests.current.fail(request);
+      throw new Error("La cuenta activa de la extensión cambió. Vuelve a conectar.");
+    }
+    if (!connectionRequests.current.accept(request, wallet)) return;
+    providerRef.current = wallet;
+    sessionRef.current.set(wallet, key.toBase58());
+    refreshVersion.current++;
+    setConnectionEpoch(request);
     setWalletName(name);
     setConnectedAddress(key.toBase58());
     setAccounts({});
@@ -331,16 +406,16 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const disconnect = useCallback(async () => {
-    try {
-      await providerRef.current?.disconnect();
-    } finally {
-      refreshVersion.current++;
-      providerRef.current = null;
-      setWalletName(null);
-      setConnectedAddress(null);
-      setAccounts({});
-      setObservedBalanceLamports(null);
-    }
+    const provider = providerRef.current;
+    connectionRequests.current.cancel();
+    sessionRef.current.set(null, null);
+    refreshVersion.current++;
+    providerRef.current = null;
+    setWalletName(null);
+    setConnectedAddress(null);
+    setAccounts({});
+    setObservedBalanceLamports(null);
+    await provider?.disconnect();
   }, []);
 
   const observeAddress = useCallback(async (address: string) => {
@@ -363,24 +438,35 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
       setAccounts({});
       setObservedBalanceLamports(null);
       const connection = await getConnection();
+      if (version !== refreshVersion.current) return;
       const guardian = new PublicKey(address);
-      const balancePromise = connection
+      const read = async (source: Connection): Promise<{
+        profiles: ProfileAccount[];
+        balance: { value: number | null; error: string | null };
+        failedReads: number;
+      }> => {
+      let failedReads = 0;
+      const balancePromise = source
         .getBalance(guardian, COMMITMENT)
         .then((value) => ({
           value: safeLamports(value),
           error: null as string | null,
         }))
-        .catch((error) => ({
-          value: null,
-          error: `Saldo de la dirección consultada no disponible: ${errorText(error)}`,
-        }));
+        .catch((error) => {
+          failedReads++;
+          return {
+            value: null,
+            error: `Saldo de la dirección consultada no disponible: ${errorText(error)}`,
+          };
+        });
       const profiles = await Promise.all(
         wallets.map(async (wallet) => {
           const { seed, key } = await derive(wallet.id, guardian);
           let account: Awaited<ReturnType<Connection["getAccountInfo"]>>;
           try {
-            account = await connection.getAccountInfo(key, COMMITMENT);
+            account = await source.getAccountInfo(key, COMMITMENT);
           } catch (error) {
+            failedReads++;
             return {
               walletId: wallet.id,
               address: key.toBase58(),
@@ -396,6 +482,7 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
             try {
               safeLamports(account.lamports);
             } catch (error) {
+              failedReads++;
               return {
                 walletId: wallet.id,
                 address: key.toBase58(),
@@ -428,7 +515,7 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
           let activity: ChainActivity[] = [];
           let historyError: string | undefined;
           try {
-            const signatures = await connection.getSignaturesForAddress(
+            const signatures = await source.getSignaturesForAddress(
               key,
               { limit: 8 },
               COMMITMENT,
@@ -437,7 +524,7 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
             const details = await Promise.all(
               signatures.map(async (entry) => {
                 try {
-                  const transaction = await connection.getParsedTransaction(
+                  const transaction = await source.getParsedTransaction(
                     entry.signature,
                     {
                       commitment: COMMITMENT,
@@ -482,6 +569,7 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
                   } satisfies ChainActivity;
                 } catch {
                   incompleteDetails++;
+                  failedReads++;
                   return {
                     signature: entry.signature,
                     blockTime: entry.blockTime ?? null,
@@ -499,6 +587,7 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
             if (incompleteDetails)
               historyError = `${incompleteDetails} transacción(es) sin detalle de saldo en este RPC.`;
           } catch (error) {
+            failedReads++;
             historyError = `Historial no disponible: ${errorText(error)}`;
           }
           return {
@@ -514,7 +603,30 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
         }),
       );
       const balance = await balancePromise;
+      return { profiles, balance, failedReads };
+      };
+      const configured = !!import.meta.env.VITE_SOLANA_RPC_URL?.trim();
+      const selected = await retryReadOnVerifiedFallback({
+        primary: connection,
+        primaryUrl: connection.rpcEndpoint,
+        officialUrl: MAINNET_RPC,
+        configured,
+        verifyFallback: () => checkedConnection(PUBLIC_FALLBACK_RPC),
+        read,
+        mergeResults: mergeVerifiedReads,
+      });
+      const { profiles, balance } = selected.result;
       if (version === refreshVersion.current) {
+        if (selected.usedFallback && connectionRef.current === connection) {
+          connectionRef.current = selected.connection;
+          setRpcUrl(PUBLIC_FALLBACK_RPC);
+          setRpcNotice("La conexión principal dejó de responder. Seguimos consultando Solana mainnet a través de PublicNode.");
+          setRpcError(null);
+        } else if (selected.fallbackError) {
+          setRpcError(`PublicNode no pudo completar la consulta: ${selected.fallbackError}`);
+        } else {
+          setRpcError(null);
+        }
         setObservedBalanceLamports(balance.value);
         setAccounts(
           Object.fromEntries(
@@ -528,104 +640,93 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
     [connectedAddress, watchedAddress, getConnection],
   );
 
-  const requireSigner = useCallback(async () => {
+  const captureSigner = useCallback(() => {
     if (!connectedAddress || !providerRef.current)
       throw new Error("Conecta la billetera del representante para firmar.");
-    const key = providerRef.current.publicKey;
+    const provider = providerRef.current;
+    const key = provider.publicKey;
     if (!key || key.toBase58() !== connectedAddress)
       throw new Error(
         "La cuenta activa de la extensión cambió. Vuelve a conectar.",
       );
+    return sessionRef.current.snapshot(provider, connectedAddress);
+  }, [connectedAddress]);
+
+  const assertSigner = useCallback((session: ReturnType<typeof sessionRef.current.snapshot>) => {
+    const provider = providerRef.current;
+    sessionRef.current.assert(session, provider?.publicKey?.toBase58() ?? null);
+  }, []);
+
+  const invalidateSigningSession = useCallback(() => {
+    sessionRef.current.invalidate();
+  }, []);
+
+  const requireSigner = useCallback(async (session: ReturnType<typeof sessionRef.current.snapshot>) => {
+    assertSigner(session);
     const connection = await getConnection();
+    assertSigner(session);
     return {
       connection,
-      provider: providerRef.current,
-      guardian: new PublicKey(connectedAddress),
+      provider: session.provider as InjectedWallet,
+      guardian: new PublicKey(session.address),
     };
-  }, [connectedAddress, getConnection]);
+  }, [assertSigner, getConnection]);
 
   const submit = useCallback(
     async (
       transaction: Transaction,
       address: string,
+      profileId: string,
+      kind: OperationKind,
+      session: ReturnType<typeof sessionRef.current.snapshot>,
     ): Promise<ChainReceipt> => {
-      const { connection, provider, guardian } = await requireSigner();
-      const { blockhash, lastValidBlockHeight } =
-        await connection.getLatestBlockhash(COMMITMENT);
-      transaction.feePayer = guardian;
-      transaction.recentBlockhash = blockhash;
-      const expectedMessage = transaction.serializeMessage();
-      const signed = await provider.signTransaction(transaction);
-      const signedMessage = signed.serializeMessage();
-      if (
-        expectedMessage.length !== signedMessage.length ||
-        expectedMessage.some((byte, index) => byte !== signedMessage[index])
-      ) {
-        throw new Error(
-          "La billetera devolvió una transacción distinta; no se envió.",
-        );
-      }
-      const serialized = signed.serialize();
-      if (!signed.signature)
-        throw new Error(
-          "La billetera no firmó la transacción requerida; no se envió.",
-        );
-      const signedSignature = encodeBase58(signed.signature);
-      let signature: string;
-      try {
-        signature = await connection.sendRawTransaction(serialized);
-      } catch (error) {
-        throw new UnconfirmedTransactionError(signedSignature, error);
-      }
-      if (signature !== signedSignature)
-        throw new UnconfirmedTransactionError(
-          signedSignature,
-          new Error(
-            "El RPC devolvió una firma distinta a la transacción firmada.",
-          ),
-        );
-      let confirmation: Awaited<ReturnType<Connection["confirmTransaction"]>>;
-      try {
-        confirmation = await withTimeout(
-          connection.confirmTransaction(
-            { signature, blockhash, lastValidBlockHeight },
-            COMMITMENT,
-          ),
-          90_000,
-        );
-      } catch (error) {
-        throw new UnconfirmedTransactionError(signature, error);
-      }
-      if (confirmation.value.err)
-        throw new Error(
-          `La transacción falló: ${JSON.stringify(confirmation.value.err)}. Firma: ${signature}`,
-        );
+      storeRef.current.recordGuardianBase(profileId, session.address);
+      storeRef.current.assertDurableWallet(profileId);
+      const { connection, provider, guardian } = await requireSigner(session);
+      const confirmed = await signAndSendOperation({
+        transaction,
+        provider,
+        guardian,
+        connection,
+        assertSession: () => {
+          assertSigner(session);
+          storeRef.current.assertDurableWallet(profileId);
+        },
+        journal: journal(),
+        save: saveOperation,
+        profileId,
+        profileAddress: address,
+        kind,
+        confirmWithTimeout: (promise) => withTimeout(promise, 90_000),
+      });
       return {
-        signature,
-        explorerUrl: transactionExplorer(signature),
+        signature: confirmed.signature,
+        explorerUrl: transactionExplorer(confirmed.signature),
         address,
       };
     },
-    [requireSigner],
+    [requireSigner, assertSigner, journal, saveOperation],
   );
 
-  const run = useCallback(async (action: () => Promise<ChainReceipt>) => {
+  const run = useCallback(async (action: (session: ReturnType<typeof sessionRef.current.snapshot>) => Promise<ChainReceipt>) => {
     if (busyRef.current)
       throw new Error("Espera a que termine la operación actual.");
+    journal().assertNoPending();
+    const session = captureSigner();
     busyRef.current = true;
     setBusy(true);
     try {
-      return await action();
+      return await action(session);
     } finally {
       busyRef.current = false;
       setBusy(false);
     }
-  }, []);
+  }, [captureSigner, journal]);
 
   const createProfile = useCallback(
     (wallet: Wallet) =>
-      run(async () => {
-        const { connection, guardian } = await requireSigner();
+      run(async (session) => {
+        const { connection, guardian } = await requireSigner(session);
         const { seed, key } = await derive(wallet.id, guardian);
         if (await connection.getAccountInfo(key, COMMITMENT))
           throw new Error(
@@ -658,16 +759,17 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
             programId: SystemProgram.programId,
           }),
         );
-        const receipt = await submit(transaction, key.toBase58());
+        assertSigner(session);
+        const receipt = await submit(transaction, key.toBase58(), wallet.id, "create", session);
         return receipt;
       }),
-    [run, requireSigner, submit],
+    [run, requireSigner, submit, assertSigner],
   );
 
   const deposit = useCallback(
     (wallet: Wallet, amountSol: string) =>
-      run(async () => {
-        const { connection, guardian } = await requireSigner();
+      run(async (session) => {
+        const { connection, guardian } = await requireSigner(session);
         const lamports = parseSolLamports(amountSol);
         const { key } = await derive(wallet.id, guardian);
         const account = await connection.getAccountInfo(key, COMMITMENT);
@@ -700,15 +802,16 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
             lamports,
           }),
         );
-        return submit(transaction, key.toBase58());
+        assertSigner(session);
+        return submit(transaction, key.toBase58(), wallet.id, "deposit", session);
       }),
-    [run, requireSigner, submit],
+    [run, requireSigner, submit, assertSigner],
   );
 
   const withdraw = useCallback(
     (wallet: Wallet, amountSol: string, destination: string) =>
-      run(async () => {
-        const { connection, guardian } = await requireSigner();
+      run(async (session) => {
+        const { connection, guardian } = await requireSigner(session);
         const lamports = parseSolLamports(amountSol);
         const toPubkey = new PublicKey(destination.trim());
         const { seed, key } = await derive(wallet.id, guardian);
@@ -751,10 +854,54 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
             programId: SystemProgram.programId,
           }),
         );
-        return submit(transaction, key.toBase58());
+        assertSigner(session);
+        return submit(transaction, key.toBase58(), wallet.id, "withdraw", session);
       }),
-    [run, requireSigner, submit],
+    [run, requireSigner, submit, assertSigner],
   );
+
+  const reconcile = useCallback(async (signature: string) => {
+    storeRef.current.assertWriter();
+    const operation = journal().read().find((item) => item.signature === signature);
+    if (!operation) throw new Error("No se encontró la transacción firmada.");
+    if (operation.state !== "pending") return;
+    const connection = await getConnection();
+    const result = await reconcileOperation(operation, {
+      getSignatureStatuses: (signatures, options) => connection.getSignatureStatuses(signatures, options),
+      getBlockHeight: (commitment) => connection.getBlockHeight(commitment),
+      getSignaturesForAddress: (address, options, commitment) =>
+        connection.getSignaturesForAddress(address as PublicKey, options, commitment),
+    }, new PublicKey(operation.profileAddress));
+    saveOperation({ ...operation, state: result.state, detail: result.detail });
+  }, [journal, getConnection, saveOperation]);
+
+  const retrySigned = useCallback(async (signature: string) => {
+    if (busyRef.current) throw new Error("Espera a que termine la operación actual.");
+    const operation = journal().read().find((item) => item.signature === signature);
+    if (!operation || operation.state !== "pending")
+      throw new Error("La transacción ya no está pendiente.");
+    storeRef.current.assertDurableWallet(operation.profileId);
+    const session = captureSigner();
+    if (session.address !== operation.guardian)
+      throw new Error("Conecta la billetera del representante que firmó esta transacción.");
+    busyRef.current = true;
+    setBusy(true);
+    try {
+      // A failed status read cannot make a byte-identical rebroadcast unsafe.
+      try { await reconcile(signature); } catch { /* Keep the persisted pending record. */ }
+      const current = journal().read().find((item) => item.signature === signature);
+      if (!current || current.state !== "pending") return;
+      const connection = await getConnection();
+      await rebroadcastSignedOperation(operation, connection, () => {
+        assertSigner(session);
+        storeRef.current.assertDurableWallet(operation.profileId);
+      });
+      await reconcile(signature);
+    } finally {
+      busyRef.current = false;
+      setBusy(false);
+    }
+  }, [journal, captureSigner, reconcile, getConnection, assertSigner]);
 
   const value = useMemo<SolanaAPI>(
     () => ({
@@ -769,6 +916,11 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
       observedBalanceLamports,
       accounts,
       busy,
+      operations,
+      operationError,
+      reconcile,
+      retrySigned,
+      invalidateSigningSession,
       connect,
       disconnect,
       observeAddress,
@@ -788,6 +940,11 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
       observedBalanceLamports,
       accounts,
       busy,
+      operations,
+      operationError,
+      reconcile,
+      retrySigned,
+      invalidateSigningSession,
       connect,
       disconnect,
       observeAddress,
