@@ -135,6 +135,22 @@
   align-items: center;
   gap: 0.25rem;
 }
+.solana-operation {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.8rem;
+  margin-top: 0.65rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid #d9c89d;
+}
+.solana-operation > span:first-child {
+  flex-basis: 100%;
+  font-weight: 650;
+}
+.solana-operation > span:not(:first-child) {
+  flex-basis: 100%;
+}
 .solana-profilebar {
   display: flex;
   align-items: center;
@@ -328,4 +344,42 @@
   .solana-watch > div {
     flex-direction: column;
   }
+}
+
+.solana-panel .solana-status,
+.solana-panel .solana-action {
+  border: 0;
+  border-radius: 14px;
+  box-shadow: 0 5px 20px rgb(34 38 74 / 5%);
+}
+.solana-panel .solana-account { border-radius: 14px; }
+
+@media (max-width: 800px) {
+  .solana-panel { min-width: 0; gap: 16px; padding: 18px; }
+  .solana-panel__head { flex-direction: column; gap: 10px; }
+  .solana-panel__head h2 { font-size: 22px; }
+  .solana-network { white-space: normal; }
+  .solana-status { align-items: flex-start; padding: 14px; }
+  .solana-status > button { margin-left: 0; min-height: 44px; }
+  .solana-connect__buttons .button,
+  .solana-watch .button,
+  .solana-profilebar button,
+  .solana-action .button { min-height: 44px; }
+  .solana-watch > div { flex-direction: column; }
+  .solana-watch input,
+  .solana-action input,
+  .solana-profilebar select { min-width: 0; width: 100%; font-size: 16px; }
+  .solana-profilebar { align-items: stretch; }
+  .solana-profilebar label { width: 100%; }
+  .solana-profilebar select { min-height: 44px; }
+  .solana-profilebar button { margin-left: 0; }
+  .solana-account,
+  .solana-actions { grid-template-columns: minmax(0, 1fr); }
+  .solana-account { padding: 16px; }
+  .solana-account__balance > strong { font-size: clamp(29px, 9vw, 40px); }
+  .solana-action { padding: 16px; min-width: 0; }
+  .solana-history li { align-items: flex-start; }
+  .solana-history li > span:nth-child(2) { overflow-wrap: anywhere; }
+  .solana-history li > strong { margin-left: auto; }
+  .solana-history li a { min-width: 44px; min-height: 44px; }
 }

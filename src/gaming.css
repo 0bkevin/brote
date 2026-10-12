@@ -1430,3 +1430,292 @@ h3,
 }
 
 .simple-mode .learning-options label{font-size:17px;min-height:62px;line-height:1.6;padding:15px}.simple-mode .learning-question legend{font-size:18px;line-height:1.6}.simple-mode .learning-instruction{font-size:17px}.simple-mode .learning-choice-copy strong,.simple-mode .learning-bucket-name strong{font-size:16px}.simple-mode .learning-choice-copy small,.simple-mode .learning-bucket-name small{font-size:14px}.simple-mode .learning-explanations p,.simple-mode .learning-explanations p strong{font-size:15px}.simple-mode .learning-stepper button{width:46px;height:46px}.simple-mode .learning-listen-button{font-size:16px;min-height:48px}.simple-mode .learning-card-lesson{font-size:16px}
+
+/* Calm surfaces let the playful color live in icons, progress and actions. */
+.app-shell .card,
+.app-shell .stat-card,
+.app-shell .wallet-card,
+.app-shell .goal-detail,
+.app-shell .solana-action,
+.app-shell .solana-status {
+  border: 0;
+  border-radius: 14px;
+  box-shadow: 0 5px 22px rgb(34 38 74 / 6%);
+}
+.app-shell .wallet-card {
+  padding: 19px;
+  background: #fff;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.app-shell .wallet-card::before { content: none; }
+.app-shell .wallet-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgb(34 38 74 / 10%);
+}
+.app-shell .wallet-card.selected {
+  border: 0;
+  background: #f4f0ff;
+  box-shadow: 0 5px 22px rgb(77 50 161 / 10%);
+}
+.app-shell .wallet-add {
+  background: #eee9ff;
+  color: #6847c8;
+  min-height: 220px;
+}
+.app-shell .person-level { border: 0; }
+.app-shell .wallet-balance { padding-block: 13px 14px; }
+.app-shell .wallet-goal { padding-top: 12px; }
+.app-shell .wallet-open { margin-top: 12px; font-size: 12px; }
+.app-shell .stat-card { padding: 17px; }
+.app-shell .goal-detail { background: #fff; }
+.app-shell .welcome-banner,
+.app-shell .adventure-teaser { border: 0; border-radius: 16px; }
+
+/* The desktop chrome fits in one restrained row. */
+.app-shell .topbar { height: 62px; padding-inline: 28px; }
+.app-shell .topbar-actions { gap: 10px; min-width: 0; }
+.app-shell .mode-switch { border: 0; padding: 3px; gap: 2px; border-radius: 10px; }
+.app-shell .mode-switch button {
+  min-height: 38px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+.app-shell .role-switch { min-width: 0; }
+.app-shell .role-switch select {
+  min-height: 42px;
+  max-width: 154px;
+  padding: 5px 21px 5px 8px;
+  border-radius: 9px;
+  background: #f5f3fc;
+  font-size: 12px;
+}
+.app-shell .bell-button { width: 44px; height: 44px; flex: none; border-radius: 10px; }
+.app-shell .bell-button:hover { background: #f4f0ff; }
+.app-shell .family-switch { padding: 9px; margin-bottom: 17px; border: 0; border-radius: 10px; }
+.app-shell .workspace-label { margin-top: 20px; }
+.app-shell .nav-link { min-height: 44px; padding-block: 10px; }
+.app-shell .main-content { padding-top: 24px; }
+
+@media (max-width: 900px) {
+  .app-shell .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .app-shell .rhythm-card { display: block; }
+  .app-shell .stat-card { display: flex; }
+  .app-shell .stat-icon { margin-bottom: 0; }
+  .app-shell .wallet-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .app-shell .wallet-person h3 { font-size: 19px; }
+  .app-shell .wallet-balance strong { font-size: 23px; }
+  .app-shell .wallet-person p,
+  .app-shell .wallet-balance span,
+  .app-shell .wallet-goal > div:first-child,
+  .app-shell .wallet-goal b { font-size: 11px; }
+}
+
+@media (max-width: 800px) {
+  .app-shell { display: block; min-width: 0; }
+  .app-shell .sidebar {
+    position: relative;
+    inset: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    width: 100%;
+    min-height: 0;
+    padding: 9px 14px 0;
+    gap: 6px 4px;
+  }
+  .app-shell .brand { grid-column: 1; padding: 0; font-size: 27px; width: max-content; }
+  .app-shell .brand > span:first-child svg { width: 25px; height: 25px; }
+  .app-shell .workspace-label,
+  .app-shell .family-switch,
+  .app-shell .sidebar-note,
+  .app-shell .sidebar-user { display: none; }
+  .app-shell .sidebar nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    min-width: 0;
+  }
+  .app-shell .sidebar nav .nav-link {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 51px;
+    margin: 0;
+    padding: 5px 2px 7px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    border-radius: 9px 9px 0 0;
+    text-align: center;
+    font-size: 10px;
+    line-height: 1.1;
+  }
+  .app-shell .sidebar nav .nav-link svg { width: 18px; height: 18px; }
+  .app-shell .sidebar nav .nav-link span { white-space: normal; }
+  .app-shell .nav-link.active::before { content: none; }
+  .app-shell .sidebar nav .nav-link b {
+    position: absolute;
+    transform: translate(24px, -13px);
+    margin: 0;
+    padding: 1px 4px;
+  }
+  .app-shell .sidebar-bottom {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    padding: 0;
+    margin: 0;
+  }
+  .app-shell .sidebar-bottom > .nav-link {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    font-size: 0;
+  }
+  .app-shell .sidebar-bottom > .nav-link svg { width: 19px; height: 19px; }
+  .app-shell .sidebar-bottom .toggle-indicator { display: none; }
+  .app-shell .sidebar-bottom .simple-toggle[aria-pressed="true"] { color: #d7ff5c; }
+  .app-shell .main-shell { width: 100%; margin: 0; min-width: 0; }
+  .app-shell .topbar { height: 58px; padding-inline: 14px; }
+  .app-shell .topbar-actions { width: 100%; justify-content: space-between; gap: 5px; }
+  .app-shell .mode-switch { flex: none; }
+  .app-shell .mode-switch button { min-height: 44px; padding-inline: 8px; font-size: 11px; }
+  .app-shell .role-switch { display: block; flex: 0 1 160px; max-width: 160px; }
+  .app-shell .role-switch select { display: block; width: 100%; max-width: none; min-width: 0; font-size: 11px; }
+  .app-shell .bell-button { width: 44px; height: 44px; }
+  .app-shell .main-content { padding: 20px 16px 32px; }
+  .app-shell .page-intro { margin-bottom: 18px; }
+  .app-shell .page-intro h1 { font-size: clamp(23px, 6vw, 30px); line-height: 1.15; }
+  .app-shell .page-intro p { font-size: 13px; line-height: 1.45; }
+  .app-shell .network-badge { display: none; }
+  .app-shell .welcome-banner { min-height: 0; padding: 24px; }
+  .app-shell .welcome-copy h2 { font-size: clamp(29px, 8vw, 39px); }
+  .app-shell .welcome-copy p { font-size: 13px; }
+  .app-shell .hero-plant { display: none; }
+  .app-shell .banner-actions { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .app-shell .banner-actions .button { font-size: 12px; min-height: 44px; }
+  .app-shell .stats-grid { grid-template-columns: 1fr; gap: 10px; margin: 14px 0 24px; }
+  .app-shell .stat-card { padding: 14px; }
+  .app-shell .stat-card > div > span { font-size: 12px; }
+  .app-shell .stat-card strong { font-size: 23px; margin-top: 3px; }
+  .app-shell .stat-card p { display: block; font-size: 11px; }
+  .app-shell .wallet-grid,
+  .app-shell .dashboard-bottom,
+  .app-shell .goals-grid,
+  .app-shell .settings-grid { grid-template-columns: 1fr; }
+  .app-shell .wallet-card {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    column-gap: 12px;
+    padding: 16px;
+  }
+  .app-shell .wallet-card-top { grid-column: 1; grid-row: 1; align-self: center; }
+  .app-shell .wallet-card-top .avatar-art { width: 52px; height: 52px; }
+  .app-shell .wallet-card .person-level { position: absolute; top: 16px; right: 16px; }
+  .app-shell .wallet-person {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    margin-top: 0;
+    padding-right: 70px;
+  }
+  .app-shell .wallet-balance,
+  .app-shell .wallet-goal,
+  .app-shell .wallet-open { grid-column: 1 / -1; }
+  .app-shell .wallet-balance { padding-block: 10px 11px; }
+  .app-shell .wallet-person h3 { font-size: 19px; }
+  .app-shell .wallet-balance strong { font-size: 23px; }
+  .app-shell .wallet-open { margin-top: 10px; }
+  .app-shell .wallet-add { display: flex; min-height: 150px; }
+  .app-shell .section-heading h2 { font-size: 18px; }
+  .app-shell .section-heading .text-button { min-height: 44px; font-size: 12px; }
+  .app-shell .recent-card,
+  .app-shell .rhythm-card { padding: 17px; }
+  .app-shell .adventure-teaser { padding: 16px; }
+  .app-shell .adventure-teaser p { display: block; font-size: 12px; }
+  .app-shell .adventure-teaser h3 { font-size: 16px; }
+  .app-shell .adventure-teaser .eyebrow { font-size: 9px; }
+  .app-shell .adventure-teaser .button { min-height: 44px; margin: 0; font-size: 12px; }
+  .app-shell .wallet-detail { padding: 17px; }
+  .app-shell .detail-actions .button,
+  .app-shell .inline-save .button { min-height: 44px; font-size: 12px; }
+  .app-shell .goal-section-head h3,
+  .app-shell .goal-body h3 { font-size: 15px; }
+  .app-shell .goal-section-head .text-button,
+  .app-shell .goal-bottom .text-button { min-height: 44px; font-size: 12px; }
+  .app-shell .goal-detail { padding: 15px; }
+  .app-shell .learner-select button { min-height: 44px; font-size: 12px; }
+  .app-shell .activity-card { padding: 15px; }
+  .app-shell .activity-filters > div { width: 100%; }
+  .app-shell .sr-label select { min-height: 44px; font-size: 12px; }
+  .app-shell .tx-copy strong,
+  .app-shell .activity-card .tx-copy strong { font-size: 12px; }
+  .app-shell .tx-copy > span,
+  .app-shell .activity-card .tx-copy > span { font-size: 10px; line-height: 1.4; }
+  .app-shell .tx-amount strong,
+  .app-shell .activity-card .tx-amount strong { font-size: 12px; }
+  .app-shell .tx-icon { width: 36px; height: 36px; border-radius: 10px; }
+  .app-shell .tx-review { margin-left: 0; }
+  .app-shell .review-button { width: 44px; height: 44px; }
+  .app-shell .field { font-size: 13px; }
+  .app-shell .field input,
+  .app-shell .field select,
+  .app-shell .field textarea { min-height: 44px; font-size: 16px; }
+  .modal-backdrop { padding: 10px; }
+  .modal { width: 100%; max-height: calc(100dvh - 20px); padding: 18px; }
+  .modal-heading h2 { font-size: 20px; }
+  .app-shell .app-footer { font-size: 11px; }
+}
+
+@media (min-width: 600px) and (max-width: 800px) {
+  .app-shell .stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .app-shell .wallet-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .app-shell .hero-plant { display: block; width: 220px; height: 165px; right: 10px; top: 50px; }
+  .app-shell .welcome-copy { max-width: 65%; }
+}
+
+@media (max-width: 380px) {
+  .app-shell .sidebar { padding-inline: 10px; }
+  .app-shell .brand { font-size: 24px; }
+  .app-shell .sidebar-bottom > .nav-link { width: 44px; min-width: 44px; }
+  .app-shell .topbar { padding-inline: 10px; }
+  .app-shell .mode-switch button { gap: 3px; padding-inline: 6px; font-size: 10px; }
+  .app-shell .mode-switch button svg { width: 12px; }
+  .app-shell .role-switch select { padding-left: 5px; padding-right: 14px; font-size: 10px; }
+  .app-shell .bell-button { width: 44px; }
+  .app-shell .main-content { padding-inline: 12px; }
+  .app-shell .adventure-icon { display: none; }
+  .app-shell .transaction-row { gap: 7px; }
+  .app-shell .main-content > .section-heading { flex-wrap: wrap; }
+  .app-shell .wallet-person { padding-right: 48px; }
+}
+
+/* Portaled dialogs retain the same comfortable controls on narrow screens. */
+.modal { border: 0; border-radius: 16px; }
+.modal .field input, .modal .field select { min-height: 44px; font-size: 16px; }
+.modal .button, .modal .icon-button { min-height: 44px; }
+.modal .icon-button { min-width: 44px; }
+@media (max-width: 800px) {
+  .app-shell .welcome-banner { box-shadow: 0 8px 24px rgb(78 44 167 / 14%); }
+  .app-shell .wallet-person p, .app-shell .wallet-balance span,
+  .app-shell .wallet-goal > div:first-child, .app-shell .wallet-goal b,
+  .app-shell .tx-copy > span, .app-shell .activity-card .tx-copy > span { font-size: 12px; }
+  .app-shell.simple-mode .page-intro p, .app-shell.simple-mode .wallet-person p,
+  .app-shell.simple-mode .wallet-balance span, .app-shell.simple-mode .wallet-open,
+  .app-shell.simple-mode .tx-copy strong, .app-shell.simple-mode .tx-copy > span,
+  .app-shell.simple-mode .activity-card .tx-copy strong,
+  .app-shell.simple-mode .activity-card .tx-copy > span { font-size: 15px; line-height: 1.5; }
+  .app-shell.simple-mode .tx-amount strong { font-size: 14px; }
+}

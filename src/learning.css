@@ -1563,3 +1563,52 @@
     flex: 1 1 auto;
   }
 }
+
+/* Learning cards stay vivid without decorative outlines. */
+.learning-page .learning-hero,
+.learning-page .learning-level-card,
+.learning-page .learning-card,
+.learning-page .learning-badges {
+  border: 0;
+  border-radius: 15px;
+}
+.learning-page .learning-card,
+.learning-page .learning-badges { box-shadow: 0 5px 22px rgb(34 38 74 / 6%); }
+.learning-page .learning-card::before { content: none; }
+.learning-page .learning-card:hover { border: 0; }
+.learning-page .learning-card.is-complete { background: #f4ffe4; }
+.learning-page .learning-card { min-height: 0; }
+.learning-page .learning-completion-pill { border: 0; }
+
+@media (max-width: 800px) {
+  .learning-page .learning-hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    padding: 23px;
+    gap: 18px;
+  }
+  .learning-page .learning-hero h2 { font-size: clamp(27px, 8vw, 34px); }
+  .learning-page .learning-level-card { padding: 15px; }
+  .learning-page .learning-section-head { align-items: flex-start; gap: 8px; }
+  .learning-page .learning-section-head h2 { font-size: 22px; }
+  .learning-page .learning-mission-grid { grid-template-columns: 1fr; gap: 11px; }
+  .learning-page .learning-card { padding: 17px; }
+  .learning-page .learning-card h3 { font-size: 21px; }
+  .learning-page .learning-card-lesson { min-height: 0; font-size: 13px; }
+  .learning-page .learning-completion-pill { font-size: 11px; padding: 8px; }
+  .learning-page .learning-start-button,
+  .learning-stepper button,
+  .learning-modal-actions .button { min-height: 44px; }
+  .learning-choice,
+  .learning-options label { min-height: 48px; }
+  .learning-modal-content { max-width: 100%; }
+}
+
+@media (max-width: 380px) {
+  .learning-page .learning-hero { padding: 18px; }
+  .learning-page .learning-section-head { flex-wrap: wrap; }
+  .learning-page .learning-section-head p { max-width: none; }
+  .learning-page .learning-completion-pill { font-size: 11px; }
+  .learning-allocation { flex-wrap: wrap; }
+  .learning-stepper { margin-left: auto; }
+}
