@@ -40,7 +40,9 @@ See [SOLANA.md](SOLANA.md) for the implementation, wallet API, custody model and
 
 Practice data is stored in this browser. The role selector is a demo switch, not authentication or access enforcement. Local limits apply to practice money; mainnet operations are authorized by the guardian's signature, with no delegated spending program. Profiles are not independent bank accounts.
 
-Preserve profile IDs and the guardian address to recover the same accounts. Resetting practice downloads a backup first; restoring downloads a copy of the current data first. The app does not infer what was purchased from a Solana transfer. Practice descriptions and categories are entered by the user; on-chain history shows account balance changes.
+Preserve profile IDs and the verified guardian address for each account to recover the same accounts. A profile may have accounts under more than one guardian; backup files retain each verified profile/address pair. An address found in an older backup is kept only as an unverified recovery hint. Resetting practice downloads a backup first; restoring downloads a copy of the current data first. The app does not infer what was purchased from a Solana transfer. Practice descriptions and categories are entered by the user; on-chain history shows account balance changes.
+
+Only one open tab can edit the local practice data at a time. Other tabs follow saved changes in read-only mode until the writer tab closes. A browser without Web Locks opens read-only. A failed storage write leaves the current profile data unchanged and reports an error. If stored data cannot be parsed, Brote keeps its original bytes and offers a download before explicit replacement or restore. Backup files are compact JSON with a 50 MB export and import limit; they contain public addresses and practice data, never private keys.
 
 Creation/deposit/withdrawal transaction construction and signer authority are covered by focused tests. A real wallet signature and confirmed mainnet transfer still require a user-led test. Public RPC availability can vary. This is a hackathon prototype, not a production custody service.
 

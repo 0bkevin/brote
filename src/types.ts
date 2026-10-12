@@ -42,6 +42,15 @@ export interface AppState {
   version: 1;
   wallets: Wallet[];
   transactions: Transaction[];
+  guardianBases?: { walletId: string; address: string }[];
+  /** An unverified address from an older backup, retained only as a recovery hint. */
+  legacyGuardianAddress?: string | null;
+}
+export interface PersistenceStatus {
+  loading: boolean;
+  writable: boolean;
+  error: string | null;
+  corruptRaw: string | null;
 }
 export interface NewWallet {
   name: string;
@@ -52,6 +61,12 @@ export interface NewWallet {
 }
 export interface StoreAPI {
   state: AppState;
+  persistence: PersistenceStatus;
+  assertWriter: () => void;
+  assertDurableWallet: (walletId: string) => void;
+  recordGuardianBase: (walletId: string, address: string) => void;
+  restoreBackup: (state: AppState) => void;
+  replaceCorruptWithSeed: () => void;
   createWallet: (input: NewWallet) => Wallet;
   topUp: (walletId: string, amount: number, mode: Mode) => void;
   purchase: (
