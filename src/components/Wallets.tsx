@@ -21,6 +21,7 @@ import { formatMoney, levelFor } from "../format";
 import { goalProgress } from "../goals";
 import Avatar from "./Avatar";
 import Modal from "./Modal";
+import { useI18n } from "../i18n";
 
 export function WalletCards({
   wallets,
@@ -33,6 +34,7 @@ export function WalletCards({
   selectedId?: string;
   onAdd?: () => void;
 }) {
+  const { t } = useI18n();
   return (
     <div className="wallet-grid">
       {wallets.map((w) => {
@@ -47,15 +49,15 @@ export function WalletCards({
             <div className="wallet-card-top">
               <Avatar kind={w.avatar} color={w.color} size={52} />
               <span className={`person-level ${w.paused ? "paused" : ""}`}>
-                {w.paused ? "En pausa" : `Nivel ${levelFor(w.xp)}`}
+                {w.paused ? t("En pausa") : t("Nivel {level}", { level: levelFor(w.xp) })}
               </span>
             </div>
             <div className="wallet-person">
               <h3>{w.name}</h3>
-              <p>{w.relationship}</p>
+              <p>{t(w.relationship)}</p>
             </div>
             <div className="wallet-balance">
-              <span>Disponible para practicar</span>
+              <span>{t("Disponible para practicar")}</span>
               <strong>{formatMoney(w.practiceBalance)}</strong>
             </div>
             {goal ? (
@@ -63,7 +65,7 @@ export function WalletCards({
                 <div>
                   <span>
                     <Target size={13} />
-                    {goal.title}
+                    {t(goal.title)}
                   </span>
                   <b>{goalProgress(goal).percent}%</b>
                 </div>
@@ -78,11 +80,11 @@ export function WalletCards({
               </div>
             ) : (
               <div className="wallet-goal">
-                <span className="muted">Un nuevo comienzo, a tu ritmo.</span>
+                <span className="muted">{t("Un nuevo comienzo, a tu ritmo.")}</span>
               </div>
             )}
             <span className="wallet-open">
-              Ver su espacio <ChevronRight size={15} />
+              {t("Ver su espacio")} <ChevronRight size={15} />
             </span>
           </button>
         );
@@ -90,8 +92,8 @@ export function WalletCards({
       {onAdd && wallets.length < 3 && (
         <button className="wallet-card wallet-add" onClick={onAdd}>
           <Plus size={25} />
-          <strong>Acompaña a alguien más</strong>
-          <span>Una wallet, un nuevo comienzo</span>
+          <strong>{t("Acompaña a alguien más")}</strong>
+          <span>{t("Una wallet, un nuevo comienzo")}</span>
         </button>
       )}
     </div>
@@ -107,6 +109,7 @@ export function CreateWalletModal({
   onClose: () => void;
   onCreated: (w: Wallet) => void;
 }) {
+  const { t } = useI18n();
   const [form, setForm] = useState<NewWallet>({
     name: "",
     relationship: "",
@@ -120,10 +123,10 @@ export function CreateWalletModal({
     e.preventDefault();
     try {
       if (!form.name.trim() || !form.relationship.trim())
-        throw Error("Cuéntanos su nombre y qué relación tienen.");
+        throw Error(t("Cuéntanos su nombre y qué relación tienen."));
       if (form.kind !== "child" && !consent)
         throw Error(
-          "Confirma que esta persona acepta compartir su actividad contigo.",
+          t("Confirma que esta persona acepta compartir su actividad contigo."),
         );
       const w = store.createWallet({
         ...form,
@@ -133,19 +136,18 @@ export function CreateWalletModal({
       onCreated(w);
       onClose();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "No pudimos crear la wallet.");
+      setError(e instanceof Error ? t(e.message) : t("No pudimos crear la wallet."));
     }
   }
   return (
-    <Modal title="Una wallet para alguien especial" onClose={onClose}>
+    <Modal title={t("Una wallet para alguien especial")} onClose={onClose}>
       <p className="muted modal-intro">
-        Aprender se siente mejor en compañía. Su espacio de práctica empieza con
-        0 Brotes.
+        {t("Aprender se siente mejor en compañía. Su espacio de práctica empieza con 0 Brotes.")}
       </p>
       <form onSubmit={submit}>
         <div className="form-grid">
           <label className="field">
-            Nombre
+            {t("Nombre")}
             <input
               autoComplete="off"
               maxLength={30}
@@ -154,12 +156,12 @@ export function CreateWalletModal({
                 setConsent(false);
                 setForm({ ...form, name: e.target.value });
               }}
-              placeholder="¿Cómo se llama?"
+              placeholder={t("¿Cómo se llama?")}
               required
             />
           </label>
           <label className="field">
-            Relación contigo
+            {t("Relación contigo")}
             <input
               value={form.relationship}
               maxLength={40}
@@ -167,13 +169,13 @@ export function CreateWalletModal({
                 setConsent(false);
                 setForm({ ...form, relationship: e.target.value });
               }}
-              placeholder="Hija, papá, estudiante…"
+              placeholder={t("Hija, papá, estudiante…")}
               required
             />
           </label>
         </div>
         <label className="field">
-          ¿A quién acompañas?
+          {t("¿A quién acompañas?")}
           <select
             value={form.kind}
             onChange={(e) => {
@@ -181,19 +183,19 @@ export function CreateWalletModal({
               setForm({ ...form, kind: e.target.value as NewWallet["kind"] });
             }}
           >
-            <option value="child">Niño o adolescente</option>
-            <option value="adult">Persona adulta</option>
-            <option value="senior">Persona mayor</option>
+            <option value="child">{t("Niño o adolescente")}</option>
+            <option value="adult">{t("Persona adulta")}</option>
+            <option value="senior">{t("Persona mayor")}</option>
           </select>
         </label>
-        <span className="field-label">Elige su compañero</span>
+        <span className="field-label">{t("Elige su compañero")}</span>
         <div className="avatar-picker">
           {(["fox", "bear", "rabbit", "owl"] as AvatarKind[]).map((kind, i) => (
             <button
               type="button"
               key={kind}
               className={form.avatar === kind ? "chosen" : ""}
-              aria-label={`Compañero ${["zorro", "oso", "conejo", "búho"][i]}`}
+              aria-label={t("Compañero {animal}", { animal: t(["zorro", "oso", "conejo", "búho"][i]) })}
               aria-pressed={form.avatar === kind}
               onClick={() =>
                 setForm({
@@ -223,29 +225,27 @@ export function CreateWalletModal({
               checked={consent}
               onChange={(e) => setConsent(e.target.checked)}
             />
-            Esta persona acepta que la acompañe y vea su actividad.
+            {t("Esta persona acepta que la acompañe y vea su actividad.")}
           </label>
         ) : (
           <div className="form-note">
             <ShieldCheck size={18} />
             <span>
-              La persona responsable acompaña y aprueba los gastos según sus
-              reglas.
+              {t("La persona responsable acompaña y aprueba los gastos según sus reglas.")}
             </span>
           </div>
         )}
         <p className="small muted">
-          El perfil se guarda en este navegador. Su cuenta Solana se crea por
-          separado, con tu firma.
+          {t("El perfil se guarda en este navegador. Su cuenta Solana se crea por separado, con tu firma.")}
         </p>
         {error && (
           <p role="alert" className="form-error">
-            {error}
+            {t(error)}
           </p>
         )}
         <button className="button button-primary full-width" type="submit">
           <Plus size={17} />
-          Crear wallet de práctica
+          {t("Crear wallet de práctica")}
         </button>
       </form>
     </Modal>
@@ -265,6 +265,7 @@ export function WalletActionModal({
   onClose: () => void;
   notify: (s: string) => void;
 }) {
+  const { t, locale } = useI18n();
   const [amount, setAmount] = useState("");
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Entretenimiento");
@@ -279,15 +280,15 @@ export function WalletActionModal({
       else store.createGoal(wallet.id, title.trim(), n, "practice");
       notify(
         action === "topup"
-          ? `¡${wallet.name} recibió ${formatMoney(n)} para practicar!`
+          ? t("¡{name} recibió {amount} para practicar!", { name: wallet.name, amount: formatMoney(n) })
           : action === "goal"
-            ? "Una nueva meta para crecer."
-            : "Gasto registrado. Revisa su estado en Actividad.",
+            ? t("Una nueva meta para crecer.")
+            : t("Gasto registrado. Revisa su estado en Actividad."),
       );
       onClose();
     } catch (e) {
       setError(
-        e instanceof Error ? e.message : "No pudimos completar esta acción.",
+        e instanceof Error ? t(e.message) : t("No pudimos completar esta acción."),
       );
     }
   }
@@ -295,29 +296,29 @@ export function WalletActionModal({
     <Modal
       title={
         action === "topup"
-          ? `Brotes para ${wallet.name}`
+          ? t("Brotes para {name}", { name: wallet.name })
           : action === "purchase"
-            ? "Practica una compra"
-            : "Una nueva meta"
+            ? t("Practica una compra")
+            : t("Una nueva meta")
       }
       onClose={onClose}
     >
       <div className="practice-note">
         <Sparkles size={17} />
-        <span>Dinero de práctica · sin valor monetario</span>
+        <span>{t("Dinero de práctica · sin valor monetario")}</span>
       </div>
       <form onSubmit={submit}>
         {action !== "topup" && (
           <label className="field">
             {action === "goal"
-              ? "¿Qué quieres lograr?"
-              : "¿En qué vas a gastar?"}
+              ? t("¿Qué quieres lograr?")
+              : t("¿En qué vas a gastar?")}
             <input
               value={title}
               maxLength={60}
               onChange={(e) => setTitle(e.target.value)}
               placeholder={
-                action === "goal" ? "Mi primera bicicleta" : "Entrada al cine"
+                action === "goal" ? t("Mi primera bicicleta") : t("Entrada al cine")
               }
               required
             />
@@ -325,7 +326,7 @@ export function WalletActionModal({
         )}
         {action === "purchase" && (
           <label className="field">
-            Categoría
+            {t("Categoría")}
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -337,15 +338,15 @@ export function WalletActionModal({
                 "Transporte",
                 "Otros",
               ].map((c) => (
-                <option key={c}>{c}</option>
+                <option key={c} value={c}>{t(c)}</option>
               ))}
             </select>
           </label>
         )}
         <label className="field">
           {action === "goal"
-            ? "¿Cuántos Brotes necesitas?"
-            : "Cantidad de Brotes"}
+            ? t("¿Cuántos Brotes necesitas?")
+            : t("Cantidad de Brotes")}
           <div className="amount-input">
             <input
               type="number"
@@ -354,7 +355,7 @@ export function WalletActionModal({
               step="0.01"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              placeholder="0,00"
+              placeholder={locale.startsWith("en") ? "0.00" : "0,00"}
               required
             />
             <span>B</span>
@@ -376,23 +377,23 @@ export function WalletActionModal({
         )}
         {action === "purchase" && (
           <p className="small muted">
-            Disponible: {formatMoney(wallet.practiceBalance)}.{" "}
+            {t("Disponible: {amount}.", { amount: formatMoney(wallet.practiceBalance) })}{" "}
             {wallet.approvalRequired
-              ? "El gasto espera la aprobación de tu responsable."
-              : "Tu gasto se descuenta al registrarlo."}
+              ? t("El gasto espera la aprobación de tu responsable.")
+              : t("Tu gasto se descuenta al registrarlo.")}
           </p>
         )}
         {error && (
           <p role="alert" className="form-error">
-            {error}
+            {t(error)}
           </p>
         )}
         <button type="submit" className="button button-primary full-width">
           {action === "topup"
-            ? "Asignar Brotes"
+            ? t("Asignar Brotes")
             : action === "goal"
-              ? "Crear mi meta"
-              : "Registrar gasto"}
+              ? t("Crear mi meta")
+              : t("Registrar gasto")}
           <ArrowUpRight size={17} />
         </button>
       </form>
@@ -411,6 +412,7 @@ function GoalCard({
   store: StoreAPI;
   notify: (s: string) => void;
 }) {
+  const { t, locale } = useI18n();
   const [amount, setAmount] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -421,9 +423,9 @@ function GoalCard({
       store.saveToGoal(wallet.id, goal.id, Number(amount));
       setSaving(false);
       setAmount("");
-      notify("¡Cada Brote te acerca a tu meta!");
+      notify(t("¡Cada Brote te acerca a tu meta!"));
     } catch (e) {
-      setError(e instanceof Error ? e.message : "No se pudo guardar.");
+      setError(e instanceof Error ? t(e.message) : t("No se pudo guardar."));
     }
   }
   return (
@@ -432,9 +434,9 @@ function GoalCard({
         <Target size={23} />
       </div>
       <div className="goal-body">
-        <h3>{goal.title}</h3>
+        <h3>{t(goal.title)}</h3>
         <p>
-          {formatMoney(goal.saved)} <span>de {formatMoney(goal.target)}</span>
+          {formatMoney(goal.saved)} <span>{t("de {amount}", { amount: formatMoney(goal.target) })}</span>
         </p>
         <div className="progress-track">
           <div
@@ -444,20 +446,20 @@ function GoalCard({
         </div>
         <div className="goal-bottom">
           <span>
-            {complete ? "¡Lo lograste!" : `${percent}% del camino`}
+            {complete ? t("¡Lo lograste!") : t("{percent}% del camino", { percent })}
           </span>
           <button
             className="text-button"
             disabled={wallet.paused || complete}
             onClick={() => setSaving(!saving)}
           >
-            {saving ? "Cancelar" : "Añadir a mi ahorro"} <Plus size={14} />
+            {saving ? t("Cancelar") : t("Añadir a mi ahorro")} <Plus size={14} />
           </button>
         </div>
         {saving && (
           <form className="inline-save" onSubmit={submit}>
             <label className="sr-only" htmlFor={goal.id}>
-              Brotes para ahorrar
+              {t("Brotes para ahorrar")}
             </label>
             <input
               id={goal.id}
@@ -467,15 +469,15 @@ function GoalCard({
               step="0.01"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              placeholder="0,00"
+              placeholder={locale.startsWith("en") ? "0.00" : "0,00"}
               required
             />
             <button className="button button-primary" type="submit">
-              Ahorrar
+              {t("Ahorrar")}
             </button>
             {error && (
               <p className="form-error" role="alert">
-                {error}
+                {t(error)}
               </p>
             )}
           </form>
@@ -500,6 +502,7 @@ export default function Wallets({
   isGuardian: boolean;
   notify: (s: string) => void;
 }) {
+  const { t } = useI18n();
   const wallet =
     store.state.wallets.find((w) => w.id === selectedId) ||
     store.state.wallets[0];
@@ -516,14 +519,14 @@ export default function Wallets({
       <div className="section-heading">
         <div>
           <h2>
-            {isGuardian ? "Sus pequeños universos" : "Tu espacio para crecer"}
+            {isGuardian ? t("Sus pequeños universos") : t("Tu espacio para crecer")}
           </h2>
-          <p>Un ritmo distinto. El mismo acompañamiento.</p>
+          <p>{t("Un ritmo distinto. El mismo acompañamiento.")}</p>
         </div>
         {isGuardian && (
           <button className="button button-primary" onClick={onAdd}>
             <Plus size={16} />
-            Nueva wallet
+            {t("Nueva wallet")}
           </button>
         )}
       </div>
@@ -537,10 +540,9 @@ export default function Wallets({
           <div className="person-inline">
             <Avatar kind={wallet.avatar} color={wallet.color} />
             <div>
-              <h2>El espacio de {wallet.name}</h2>
+              <h2>{t("El espacio de {name}", { name: wallet.name })}</h2>
               <p className="muted">
-                {wallet.xp} XP · {wallet.completedMissions.length} aventuras
-                completadas
+                {t("{xp} XP · {count} aventuras completadas", { xp: wallet.xp, count: wallet.completedMissions.length })}
               </p>
             </div>
           </div>
@@ -556,7 +558,7 @@ export default function Wallets({
                 }}
               >
                 <ShieldCheck size={16} />
-                Acompañamiento
+                {t("Acompañamiento")}
               </button>
             )}
             {isGuardian && (
@@ -566,7 +568,7 @@ export default function Wallets({
                 onClick={() => setAction("topup")}
               >
                 <ArrowDownLeft size={16} />
-                Asignar Brotes
+                {t("Asignar Brotes")}
               </button>
             )}
             <button
@@ -575,19 +577,19 @@ export default function Wallets({
               onClick={() => setAction("purchase")}
             >
               <WalletIcon size={16} />
-              Practicar un gasto
+              {t("Practicar un gasto")}
             </button>
           </div>
         </div>
         <div className="goal-section-head">
-          <h3>Un poquito más cerca de sus metas</h3>
+          <h3>{t("Un poquito más cerca de sus metas")}</h3>
           <button
             className="text-button"
             disabled={wallet.paused}
             onClick={() => setAction("goal")}
           >
             <Plus size={16} />
-            Nueva meta
+            {t("Nueva meta")}
           </button>
         </div>
         <div className="goals-grid">
@@ -605,8 +607,8 @@ export default function Wallets({
           {!wallet.goals.length && (
             <div className="empty-state">
               <Target />
-              <h3>¿Qué te gustaría lograr?</h3>
-              <p>Crea tu primera meta y empieza con un pequeño paso.</p>
+              <h3>{t("¿Qué te gustaría lograr?")}</h3>
+              <p>{t("Crea tu primera meta y empieza con un pequeño paso.")}</p>
             </div>
           )}
         </div>
@@ -614,11 +616,11 @@ export default function Wallets({
           <ShieldCheck size={16} />
           <span>
             {wallet.paused
-              ? "Wallet de práctica en pausa."
+              ? t("Wallet de práctica en pausa.")
               : wallet.approvalRequired
-                ? "Gastos con aprobación de la persona responsable."
-                : "Gastos de práctica sin aprobación."}{" "}
-            Límite por gasto: {formatMoney(wallet.spendingLimit)}.
+                ? t("Gastos con aprobación de la persona responsable.")
+                : t("Gastos de práctica sin aprobación.")}{" "}
+            {t("Límite por gasto: {amount}.", { amount: formatMoney(wallet.spendingLimit) })}
           </span>
         </div>
       </section>
@@ -634,12 +636,11 @@ export default function Wallets({
       )}
       {rules && (
         <Modal
-          title={`Acompaña a ${wallet.name}`}
+          title={t("Acompaña a {name}", { name: wallet.name })}
           onClose={() => setRules(false)}
         >
           <p className="muted modal-intro">
-            Reglas para su dinero de práctica. Las operaciones Solana siempre
-            necesitan tu firma.
+            {t("Reglas para su dinero de práctica. Las operaciones Solana siempre necesitan tu firma.")}
           </p>
           <form
             onSubmit={(e) => {
@@ -651,16 +652,16 @@ export default function Wallets({
                   paused,
                 });
                 setRules(false);
-                notify("Reglas de acompañamiento actualizadas.");
+                notify(t("Reglas de acompañamiento actualizadas."));
               } catch (e) {
                 setError(
-                  e instanceof Error ? e.message : "No se pudo guardar.",
+                  e instanceof Error ? t(e.message) : t("No se pudo guardar."),
                 );
               }
             }}
           >
             <label className="field">
-              Límite por gasto de práctica (B)
+              {t("Límite por gasto de práctica (B)")}
               <input
                 type="number"
                 min="0.01"
@@ -676,7 +677,7 @@ export default function Wallets({
                 checked={approve}
                 onChange={(e) => setApprove(e.target.checked)}
               />
-              Pedir mi aprobación antes de descontar gastos
+              {t("Pedir mi aprobación antes de descontar gastos")}
             </label>
             <label className="checkbox-field">
               <input
@@ -684,15 +685,15 @@ export default function Wallets({
                 checked={paused}
                 onChange={(e) => setPaused(e.target.checked)}
               />
-              Pausar las acciones de práctica de esta wallet
+              {t("Pausar las acciones de práctica de esta wallet")}
             </label>
             {error && (
               <p role="alert" className="form-error">
-                {error}
+                {t(error)}
               </p>
             )}
             <button className="button button-primary full-width" type="submit">
-              Guardar reglas
+              {t("Guardar reglas")}
             </button>
           </form>
         </Modal>
