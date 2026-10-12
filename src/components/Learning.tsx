@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { stopSpeech } from "../speech";
 import {
   ArrowRight,
   Award,
@@ -166,6 +167,12 @@ export default function Learning({
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [quizStep, setQuizStep] = useState(0);
   const [speechMessage, setSpeechMessage] = useState("");
+  const spoken = useRef<SpeechSynthesisUtterance | null>(null);
+  useEffect(() => () => {
+    if (typeof window !== "undefined" && "speechSynthesis" in window)
+      stopSpeech(window.speechSynthesis, spoken.current);
+    spoken.current = null;
+  }, [active, quizStep]);
   const [allocations, setAllocations] = useState([10, 6, 4]);
   const [allocationChecked, setAllocationChecked] = useState(false);
   const [justCompleted, setJustCompleted] = useState(false);
@@ -258,18 +265,20 @@ export default function Learning({
     );
   };
   const speakCurrentQuestion = () => {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+    if (typeof window === "undefined" || !("speechSynthesis" in window) ||
+        typeof SpeechSynthesisUtterance === "undefined") {
       setSpeechMessage(
         "La lectura en voz alta no está disponible en este navegador.",
       );
       return;
     }
-    window.speechSynthesis.cancel();
+    stopSpeech(window.speechSynthesis, spoken.current);
     const question = quiz[quizStep];
     const utterance = new SpeechSynthesisUtterance(
       `${question.prompt} ${question.options.map((option, index) => `Opción ${index + 1}: ${option}`).join(". ")}`,
     );
     utterance.lang = "es-VE";
+    spoken.current = utterance;
     utterance.onstart = () => setSpeechMessage("Leyendo en voz alta…");
     utterance.onend = () => setSpeechMessage("Lectura terminada.");
     utterance.onerror = () =>
