@@ -173,7 +173,7 @@ export default function SolanaPanel({
       </header>
       {testnet && <p className="solana-note" role="status">{t("Red de prueba: el SOL de prueba no tiene valor monetario.")}</p>}
 
-      <div className="solana-status" aria-live="polite">
+      <div className="solana-status" aria-live="polite" data-brote-tour="solana">
         <div className="solana-status__icon">
           <WalletIcon size={20} aria-hidden="true" />
         </div>

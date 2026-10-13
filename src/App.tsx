@@ -42,6 +42,7 @@ import Learning from "./components/Learning";
 import SolanaPanel from "./components/SolanaPanel";
 import NetworkSelector from "./components/NetworkSelector";
 import { useI18n, LanguageSwitcher } from "./i18n";
+import { useGuidedTour } from "./use-guided-tour";
 
 function TransactionList({
   transactions,
@@ -216,7 +217,7 @@ function Activity({
         </button>
       </div>
       <div className="card activity-card">
-        <div className="activity-filters">
+        <div className="activity-filters" data-brote-tour="activity">
           <span className="tag tag-green">
             <Sparkles size={13} />
             {t("Dinero de práctica")}
@@ -435,6 +436,8 @@ export default function App() {
     { id: "learn" as Page, label: t("Aprender jugando"), icon: Sparkles },
     { id: "activity" as Page, label: t("Actividad"), icon: ArrowUpRight },
   ];
+  const tour = useGuidedTour({ page, mode, isGuardian, busy: chain.busy,
+    navigate: (nextPage, nextMode) => { setPage(nextPage); setMode(nextMode); }, onError: notify });
   return (
     <div className={`app-shell${simple ? " simple-mode" : ""}`}>
       <MobileNav
@@ -519,7 +522,7 @@ export default function App() {
             {t("Modo simple")}{" "}
             <span className={`toggle-indicator ${simple ? "on" : ""}`} />
           </button>
-          <button className="nav-link" onClick={() => setHelp(true)}>
+          <button className="nav-link" data-tour-replay onClick={() => setHelp(true)}>
             <CircleHelp size={19} />
             {t("Conoce Brote")}
           </button>
@@ -600,6 +603,13 @@ export default function App() {
           </div>
         </header>
         <main className="main-content">
+          {tour.offered && <aside className="tour-invitation" aria-label={tour.copy.invite}>
+            <p><strong>{tour.copy.invite}</strong>{tour.copy.hint}</p>
+            <div className="tour-invitation-actions">
+              <button className="text-button" onClick={tour.skip}>{tour.copy.skip}</button>
+              <button className="button button-secondary" onClick={tour.start} disabled={chain.busy}>{tour.copy.start} <ArrowRight size={15} /></button>
+            </div>
+          </aside>}
           {(store.persistence.loading || !store.persistence.writable) && (
             <div className="form-note persistence-notice" role="status">
               <ShieldCheck size={20} />
@@ -750,7 +760,7 @@ export default function App() {
                   <section className="family-section">
                     <div className="section-heading">
                       <div>
-                        <h2>
+                        <h2 data-brote-tour={!isGuardian ? "circle" : undefined}>
                           {isGuardian
                             ? t("Cada persona, su propio camino")
                             : t("Tu pequeño universo")}{" "}
@@ -760,6 +770,7 @@ export default function App() {
                       {isGuardian && (
                         <button
                           className="text-button"
+                          data-brote-tour="circle"
                           onClick={() => setCreate(true)}
                         >
                           <Plus size={16} />
@@ -902,7 +913,7 @@ export default function App() {
                   )}
                   <section className="card settings-card">
                     <ShieldCheck size={26} />
-                    <h2>{t("Una demo que puedes explorar")}</h2>
+                    <h2 data-brote-tour={!isGuardian ? "preferences" : undefined}>{t("Una demo que puedes explorar")}</h2>
                     <p>
                       {t("Los perfiles y Brotes se guardan en este navegador. Puedes cambiar de vista para conocer la experiencia de cada persona.")}
                     </p>
@@ -1015,9 +1026,10 @@ export default function App() {
             </div>
             <button
               className="button button-primary full-width"
-              onClick={() => setHelp(false)}
+              onClick={() => { setHelp(false); tour.start(); }}
+              disabled={tour.running || chain.busy}
             >
-              {t("Empecemos a crecer")} <ArrowRight size={16} />
+              {tour.copy.replay} <ArrowRight size={16} />
             </button>
           </div>
         </Modal>

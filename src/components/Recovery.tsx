@@ -69,7 +69,7 @@ export default function Recovery({ state, notify }: {
   return (
     <section className="card settings-card recovery-card">
       <ShieldCheck size={26} />
-      <h2>{t("Conserva su camino")}</h2>
+      <h2 data-brote-tour="preferences">{t("Conserva su camino")}</h2>
       <p>
         {t("Guarda perfiles, metas y actividad de práctica. Los IDs de la copia permiten volver a encontrar las mismas cuentas Solana con la misma wallet responsable.")}
       </p>

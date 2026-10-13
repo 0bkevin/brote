@@ -458,3 +458,9 @@ Create 1200 × 630 social images in Spanish, English and Portuguese with the exi
 Serve route-specific titles, descriptions, canonical URLs, Open Graph, X cards and JSON-LD directly in the HTML. Synchronize share metadata with language selection on the landing page, app and video guide. Generate robots.txt and a sitemap, document the public origin, and verify all 103 tests plus nine browser route/language combinations.
 
 Find this update with `git log --oneline --grep="add localized page metadata and crawler discovery"`.
+
+## 110. feat(onboarding): add an optional multilingual guided walkthrough
+
+Introduce a six-step Driver.js tour with a quiet first-visit invitation, remembered Skip, replay from About Brote, and guardian/learner copy in all three languages. Add compact branded popovers, keyboard and reduced-motion support, view/focus restoration, and guards against repeated clicks and stale transitions. Verify the complete tour on desktop and narrow mobile screens without changing practice money or signing Solana operations.
+
+Find this update with `git log --oneline --grep="add an optional multilingual guided walkthrough"`.
