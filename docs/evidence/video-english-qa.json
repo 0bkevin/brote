@@ -1,0 +1,314 @@
+{
+  "recordedAtUTC": "2026-10-13T01:50:34.750998+00:00",
+  "media": [
+    {
+      "file": "public/media/brote-walkthrough-en.mp4",
+      "seconds": 139.2,
+      "bytes": 12251743,
+      "sha256": "2f2f21c4bb75f7b88fa652a3cd5159f5ae0dd2a6af56c18a2e7d3cb3df80773d",
+      "video": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1",
+        "nb_frames": "4176",
+        "pix_fmt": "yuv420p",
+        "color_range": "tv"
+      },
+      "audio": {
+        "codec_name": "aac",
+        "sample_rate": "48000",
+        "channels": 2
+      },
+      "faststart": true,
+      "fullDecodeExitCode": 0
+    },
+    {
+      "file": "public/media/brote-teaser-en.mp4",
+      "seconds": 48.967,
+      "bytes": 5080639,
+      "sha256": "94a79ba6bab0ce65b9441bcbe561b84802ede2d0bdab1f9f2ca119f03b00b125",
+      "video": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1",
+        "nb_frames": "1469",
+        "pix_fmt": "yuv420p",
+        "color_range": "tv"
+      },
+      "audio": {
+        "codec_name": "aac",
+        "sample_rate": "48000",
+        "channels": 2
+      },
+      "faststart": true,
+      "fullDecodeExitCode": 0
+    }
+  ],
+  "browser": {
+    "responsive": [
+      {
+        "lang": "es",
+        "width": 320,
+        "overflow": false,
+        "players": [
+          288,
+          288
+        ],
+        "buttonHeights": [
+          34,
+          34,
+          34,
+          34,
+          34,
+          34
+        ]
+      },
+      {
+        "lang": "en",
+        "width": 320,
+        "overflow": false,
+        "players": [
+          288,
+          288
+        ],
+        "buttonHeights": [
+          34,
+          34,
+          34,
+          34,
+          34,
+          34
+        ]
+      },
+      {
+        "lang": "pt-BR",
+        "width": 320,
+        "overflow": false,
+        "players": [
+          288,
+          288
+        ],
+        "buttonHeights": [
+          34,
+          34,
+          34,
+          34,
+          34,
+          34
+        ]
+      },
+      {
+        "lang": "es",
+        "width": 390,
+        "overflow": false,
+        "players": [
+          358,
+          358
+        ],
+        "buttonHeights": [
+          34,
+          34,
+          34,
+          34,
+          34,
+          34
+        ]
+      },
+      {
+        "lang": "en",
+        "width": 390,
+        "overflow": false,
+        "players": [
+          358,
+          358
+        ],
+        "buttonHeights": [
+          34,
+          34,
+          34,
+          34,
+          34,
+          34
+        ]
+      },
+      {
+        "lang": "pt-BR",
+        "width": 390,
+        "overflow": false,
+        "players": [
+          358,
+          358
+        ],
+        "buttonHeights": [
+          34,
+          34,
+          34,
+          34,
+          34,
+          34
+        ]
+      },
+      {
+        "lang": "es",
+        "width": 768,
+        "overflow": false,
+        "players": [
+          720,
+          720
+        ],
+        "buttonHeights": [
+          42,
+          42,
+          42,
+          42,
+          42,
+          42
+        ]
+      },
+      {
+        "lang": "en",
+        "width": 768,
+        "overflow": false,
+        "players": [
+          720,
+          720
+        ],
+        "buttonHeights": [
+          42,
+          42,
+          42,
+          42,
+          42,
+          42
+        ]
+      },
+      {
+        "lang": "pt-BR",
+        "width": 768,
+        "overflow": false,
+        "players": [
+          720,
+          720
+        ],
+        "buttonHeights": [
+          42,
+          42,
+          42,
+          42,
+          42,
+          42
+        ]
+      },
+      {
+        "lang": "es",
+        "width": 1024,
+        "overflow": false,
+        "players": [
+          653,
+          299
+        ],
+        "buttonHeights": [
+          42,
+          42,
+          42,
+          42,
+          42,
+          42
+        ]
+      },
+      {
+        "lang": "en",
+        "width": 1024,
+        "overflow": false,
+        "players": [
+          653,
+          299
+        ],
+        "buttonHeights": [
+          42,
+          42,
+          42,
+          42,
+          42,
+          42
+        ]
+      },
+      {
+        "lang": "pt-BR",
+        "width": 1024,
+        "overflow": false,
+        "players": [
+          653,
+          299
+        ],
+        "buttonHeights": [
+          42,
+          42,
+          42,
+          42,
+          42,
+          42
+        ]
+      }
+    ],
+    "nativePlayback": [
+      {
+        "time": 28.186779,
+        "paused": true,
+        "ready": 4,
+        "error": null
+      },
+      {
+        "time": 3.865432,
+        "paused": false,
+        "ready": 4,
+        "error": null
+      }
+    ]
+  },
+  "automatedTests": {
+    "passed": 100,
+    "failed": 0
+  },
+  "build": "passed",
+  "visualReview": {
+    "sourceViewportPreserved": true,
+    "automaticZooms": false,
+    "largeSurroundFrames": false,
+    "chaptersReviewed": 17,
+    "quickTourChaptersReviewed": 8,
+    "targetedFixes": [
+      "Removed mistimed amount highlight",
+      "Corrected goal result frame",
+      "Kept expense request pending before approval",
+      "Updated saved rule to30B",
+      "Recaptured Noah108B and family311.50B",
+      "Trimmed the incomplete-bridge feedback before the win",
+      "Preserved original UI colors using limited-range H264 signaling",
+      "Moved purchase, approval, and backup captions to keep success feedback visible",
+      "Normalized mixed video and still-shot metadata to preserve overlays after every cut"
+    ]
+  },
+  "audioLoudness": {
+    "integratedLUFS": -16.39,
+    "truePeakDBTP": -4.25,
+    "music": "Original sample-free114BPM synth bed"
+  },
+  "solanaEvidence": {
+    "network": "testnet",
+    "localQAWallet": true,
+    "newTransfersWhileFilming": false,
+    "depositReview": "cancelled before signing",
+    "withdrawal": "fields only; not signed",
+    "explorer": "Earlier deposit freshly checked as finalized",
+    "customBroteProgram": false,
+    "fundedMainnetAndExtensionUIValidated": false
+  },
+  "limitations": [
+    "Edited chapters demonstrate features, not every ledger entry in chronological order",
+    "English captions are paced phrase blocks rather than word-level forced alignment",
+    "Engagement has not been measured with audience analytics"
+  ]
+}
