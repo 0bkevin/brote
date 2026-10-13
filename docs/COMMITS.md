@@ -365,11 +365,41 @@ Update the landing page, English README, and game documentation for the playable
 
 Record 100 passing tests, real browser wins and replay, 34px controls, translations, read-only protection, and reviewed fixes.
 
-## 90. docs(history): index dual-network release and playable finance games
+## 90. `83f76f6` — docs(history): index dual-network release and playable finance games
 
 Keep the complete functional commit history and product overview current for this release.
 
 Retrieve this update with `git log --oneline --grep="index dual-network release"`.
+
+## 91. `7ff815a` — feat(media): render branded 16:9 tutorials from real browser captures
+
+Render real screenshots and gameplay sequences with Brote fonts, zooms in and out, pointer highlights, transitions, narration, captions, and preview validation.
+
+## 92. `679a9d6` — docs(video): script complete onboarding and record interactive game walkthroughs
+
+Write the complete Spanish app and game walkthroughs, retain actual UI captures and browser footage, and label archived testnet proof.
+
+## 93. `6e72dad` — feat(guide): add multilingual video library with accessible downloads
+
+Provide two accessible 16:9 players, subtitles and downloads in a compact, responsive Spanish/English/Portuguese page.
+
+## 94. `c814e57` — fix(guide): preserve app language and show the activity export control
+
+Keep the selected language consistent with the app, retain it after reload, and show the history export action in the walkthrough.
+
+## 95. `4617247` — feat(media): publish narrated full-app and game guides in 1080p
+
+Ship the full 2:52 app guide and extra 1:02 games guide with 1080p H.264, 48kHz narration, faststart, posters and SRT/VTT captions.
+
+## 96. `9555790` — docs(media): document tutorial chapters, provenance, reproduction, and playback QA
+
+Explain every chapter, evidence boundaries and reproducible rendering; record final metadata, hashes, native playback and mobile checks.
+
+## 97. docs(history): index the complete instructional video release
+
+Keep the complete commit list and interactive overview current with all tutorial implementation, review fixes, published media and evidence.
+
+Retrieve this update with `git log --oneline --grep="index the complete instructional video"`.
 
 ## Updating this index
 
