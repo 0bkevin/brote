@@ -11,6 +11,10 @@ import "./gaming.css";
 import "./landing.css";
 import "./mobile-nav.css";
 import "./mobile-compact.css";
+if (import.meta.env.DEV && import.meta.env.VITE_BROTE_TEST_WALLET === "true" &&
+    import.meta.env.VITE_SOLANA_NETWORK === "testnet") {
+  await import("./qa-test-wallet").then(({ installBroteTestWallet }) => installBroteTestWallet());
+}
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     {window.location.pathname === "/app" ||
