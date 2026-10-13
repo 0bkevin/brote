@@ -2,6 +2,10 @@ import type { TranslationMessages } from "./types";
 
 /** Validation, persistence, and Solana runtime messages. Spanish is the source language. */
 export const domainMessages: TranslationMessages = {
+  "Cuentas de prueba acompañadas, sin valor monetario y bajo la firma de tu wallet.": { en: "Guided test accounts with no monetary value, authorized by your wallet signature.", pt: "Contas de teste acompanhadas, sem valor monetário e autorizadas pela assinatura da sua wallet." },
+  "Las vistas de demo no son sesiones autenticadas. En testnet, la wallet conectada autoriza las operaciones de prueba sin valor monetario.": { en: "Demo views are not authenticated sessions. On testnet, the connected wallet authorizes test transactions with no monetary value.", pt: "As visualizações da demonstração não são sessões autenticadas. Na testnet, a wallet conectada autoriza operações de teste sem valor monetário." },
+  "Conecta una billetera compatible. Las cuentas de testnet se derivan de la wallet del responsable, quien firma cada movimiento de prueba sin valor monetario.": { en: "Connect a compatible wallet. Testnet accounts are derived from the guardian's wallet, which signs every test transaction with no monetary value.", pt: "Conecte uma wallet compatível. As contas da testnet são derivadas da wallet da pessoa responsável, que assina cada operação de teste sem valor monetário." },
+  "Los IDs de perfiles creados determinan sus direcciones Solana. Guarda una copia antes de reiniciar si creaste cuentas de testnet.": { en: "Created profile IDs determine their Solana addresses. Save a backup before resetting if you created testnet accounts.", pt: "Os IDs dos perfis criados determinam seus endereços Solana. Salve uma cópia antes de redefinir se criou contas da testnet." },
   "La cuenta existe, pero no es una cuenta de sistema vacía. Se bloquearon las operaciones.": { en: "The account exists, but it is not an empty system account. Transactions have been blocked.", pt: "A conta existe, mas não é uma conta de sistema vazia. As operações foram bloqueadas." },
   "El movimiento": { en: "The transaction", pt: "A movimentação" },
   "El RPC devolvió un saldo mínimo exento de renta inválido.": { en: "The RPC returned an invalid rent-exempt minimum balance.", pt: "O RPC retornou um saldo mínimo de isenção de aluguel inválido." },
@@ -65,6 +69,7 @@ export const domainMessages: TranslationMessages = {
   "Esta copia es demasiado grande.": { en: "This backup is too large.", pt: "Esta cópia de segurança é grande demais." },
   "La copia no tiene un formato válido.": { en: "The backup has an invalid format.", pt: "A cópia de segurança está em um formato inválido." },
   "Esta copia no es compatible con Brote.": { en: "This backup is not compatible with Brote.", pt: "Esta cópia de segurança não é compatível com a Brote." },
+  "Esta copia pertenece a otra red Solana. Abre Brote en la red de la copia para restaurarla.": { en: "This backup belongs to a different Solana network. Open Brote on the backup's network to restore it.", pt: "Esta cópia de segurança pertence a outra rede Solana. Abra a Brote na rede da cópia para restaurá-la." },
   "Una transacción firmada no corresponde a la cuenta del perfil indicada en la copia.": { en: "A signed transaction does not match the profile account listed in the backup.", pt: "Uma transação assinada não corresponde à conta do perfil indicada na cópia de segurança." },
   "Una transacción firmada usa una semilla distinta a la del perfil indicado en la copia.": { en: "A signed transaction uses a seed that differs from the profile listed in the backup.", pt: "Uma transação assinada usa uma semente diferente da do perfil indicado na cópia de segurança." },
   "Las transacciones de la copia no coinciden con sus perfiles.": { en: "The backup transactions do not match its profiles.", pt: "As transações da cópia de segurança não correspondem aos perfis." },
@@ -83,6 +88,8 @@ export const domainMessages: TranslationMessages = {
   "La derivación de direcciones requiere HTTPS o localhost.": { en: "Address derivation requires HTTPS or localhost.", pt: "A derivação de endereços requer HTTPS ou localhost." },
   "La semilla excede 32 bytes.": { en: "The seed exceeds 32 bytes.", pt: "A semente excede 32 bytes." },
   "RPC rechazado: el clúster no es Solana mainnet ({genesis}).": { en: "RPC rejected: the cluster is not Solana mainnet ({genesis}).", pt: "RPC rejeitado: o cluster não é a Solana mainnet ({genesis})." },
+  "RPC rechazado: el clúster no es Solana testnet ({genesis}).": { en: "RPC rejected: the cluster is not Solana testnet ({genesis}).", pt: "RPC rejeitado: o cluster não é a Solana testnet ({genesis})." },
+  "VITE_SOLANA_NETWORK inválido: {value}. Usa mainnet o testnet.": { en: "Invalid VITE_SOLANA_NETWORK: {value}. Use mainnet or testnet.", pt: "VITE_SOLANA_NETWORK inválido: {value}. Use mainnet ou testnet." },
   "No se pudo leer el registro local de transacciones. Se bloquearon nuevas operaciones.": { en: "The local transaction record couldn't be read. New operations have been blocked.", pt: "Não foi possível ler o registro local de transações. Novas operações foram bloqueadas." },
   "El registro local de transacciones no se puede interpretar. Se bloquearon nuevas operaciones.": { en: "The local transaction record can't be interpreted. New operations have been blocked.", pt: "Não é possível interpretar o registro local de transações. Novas operações foram bloqueadas." },
   "La transacción firmada no tiene un formato válido.": { en: "The signed transaction has an invalid format.", pt: "A transação assinada está em um formato inválido." },
@@ -108,6 +115,7 @@ export const domainMessages: TranslationMessages = {
   "La firma aún no aparece confirmada. Puedes reenviar exactamente la misma transacción firmada.": { en: "The signature hasn't been confirmed yet. You can resend the exact same signed transaction.", pt: "A assinatura ainda não foi confirmada. Você pode reenviar exatamente a mesma transação assinada." },
 
   "No se encontró la extensión {name}. Instálala y recarga la página.": { en: "The {name} extension wasn't found. Install it and reload the page.", pt: "A extensão {name} não foi encontrada. Instale-a e recarregue a página." },
+  "La billetera de prueba no está disponible.": { en: "The test wallet is unavailable.", pt: "A carteira de teste não está disponível." },
   "El RPC devolvió un saldo que no se puede representar con precisión.": { en: "The RPC returned a balance that can't be represented precisely.", pt: "O RPC retornou um saldo que não pode ser representado com precisão." },
   "Tiempo de espera del RPC agotado.": { en: "The RPC request timed out.", pt: "A solicitação RPC expirou." },
   "VITE_SOLANA_RPC_URL debe usar HTTPS.": { en: "VITE_SOLANA_RPC_URL must use HTTPS.", pt: "VITE_SOLANA_RPC_URL deve usar HTTPS." },
@@ -120,12 +128,15 @@ export const domainMessages: TranslationMessages = {
   "Conecta la billetera del representante para firmar.": { en: "Connect the guardian's wallet to sign.", pt: "Conecte a wallet da pessoa responsável para assinar." },
   "Espera a que termine la operación actual.": { en: "Wait for the current operation to finish.", pt: "Aguarde a operação atual terminar." },
   "Esta cuenta ya existe en mainnet. Actualiza el saldo.": { en: "This account already exists on mainnet. Refresh the balance.", pt: "Esta conta já existe na mainnet. Atualize o saldo." },
+  "Esta cuenta ya existe en testnet. Actualiza el saldo.": { en: "This account already exists on testnet. Refresh the balance.", pt: "Esta conta já existe na testnet. Atualize o saldo." },
   "Saldo insuficiente en la billetera del representante para crear la cuenta y pagar la comisión.": { en: "The guardian's wallet has insufficient funds to create the account and pay the fee.", pt: "A wallet da pessoa responsável não tem saldo suficiente para criar a conta e pagar a taxa." },
   "La cuenta del perfil no existe o no es una cuenta de sistema válida.": { en: "The profile account doesn't exist or isn't a valid system account.", pt: "A conta do perfil não existe ou não é uma conta de sistema válida." },
   "Saldo insuficiente para el depósito y la comisión de red.": { en: "Insufficient funds for the deposit and network fee.", pt: "Saldo insuficiente para o depósito e a taxa de rede." },
   "La dirección de destino debe ser distinta de la cuenta del perfil.": { en: "The destination address must differ from the profile account.", pt: "O endereço de destino deve ser diferente da conta do perfil." },
+  "Introduce una dirección de destino Solana válida.": { en: "Enter a valid Solana destination address.", pt: "Informe um endereço de destino Solana válido." },
   "Saldo insuficiente en la cuenta del perfil.": { en: "Insufficient funds in the profile account.", pt: "Saldo insuficiente na conta do perfil." },
   "El retiro debe dejar la cuenta vacía o conservar su saldo mínimo de rent-exemption.": { en: "The withdrawal must leave the account empty or preserve its rent-exempt minimum balance.", pt: "O saque deve deixar a conta vazia ou manter seu saldo mínimo de isenção de aluguel." },
+  "El retiro es demasiado pequeño para que la cuenta de destino alcance el saldo mínimo exento de renta.": { en: "The withdrawal is too small to bring the destination account to its rent-exempt minimum balance.", pt: "O saque é pequeno demais para que a conta de destino atinja o saldo mínimo de isenção de aluguel." },
   "El representante necesita SOL para la comisión de red.": { en: "The guardian needs SOL to pay the network fee.", pt: "A pessoa responsável precisa de SOL para pagar a taxa de rede." },
   "Operación cancelada.": { en: "Operation cancelled.", pt: "Operação cancelada." },
   "No se encontró la transacción firmada.": { en: "The signed transaction could not be found.", pt: "A transação assinada não foi encontrada." },
@@ -205,6 +216,84 @@ Check the destination carefully. Continue?`,
     pt: `SOLANA MAINNET · SOL real
 
 Sacar {amount} SOL de {name}
+De: {address}
+Para: {destination}
+Assinatura: {guardian}
+A taxa é paga pela wallet da pessoa responsável.
+
+Confira o destino com atenção. Continuar?`,
+  },
+  [`SOLANA TESTNET · SOL de prueba sin valor monetario
+
+Crear cuenta para {name}
+Dirección: {address}
+Desde: {guardian}
+Depósito inicial: {amount} SOL de prueba, más comisión de red.
+
+La billetera del representante deberá firmar. ¿Continuar?`]: {
+    en: `SOLANA TESTNET · Test SOL has no monetary value
+
+Create account for {name}
+Address: {address}
+From: {guardian}
+Initial deposit: {amount} test SOL, plus network fee.
+
+The guardian's wallet will need to sign. Continue?`,
+    pt: `SOLANA TESTNET · SOL de teste não tem valor monetário
+
+Criar conta para {name}
+Endereço: {address}
+De: {guardian}
+Depósito inicial: {amount} SOL de teste, mais taxa de rede.
+
+A wallet da pessoa responsável precisará assinar. Continuar?`,
+  },
+  [`SOLANA TESTNET · SOL de prueba sin valor monetario
+
+Depositar {amount} SOL de prueba para {name}
+Desde: {guardian}
+Hacia: {address}
+Más comisión de red pagada por el representante.
+
+¿Continuar a la firma en tu billetera?`]: {
+    en: `SOLANA TESTNET · Test SOL has no monetary value
+
+Deposit {amount} test SOL for {name}
+From: {guardian}
+To: {address}
+Plus network fee paid by the guardian.
+
+Continue to wallet signing?`,
+    pt: `SOLANA TESTNET · SOL de teste não tem valor monetário
+
+Depositar {amount} SOL de teste para {name}
+De: {guardian}
+Para: {address}
+Mais a taxa de rede paga pela pessoa responsável.
+
+Continuar para a assinatura na sua wallet?`,
+  },
+  [`SOLANA TESTNET · SOL de prueba sin valor monetario
+
+Retirar {amount} SOL de prueba de {name}
+Desde: {address}
+Hacia: {destination}
+Firma: {guardian}
+La comisión se paga desde la billetera del representante.
+
+Verifica cuidadosamente el destino. ¿Continuar?`]: {
+    en: `SOLANA TESTNET · Test SOL has no monetary value
+
+Withdraw {amount} test SOL from {name}
+From: {address}
+To: {destination}
+Signer: {guardian}
+The fee is paid from the guardian's wallet.
+
+Check the destination carefully. Continue?`,
+    pt: `SOLANA TESTNET · SOL de teste não tem valor monetário
+
+Sacar {amount} SOL de teste de {name}
 De: {address}
 Para: {destination}
 Assinatura: {guardian}

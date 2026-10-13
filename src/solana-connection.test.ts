@@ -6,6 +6,8 @@ import {
   mergeVerifiedReads,
   retryReadOnVerifiedFallback,
   verifyMainnetConnection,
+  verifySolanaConnection,
+  WrongSolanaClusterError,
 } from "./solana-connection";
 
 function deferred<T>() {
@@ -121,6 +123,22 @@ test("an official read failure retries once through a freshly verified public fa
   assert.equal(selected.connection, fallback);
   assert.equal(selected.result.balance, 42);
   assert.equal(selected.usedFallback, true);
+});
+
+test("testnet verification rejects another genesis before reading a blockhash", async () => {
+  const expected = "4uhcVJyU9pJkvQyS88uRDiswHXSCkY3zQawwpjk2NsNY";
+  let blockhashReads = 0;
+  const connection = {
+    getGenesisHash: async () => expected,
+    getLatestBlockhash: async () => { blockhashReads++; return {}; },
+  };
+  assert.equal(await verifySolanaConnection(connection, expected, "Solana testnet"), connection);
+  assert.equal(blockhashReads, 1);
+  await assert.rejects(
+    verifySolanaConnection({ ...connection, getGenesisHash: async () => "wrong" }, expected, "Solana testnet"),
+    (error: unknown) => error instanceof WrongSolanaClusterError && /Solana testnet/.test(error.message),
+  );
+  assert.equal(blockhashReads, 1);
 });
 
 test("wrong-genesis fallback and configured RPC preserve partial unknown reads", async () => {

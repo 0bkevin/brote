@@ -534,3 +534,15 @@ test("the journal accepts actual create and withdraw transactions with the deriv
     assert.equal(journal.read()[0].kind, kind);
   }
 });
+
+test("testnet operation journals do not read or change the mainnet journal", async () => {
+  const storage = memoryStorage();
+  const fx = fixture("deposit", storage);
+  await fx.submit();
+  const original = fx.journal.read();
+  const isolated = new OperationJournal(storage, "brote:solana:testnet:operations:v1");
+  assert.deepEqual(isolated.read(), []);
+  isolated.merge(original);
+  assert.equal(isolated.read()[0].state, "pending");
+  assert.deepEqual(fx.journal.read(), original);
+});

@@ -48,6 +48,8 @@ export default function SolanaPanel({
 }: Props) {
   const { t, locale } = useI18n();
   const chain = useSolana();
+  const testnet = chain.network === "Solana testnet";
+  const solUnit = testnet ? t("SOL de prueba") : "SOL";
   const [profileId, setProfileId] = useState(
     selectedWalletId ?? wallets[0]?.id ?? "",
   );
@@ -156,14 +158,15 @@ export default function SolanaPanel({
     <section className="solana-panel card" aria-labelledby="solana-heading">
       <header className="solana-panel__head">
         <div>
-          <span className="eyebrow">{t("Dinero real")}</span>
+          <span className="eyebrow">{testnet ? t("Pruebas · sin valor monetario") : t("Dinero real")}</span>
           <h2 id="solana-heading">{t("Cuentas en Solana")}</h2>
           <p className="muted">
             {t("Cada perfil tiene una dirección propia. La billetera del representante controla los movimientos.")} </p>
         </div>
         <span className="solana-network">
-          <span className="solana-network__dot" /> {t("Solana mainnet")} </span>
+          <span className="solana-network__dot" /> {t(chain.network)} </span>
       </header>
+      {testnet && <p className="solana-note" role="status">{t("Red de prueba: el SOL de prueba no tiene valor monetario.")}</p>}
 
       <div className="solana-status" aria-live="polite">
         <div className="solana-status__icon">
@@ -185,7 +188,7 @@ export default function SolanaPanel({
           {chain.observedAddress && (
             <span>
               {t("Saldo de la dirección consultada:")}{" "}
-              {sol(chain.observedBalanceLamports)} SOL
+              {sol(chain.observedBalanceLamports)} {solUnit}
             </span>
           )}
         </div>
@@ -349,7 +352,7 @@ export default function SolanaPanel({
                 <span className="muted">{t("Saldo verificado de")} {wallet.name}</span>
                 <strong>
                   {account ? sol(account.balanceLamports) : "—"}{" "}
-                  <small>SOL</small>
+                  <small>{solUnit}</small>
                 </strong>
                 <span className="solana-account__state">
                   {loading && !account
@@ -359,12 +362,12 @@ export default function SolanaPanel({
                         ? t("Cuenta incompatible para operaciones")
                         : t("Estado no disponible")
                     : account?.exists === true
-                      ? t("Cuenta activa en mainnet")
+                      ? t(testnet ? "Cuenta activa en testnet" : "Cuenta activa en mainnet")
                       : account?.exists === false
                         ? t("Cuenta aún no creada")
                         : account
                           ? t("Estado no disponible")
-                          : t("Esperando datos de mainnet")}
+                          : t(testnet ? "Esperando datos de testnet" : "Esperando datos de mainnet")}
                 </span>
               </div>
               {account && (
@@ -416,7 +419,7 @@ export default function SolanaPanel({
                       onClick={() =>
                         void act(
                           () => chain.createProfile(wallet),
-                          t("Cuenta creada y confirmada en mainnet."),
+                          t(testnet ? "Cuenta creada y confirmada en testnet." : "Cuenta creada y confirmada en mainnet."),
                         )
                       }
                     >
@@ -431,7 +434,7 @@ export default function SolanaPanel({
                         event.preventDefault();
                         void act(
                           () => chain.deposit(wallet, depositAmount),
-                          t("Depósito confirmado en mainnet."),
+                          t(testnet ? "Depósito confirmado en testnet." : "Depósito confirmado en mainnet."),
                         );
                       }}
                     >
@@ -439,7 +442,7 @@ export default function SolanaPanel({
                         <ArrowDownLeft size={19} aria-hidden="true" />
                         <h3>{t("Depositar")}</h3>
                       </div>
-                      <label htmlFor="solana-deposit">{t("Monto en SOL")}</label>
+                      <label htmlFor="solana-deposit">{t(testnet ? "Monto en SOL de prueba" : "Monto en SOL")}</label>
                       <input
                         id="solana-deposit"
                         type="text"
@@ -469,7 +472,7 @@ export default function SolanaPanel({
                         void act(
                           () =>
                             chain.withdraw(wallet, withdrawAmount, destination),
-                          t("Retiro confirmado en mainnet."),
+                          t(testnet ? "Retiro confirmado en testnet." : "Retiro confirmado en mainnet."),
                         );
                       }}
                     >
@@ -477,7 +480,7 @@ export default function SolanaPanel({
                         <ArrowUpRight size={19} aria-hidden="true" />
                         <h3>{t("Retirar")}</h3>
                       </div>
-                      <label htmlFor="solana-withdraw">{t("Monto en SOL")}</label>
+                      <label htmlFor="solana-withdraw">{t(testnet ? "Monto en SOL de prueba" : "Monto en SOL")}</label>
                       <input
                         id="solana-withdraw"
                         type="text"
@@ -534,7 +537,7 @@ export default function SolanaPanel({
           {account && (
             <div className="solana-history">
               <div className="solana-history__heading">
-                <h3>{t("Actividad en mainnet")}</h3>
+                <h3>{t(testnet ? "Actividad en testnet" : "Actividad en mainnet")}</h3>
                 <span className="muted">
                   {t("Últimas 8 firmas que incluyen esta dirección")} </span>
               </div>
@@ -584,7 +587,7 @@ export default function SolanaPanel({
                       {entry.changeLamports !== null && (
                         <strong>
                           {entry.changeLamports > 0 ? "+" : ""}
-                          {sol(entry.changeLamports)} SOL
+                          {sol(entry.changeLamports)} {solUnit}
                         </strong>
                       )}
                       <a
@@ -605,7 +608,9 @@ export default function SolanaPanel({
       )}
 
       <p className="solana-footnote">
-        {t("Los perfiles son cuentas de sistema controladas técnicamente por la billetera del representante. Consultar no reserva fondos; cada operación real necesita su firma y puede pagar comisión de red. Las actividades de práctica de Brote son independientes de SOL.")} </p>
+        {t(testnet
+          ? "Los perfiles son cuentas de sistema de testnet controladas por la billetera del representante. El SOL de prueba no tiene valor monetario; cada operación necesita su firma y puede pagar una comisión de prueba."
+          : "Los perfiles son cuentas de sistema controladas técnicamente por la billetera del representante. Consultar no reserva fondos; cada operación real necesita su firma y puede pagar comisión de red. Las actividades de práctica de Brote son independientes de SOL.")} </p>
     </section>
   );
 }

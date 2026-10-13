@@ -48,15 +48,25 @@ export class LatestRequest {
 
 export type ReadResult = { failedReads: number };
 
-export async function verifyMainnetConnection<Connection extends {
+export class WrongSolanaClusterError extends Error {}
+
+export async function verifySolanaConnection<Connection extends {
+  getGenesisHash: () => Promise<string>;
+  getLatestBlockhash: (commitment: "confirmed") => Promise<unknown>;
+}>(connection: Connection, expectedGenesis: string, networkLabel: string): Promise<Connection> {
+  const genesis = await connection.getGenesisHash();
+  if (genesis !== expectedGenesis)
+    throw new WrongSolanaClusterError(`RPC rechazado: el clúster no es ${networkLabel} (${genesis}).`);
+  await connection.getLatestBlockhash("confirmed");
+  return connection;
+}
+
+/** Kept for existing mainnet consumers and tests. */
+export function verifyMainnetConnection<Connection extends {
   getGenesisHash: () => Promise<string>;
   getLatestBlockhash: (commitment: "confirmed") => Promise<unknown>;
 }>(connection: Connection, mainnetGenesis: string): Promise<Connection> {
-  const genesis = await connection.getGenesisHash();
-  if (genesis !== mainnetGenesis)
-    throw new Error(`RPC rechazado: el clúster no es Solana mainnet (${genesis}).`);
-  await connection.getLatestBlockhash("confirmed");
-  return connection;
+  return verifySolanaConnection(connection, mainnetGenesis, "Solana mainnet");
 }
 
 /** A public read may move to the fallback only after a fresh verification. */

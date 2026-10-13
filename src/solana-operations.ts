@@ -33,12 +33,12 @@ export function base64ToBytes(value: string): Uint8Array {
 }
 
 export class OperationJournal {
-  constructor(private readonly storage: OperationStorage) {}
+  constructor(private readonly storage: OperationStorage, private readonly storageKey = SOLANA_OPERATIONS_KEY) {}
 
   read(): SignedOperation[] {
     let raw: string | null;
     try {
-      raw = this.storage.getItem(SOLANA_OPERATIONS_KEY);
+      raw = this.storage.getItem(this.storageKey);
     } catch {
       throw new Error("No se pudo leer el registro local de transacciones. Se bloquearon nuevas operaciones.");
     }
@@ -83,7 +83,7 @@ export class OperationJournal {
     let terminal = 0;
     const next = records.filter((record) => record.state === "pending" || ++terminal <= MAX_TERMINAL_RECORDS);
     try {
-      this.storage.setItem(SOLANA_OPERATIONS_KEY, JSON.stringify(next));
+      this.storage.setItem(this.storageKey, JSON.stringify(next));
     } catch {
       throw new Error("No se pudo guardar el registro de la transacción. Se conservará el resultado anterior; verifica la firma antes de operar de nuevo.");
     }

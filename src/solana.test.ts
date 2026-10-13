@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { PublicKey, SystemProgram } from "@solana/web3.js";
-import { encodeBase58, hasValidSystemAccountRemainder, parseSolLamports, seedFor } from "./solana-utils";
+import { encodeBase58, hasRentExemptDestinationBalance, hasValidSystemAccountRemainder, parseSolLamports, seedFor } from "./solana-utils";
 
 test("profile seed is stable, distinct and within createWithSeed limit", async () => {
   const first = await seedFor("sofia");
@@ -34,6 +34,30 @@ test("profile withdrawals may empty an account or leave it rent-exempt, never re
   assert.equal(hasValidSystemAccountRemainder(2_000_000, 1_109_120, minimum), true);
   assert.equal(hasValidSystemAccountRemainder(2_000_000, 1_109_121, minimum), false);
   assert.equal(hasValidSystemAccountRemainder(2_000_000, 2_000_001, minimum), false);
+});
+
+test("withdrawal destination must reach its data-size rent minimum", () => {
+  const emptyAccountMinimum = 890_880;
+  assert.equal(hasRentExemptDestinationBalance(0, emptyAccountMinimum - 1, emptyAccountMinimum), false);
+  assert.equal(hasRentExemptDestinationBalance(0, emptyAccountMinimum, emptyAccountMinimum), true);
+  assert.equal(hasRentExemptDestinationBalance(800_000, 90_880, emptyAccountMinimum), true);
+  assert.equal(hasRentExemptDestinationBalance(800_000, 90_879, emptyAccountMinimum), false);
+
+  const dataAccountMinimum = 1_002_240;
+  assert.equal(hasRentExemptDestinationBalance(1_000_000, 2_239, dataAccountMinimum), false);
+  assert.equal(hasRentExemptDestinationBalance(1_000_000, 2_240, dataAccountMinimum), true);
+  assert.equal(hasRentExemptDestinationBalance(emptyAccountMinimum, 1, emptyAccountMinimum), true);
+});
+
+test("destination rent check rejects unsafe RPC balances and amounts", () => {
+  for (const values of [
+    [-1, 1, 1], [0, 0, 0], [0, 1, 0], [0, -1, 0], [0, 1, -1],
+    [Number.MAX_SAFE_INTEGER + 1, 1, 1], [0, Number.MAX_SAFE_INTEGER + 1, 1],
+    [0, 1, Number.MAX_SAFE_INTEGER + 1], [NaN, 1, 1],
+  ] as const) {
+    assert.equal(hasRentExemptDestinationBalance(values[0], values[1], values[2]), false);
+  }
+  assert.equal(hasRentExemptDestinationBalance(Number.MAX_SAFE_INTEGER, 1, Number.MAX_SAFE_INTEGER), true);
 });
 
 test("localized SOL input accepts either decimal separator without losing lamports", () => {

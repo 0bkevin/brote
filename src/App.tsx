@@ -630,7 +630,9 @@ export default function App() {
               </h1>
               <p>
                 {mode === "crypto"
-                  ? t("Cuentas reales acompañadas, bajo la firma de tu wallet.")
+                  ? t(chain.network === "Solana testnet"
+                    ? "Cuentas de prueba acompañadas, sin valor monetario y bajo la firma de tu wallet."
+                    : "Cuentas reales acompañadas, bajo la firma de tu wallet.")
                   : page === "home"
                     ? t("Acompaña sus decisiones de hoy. Celebra sus hábitos de mañana.")
                     : page === "wallets"
@@ -644,7 +646,7 @@ export default function App() {
             </div>
             <span className="network-badge">
               <i />
-              {mode === "crypto" ? "Solana mainnet" : t("Brote · demo web")}
+              {mode === "crypto" ? t(chain.network) : t("Brote · demo web")}
             </span>
           </div>
           {mode === "crypto" ? (
@@ -903,7 +905,9 @@ export default function App() {
                       {t("Los perfiles y Brotes se guardan en este navegador. Puedes cambiar de vista para conocer la experiencia de cada persona.")}
                     </p>
                     <p>
-                      {t("Las vistas de demo no son sesiones autenticadas. En Solana, la wallet conectada autoriza las operaciones reales.")}
+                      {t(chain.network === "Solana testnet"
+                        ? "Las vistas de demo no son sesiones autenticadas. En testnet, la wallet conectada autoriza las operaciones de prueba sin valor monetario."
+                        : "Las vistas de demo no son sesiones autenticadas. En Solana, la wallet conectada autoriza las operaciones reales.")}
                     </p>
                     <button
                       className="button button-secondary"
@@ -941,7 +945,7 @@ export default function App() {
             <span>
               {mode === "practice"
                 ? t("B = Brotes de práctica · sin valor monetario")
-                : t("SOL real · Solana mainnet")}
+                : t(chain.network === "Solana testnet" ? "SOL de prueba · Solana testnet · sin valor monetario" : "SOL real · Solana mainnet")}
             </span>
           </footer>
         </main>
@@ -992,7 +996,9 @@ export default function App() {
               <section>
                 <h3>{t("Después, conecta con Solana")}</h3>
                 <p>
-                  {t("Conecta Phantom o Solflare. Las cuentas del círculo se derivan de la wallet del responsable, quien firma cada movimiento real.")}
+                  {t(chain.network === "Solana testnet"
+                    ? "Conecta una billetera compatible. Las cuentas de testnet se derivan de la wallet del responsable, quien firma cada movimiento de prueba sin valor monetario."
+                    : "Conecta Phantom o Solflare. Las cuentas del círculo se derivan de la wallet del responsable, quien firma cada movimiento real.")}
                 </p>
               </section>
             </div>
@@ -1023,7 +1029,9 @@ export default function App() {
             {t("Se reemplazarán los perfiles y la actividad de práctica de este navegador por los ejemplos iniciales. Los fondos Solana no se mueven.")}
           </p>
           <p className="form-note">
-            {t("Los IDs de perfiles creados determinan sus direcciones Solana. Guarda una copia antes de reiniciar si creaste cuentas reales.")}
+            {t(chain.network === "Solana testnet"
+              ? "Los IDs de perfiles creados determinan sus direcciones Solana. Guarda una copia antes de reiniciar si creaste cuentas de testnet."
+              : "Los IDs de perfiles creados determinan sus direcciones Solana. Guarda una copia antes de reiniciar si creaste cuentas reales.")}
           </p>
           <div className="modal-actions">
             <button

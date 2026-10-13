@@ -28,6 +28,17 @@ export function hasValidSystemAccountRemainder(
   return remaining === 0 || remaining >= minimumBalanceLamports;
 }
 
+/** A transfer must fund its destination to the rent-exempt minimum for its data size. */
+export function hasRentExemptDestinationBalance(
+  balanceLamports: number,
+  transferLamports: number,
+  minimumBalanceLamports: number,
+): boolean {
+  if (![balanceLamports, transferLamports, minimumBalanceLamports].every(Number.isSafeInteger) ||
+      balanceLamports < 0 || transferLamports <= 0 || minimumBalanceLamports <= 0) return false;
+  return BigInt(balanceLamports) + BigInt(transferLamports) >= BigInt(minimumBalanceLamports);
+}
+
 export async function seedFor(walletId: string): Promise<string> {
   if (!globalThis.crypto?.subtle)
     throw new Error("La derivación de direcciones requiere HTTPS o localhost.");

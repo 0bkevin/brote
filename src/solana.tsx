@@ -18,11 +18,11 @@ import {
 import type { Wallet } from "./types";
 import { translate } from "./i18n-core";
 import { useStore } from "./store";
-import { hasValidSystemAccountRemainder, parseSolLamports, seedFor } from "./solana-utils";
-import { ConnectionRequests, mergeVerifiedReads, retryReadOnVerifiedFallback, verifyMainnetConnection } from "./solana-connection";
+import { hasRentExemptDestinationBalance, hasValidSystemAccountRemainder, parseSolLamports, seedFor } from "./solana-utils";
+import { ConnectionRequests, WrongSolanaClusterError, mergeVerifiedReads, retryReadOnVerifiedFallback, verifySolanaConnection } from "./solana-connection";
+import { SOLANA_NETWORK } from "./solana-network";
 import {
   OperationJournal,
-  SOLANA_OPERATIONS_KEY,
   SigningSession,
   assertFinalTransactionFunds,
   estimateTransactionFee,
@@ -33,12 +33,10 @@ import {
   type SignedOperation,
 } from "./solana-operations";
 
-const MAINNET_RPC = "https://api.mainnet.solana.com";
 const PUBLIC_FALLBACK_RPC = "https://solana-rpc.publicnode.com";
-const MAINNET_GENESIS = "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d";
 const COMMITMENT = "confirmed" as const;
 
-type WalletName = "Phantom" | "Solflare";
+type WalletName = "Phantom" | "Solflare" | "Test wallet";
 type InjectedWallet = {
   isPhantom?: boolean;
   isSolflare?: boolean;
@@ -55,6 +53,7 @@ declare global {
     phantom?: { solana?: InjectedWallet };
     solflare?: InjectedWallet;
     solana?: InjectedWallet;
+    broteTestWallet?: InjectedWallet;
   }
 }
 
@@ -86,7 +85,7 @@ export type ChainReceipt = {
 export { UnconfirmedTransactionError } from "./solana-operations";
 
 export type SolanaAPI = {
-  network: "Solana mainnet";
+  network: typeof SOLANA_NETWORK.label;
   rpcUrl: string | null;
   rpcNotice: string | null;
   rpcError: string | null;
@@ -123,10 +122,20 @@ function discoverWallets(): WalletName[] {
   if (window.phantom?.solana?.isPhantom || window.solana?.isPhantom)
     found.push("Phantom");
   if (window.solflare?.isSolflare) found.push("Solflare");
+  if (testWalletEnabled() && window.broteTestWallet) found.push("Test wallet");
   return found;
 }
 
+function testWalletEnabled(): boolean {
+  return import.meta.env.DEV && import.meta.env.VITE_BROTE_TEST_WALLET === "true" && SOLANA_NETWORK.cluster === "testnet";
+}
+
 function injected(name: WalletName): InjectedWallet {
+  if (name === "Test wallet") {
+    if (!testWalletEnabled() || !window.broteTestWallet)
+      throw new Error("La billetera de prueba no está disponible.");
+    return window.broteTestWallet;
+  }
   const wallet =
     name === "Phantom"
       ? (window.phantom?.solana ??
@@ -204,15 +213,15 @@ async function checkedConnection(url: string): Promise<Connection> {
       }
     },
   });
-  return verifyMainnetConnection(connection, MAINNET_GENESIS);
+  return verifySolanaConnection(connection, SOLANA_NETWORK.genesis, SOLANA_NETWORK.label);
 }
 
 function explorerAccount(address: string) {
-  return `https://explorer.solana.com/address/${address}`;
+  return `https://explorer.solana.com/address/${address}${SOLANA_NETWORK.cluster === "testnet" ? "?cluster=testnet" : ""}`;
 }
 
 export function transactionExplorer(signature: string) {
-  return `https://explorer.solana.com/tx/${signature}`;
+  return `https://explorer.solana.com/tx/${signature}${SOLANA_NETWORK.cluster === "testnet" ? "?cluster=testnet" : ""}`;
 }
 
 export { explorerAccount };
@@ -248,7 +257,7 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
   const observedAddress = connectedAddress ?? watchedAddress;
 
   const journal = useCallback(() => {
-    if (!journalRef.current) journalRef.current = new OperationJournal(window.localStorage);
+    if (!journalRef.current) journalRef.current = new OperationJournal(window.localStorage, SOLANA_NETWORK.operationsKey);
     return journalRef.current;
   }, []);
 
@@ -267,7 +276,7 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
     }
     };
     const changed = (event: StorageEvent) => {
-      if (event.key === SOLANA_OPERATIONS_KEY || event.key === null) sync();
+      if (event.key === SOLANA_NETWORK.operationsKey || event.key === null) sync();
     };
     sync();
     window.addEventListener("storage", changed);
@@ -328,7 +337,7 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
     if (connectionPromiseRef.current) return connectionPromiseRef.current;
     const pending = (async () => {
       const configured = import.meta.env.VITE_SOLANA_RPC_URL?.trim();
-      const primary = configured || MAINNET_RPC;
+      const primary = configured || SOLANA_NETWORK.rpcUrl;
       if (!/^https:\/\//i.test(primary))
         throw new Error("VITE_SOLANA_RPC_URL debe usar HTTPS.");
       try {
@@ -340,7 +349,7 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
         return connection;
       } catch (error) {
         const message = errorText(error);
-        if (configured || message.includes("clúster no es")) {
+        if (SOLANA_NETWORK.cluster !== "mainnet" || configured || error instanceof WrongSolanaClusterError) {
           setRpcError(message);
           throw error;
         }
@@ -608,11 +617,12 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
       const balance = await balancePromise;
       return { profiles, balance, failedReads };
       };
-      const configured = !!import.meta.env.VITE_SOLANA_RPC_URL?.trim();
+      // Testnet has no approved fallback; a failed read must stay unknown.
+      const configured = SOLANA_NETWORK.cluster !== "mainnet" || !!import.meta.env.VITE_SOLANA_RPC_URL?.trim();
       const selected = await retryReadOnVerifiedFallback({
         primary: connection,
         primaryUrl: connection.rpcEndpoint,
-        officialUrl: MAINNET_RPC,
+        officialUrl: SOLANA_NETWORK.rpcUrl,
         configured,
         verifyFallback: () => checkedConnection(PUBLIC_FALLBACK_RPC),
         read,
@@ -735,9 +745,9 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
         const { connection, guardian } = await requireSigner(session);
         const { seed, key } = await derive(wallet.id, guardian);
         if (await connection.getAccountInfo(key, COMMITMENT))
-          throw new Error(
-            "Esta cuenta ya existe en mainnet. Actualiza el saldo.",
-          );
+          throw new Error(SOLANA_NETWORK.cluster === "testnet"
+            ? "Esta cuenta ya existe en testnet. Actualiza el saldo."
+            : "Esta cuenta ya existe en mainnet. Actualiza el saldo.");
         const lamports = safeLamports(
           await connection.getMinimumBalanceForRentExemption(0, COMMITMENT),
         );
@@ -762,7 +772,9 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
           );
         if (
           !window.confirm(
-            translate(`SOLANA MAINNET · SOL real\n\nCrear cuenta para ${wallet.name}\nDirección: ${key.toBase58()}\nDesde: ${guardian.toBase58()}\nDepósito inicial: ${(lamports / LAMPORTS_PER_SOL).toFixed(9)} SOL, más comisión de red.\n\nLa billetera del representante deberá firmar. ¿Continuar?`),
+            translate(SOLANA_NETWORK.cluster === "testnet"
+              ? `SOLANA TESTNET · SOL de prueba sin valor monetario\n\nCrear cuenta para ${wallet.name}\nDirección: ${key.toBase58()}\nDesde: ${guardian.toBase58()}\nDepósito inicial: ${(lamports / LAMPORTS_PER_SOL).toFixed(9)} SOL de prueba, más comisión de red.\n\nLa billetera del representante deberá firmar. ¿Continuar?`
+              : `SOLANA MAINNET · SOL real\n\nCrear cuenta para ${wallet.name}\nDirección: ${key.toBase58()}\nDesde: ${guardian.toBase58()}\nDepósito inicial: ${(lamports / LAMPORTS_PER_SOL).toFixed(9)} SOL, más comisión de red.\n\nLa billetera del representante deberá firmar. ¿Continuar?`),
           )
         )
           throw new Error("Operación cancelada.");
@@ -806,7 +818,9 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
           );
         if (
           !window.confirm(
-            translate(`SOLANA MAINNET · SOL real\n\nDepositar ${amountSol} SOL para ${wallet.name}\nDesde: ${guardian.toBase58()}\nHacia: ${key.toBase58()}\nMás comisión de red pagada por el representante.\n\n¿Continuar a la firma en tu billetera?`),
+            translate(SOLANA_NETWORK.cluster === "testnet"
+              ? `SOLANA TESTNET · SOL de prueba sin valor monetario\n\nDepositar ${amountSol} SOL de prueba para ${wallet.name}\nDesde: ${guardian.toBase58()}\nHacia: ${key.toBase58()}\nMás comisión de red pagada por el representante.\n\n¿Continuar a la firma en tu billetera?`
+              : `SOLANA MAINNET · SOL real\n\nDepositar ${amountSol} SOL para ${wallet.name}\nDesde: ${guardian.toBase58()}\nHacia: ${key.toBase58()}\nMás comisión de red pagada por el representante.\n\n¿Continuar a la firma en tu billetera?`),
           )
         )
           throw new Error("Operación cancelada.");
@@ -821,7 +835,12 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
       run(async (session) => {
         const { connection, guardian } = await requireSigner(session);
         const lamports = parseSolLamports(amountSol);
-        const toPubkey = new PublicKey(destination.trim());
+        let toPubkey: PublicKey;
+        try {
+          toPubkey = new PublicKey(destination.trim());
+        } catch {
+          throw new Error("Introduce una dirección de destino Solana válida.");
+        }
         const { seed, key } = await derive(wallet.id, guardian);
         if (toPubkey.equals(key))
           throw new Error(
@@ -846,6 +865,15 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
           throw new Error(
             "El retiro debe dejar la cuenta vacía o conservar su saldo mínimo de rent-exemption.",
           );
+        const destinationAccount = await connection.getAccountInfo(toPubkey, COMMITMENT);
+        const destinationBalance = safeLamports(destinationAccount?.lamports ?? 0);
+        const destinationMinimum = safeLamports(
+          await connection.getMinimumBalanceForRentExemption(destinationAccount?.data.length ?? 0, COMMITMENT),
+        );
+        if (destinationMinimum === 0)
+          throw new Error("El RPC devolvió un saldo mínimo exento de renta inválido.");
+        if (!hasRentExemptDestinationBalance(destinationBalance, lamports, destinationMinimum))
+          throw new Error("El retiro es demasiado pequeño para que la cuenta de destino alcance el saldo mínimo exento de renta.");
         const transaction = new Transaction().add(
           SystemProgram.transfer({
             fromPubkey: key,
@@ -865,7 +893,9 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
           );
         if (
           !window.confirm(
-            translate(`SOLANA MAINNET · SOL real\n\nRetirar ${amountSol} SOL de ${wallet.name}\nDesde: ${key.toBase58()}\nHacia: ${toPubkey.toBase58()}\nFirma: ${guardian.toBase58()}\nLa comisión se paga desde la billetera del representante.\n\nVerifica cuidadosamente el destino. ¿Continuar?`),
+            translate(SOLANA_NETWORK.cluster === "testnet"
+              ? `SOLANA TESTNET · SOL de prueba sin valor monetario\n\nRetirar ${amountSol} SOL de prueba de ${wallet.name}\nDesde: ${key.toBase58()}\nHacia: ${toPubkey.toBase58()}\nFirma: ${guardian.toBase58()}\nLa comisión se paga desde la billetera del representante.\n\nVerifica cuidadosamente el destino. ¿Continuar?`
+              : `SOLANA MAINNET · SOL real\n\nRetirar ${amountSol} SOL de ${wallet.name}\nDesde: ${key.toBase58()}\nHacia: ${toPubkey.toBase58()}\nFirma: ${guardian.toBase58()}\nLa comisión se paga desde la billetera del representante.\n\nVerifica cuidadosamente el destino. ¿Continuar?`),
           )
         )
           throw new Error("Operación cancelada.");
@@ -920,7 +950,7 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<SolanaAPI>(
     () => ({
-      network: "Solana mainnet",
+      network: SOLANA_NETWORK.label,
       rpcUrl,
       rpcNotice,
       rpcError,
