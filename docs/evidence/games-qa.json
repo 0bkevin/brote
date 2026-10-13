@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-13",
+  "suite": {
+    "passed": 100,
+    "failed": 0
+  },
+  "browser": {
+    "market_full_three_rounds": true,
+    "market_no_money_unchanged_balance": true,
+    "market_exact_refund": true,
+    "market_replay_without_duplicate_reward": true,
+    "keyboard_start_focus_and_arrow_movement": true,
+    "island_full_four_days": true,
+    "island_work_once_per_day": true,
+    "island_storm_blocks_advance_until_repair": true,
+    "read_only_notice_and_disabled_actions": true,
+    "simple_mode_animation": "none",
+    "profile_after_games": {
+      "name": "Lucas (fictional QA profile)",
+      "xp": 125,
+      "practice_balance": 118,
+      "goal_saved": 20
+    },
+    "viewports": [
+      {
+        "width": 320,
+        "height": 760
+      },
+      {
+        "width": 390,
+        "height": 844
+      },
+      {
+        "width": 1512,
+        "height": 807
+      }
+    ],
+    "languages_inspected": [
+      "es",
+      "en",
+      "pt"
+    ],
+    "mobile_island_action_height": 34
+  },
+  "independent_review": "All reported findings resolved; final source review found no remaining reward/reset/timer issues.",
+  "networks": {
+    "default": "mainnet",
+    "testnet_selection": "/app/?mode=crypto&network=testnet",
+    "storage_and_journals_isolated": true
+  },
+  "video": "Paused at user request; draft retained outside repository."
+}

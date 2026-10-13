@@ -88,3 +88,15 @@ A read-only mainnet RPC check at **2026-10-12 23:41:06 UTC** verified the mainne
 ## Live testnet verification
 
 The subsequent user-authorized testnet run confirmed actual creation, deposits, seeded withdrawals, recovery, and identical-byte rebroadcast. It exposed and corrected testnet backup isolation, BigInt handling in the local QA wallet, destination rent requirements, and invalid destination messages. The final suite passes 87 tests. See [TESTNET_QA.md](TESTNET_QA.md) for signatures and browser evidence. Mainnet funding and external extension UI remain untested.
+
+## Interactive games and production network selection — 2026-10-13
+
+Both mainnet and testnet are publicly selectable through a full navigation; strict URL parsing, per-network RPC overrides, genesis checks, storage keys, backups, and operation journals prevent network mixing. The production bundle excludes the local QA wallet.
+
+Two games replace the shopping/allocation exercises: Market adventure (three walk/shop/refund rounds) and Goal Island (four-day resource and emergency planning). The game engines use fictional currency; the practice ledger saves each achievement once per profile and permits reward-free replays. The digital safety questionnaire remains an extra activity.
+
+The local regression suite passed **100 tests**, including 11 game-engine tests, and the production build passed. Browser playthroughs completed both games, tested refunds and insufficient funds, verified a full market replay with unchanged XP, and checked the island storm gate. Lucas ended with 125 XP and 118 practice Brotes after both new rewards; ordinary game actions did not affect wallet money. Read-only controls were disabled with an explanation; simple mode disabled animation.
+
+Independent reviews found clipped game content and misleading/missing read-only copy. The game body now scrolls below its fixed header, and both games explain the tab's read-only state. Root visual checks confirmed reachable controls at 320 and 390px, 34px island action buttons, no horizontal overflow, English market copy, and Portuguese island copy. No unresolved reward, reset, or timer findings remained in the final source review.
+
+See [game rules](GAMES.md), [machine-readable QA evidence](evidence/games-qa.json), and the new game screenshots in `docs/assets`. The motion-graphics video was paused at the user's request; its drafts are kept outside the repository.

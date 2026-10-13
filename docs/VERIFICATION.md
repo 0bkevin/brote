@@ -95,3 +95,15 @@ The final local suite passes **73 tests** and `npm run build`. See [LOCALIZATION
 ## Live testnet completion
 
 The user subsequently authorized a disposable testnet wallet and faucet funding. Confirmed on-chain evidence and browser results are recorded in [TESTNET_QA.md](TESTNET_QA.md). The final regression suite passes 87 tests; both selected-cluster builds compile. Test funds have no monetary value.
+
+## Interactive games and production network selection — 2026-10-13
+
+Both mainnet and testnet are publicly selectable through a full navigation; strict URL parsing, per-network RPC overrides, genesis checks, storage keys, backups, and operation journals prevent network mixing. The production bundle excludes the local QA wallet.
+
+Two games replace the shopping/allocation exercises: Market adventure (three walk/shop/refund rounds) and Goal Island (four-day resource and emergency planning). The game engines use fictional currency; the practice ledger saves each achievement once per profile and permits reward-free replays. The digital safety questionnaire remains an extra activity.
+
+The local regression suite passed **100 tests**, including 11 game-engine tests, and the production build passed. Browser playthroughs completed both games, tested refunds and insufficient funds, verified a full market replay with unchanged XP, and checked the island storm gate. Lucas ended with 125 XP and 118 practice Brotes after both new rewards; ordinary game actions did not affect wallet money. Read-only controls were disabled with an explanation; simple mode disabled animation.
+
+Independent reviews found clipped game content and misleading/missing read-only copy. The game body now scrolls below its fixed header, and both games explain the tab's read-only state. Root visual checks confirmed reachable controls at 320 and 390px, 34px island action buttons, no horizontal overflow, English market copy, and Portuguese island copy. No unresolved reward, reset, or timer findings remained in the final source review.
+
+See [game rules](GAMES.md), [machine-readable QA evidence](evidence/games-qa.json), and the new game screenshots in `docs/assets`. The motion-graphics video was paused at the user's request; its drafts are kept outside the repository.

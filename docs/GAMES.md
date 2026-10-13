@@ -23,3 +23,7 @@ The digital-safety questionnaire remains an additional activity below the two ga
 - Independent reviews found clipping/read-only copy issues; those were corrected and reviewed again. No unresolved engine, reward, reset, or timer findings remained in the final source review.
 
 The development test wallet is excluded from production. The production app separately offers mainnet and testnet; games do not require a crypto wallet.
+
+![Market adventure desktop gameplay](assets/market-desktop.png)
+
+<img src="assets/island-mobile-320.png" width="320" alt="Goal Island with compact mobile controls">
