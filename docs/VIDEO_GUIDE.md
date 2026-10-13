@@ -1,57 +1,62 @@
-# Instructional videos
+# English video guides
 
-[Watch both guides](https://brote-three.vercel.app/guide/) or download the MP4 and subtitle files from that page. The primary guide covers the complete app; the games guide is an optional extra. Both use Spanish narration, animated instructions, real app captures, camera zooms in and out, and burnt captions. The gallery supports Spanish, English, and Brazilian Portuguese.
+The English walkthrough is the primary guide in the [video gallery](https://brote-three.vercel.app/guide/). Download the [full walkthrough](https://brote-three.vercel.app/media/brote-walkthrough-en.mp4), [English subtitles](https://brote-three.vercel.app/media/brote-walkthrough-en.srt) ([WebVTT](https://brote-three.vercel.app/media/brote-walkthrough-en.vtt)), or the [quick app teaser](https://brote-three.vercel.app/media/brote-teaser-en.mp4) with its [SRT](https://brote-three.vercel.app/media/brote-teaser-en.srt) and [WebVTT](https://brote-three.vercel.app/media/brote-teaser-en.vtt). The older Spanish walkthrough and games guide remain archived at their original media URLs.
 
-| Video | Runtime | Format |
-| --- | --- | --- |
-| Complete app guide | 2:52 | 1920 × 1080, 16:9, 24 fps, H.264/AAC |
-| Interactive games guide | 1:02 | 1920 × 1080, 16:9, 24 fps, H.264/AAC |
+Both English films are 1920 × 1080, 16:9, 30 fps, H.264 video, and AAC stereo at 48 kHz. They use real browser recordings, full-page contain scaling with no crop or zoom, small chapter tags, on-screen captions, and downloadable subtitle tracks. The full walkthrough runs 2:19; the teaser runs 0:49.
 
-## Complete app chapters
+## Walkthrough chapters
 
 | Start | Chapter |
 | --- | --- |
-| 0:00 | El dinero se aprende. En equipo. |
-| 0:10 | Un espacio para cada persona. |
-| 0:22 | Dale Brotes para empezar. |
-| 0:34 | Un sueño. Un primer paso. |
-| 0:46 | Detective digital. |
-| 0:58 | Mercado aventura. |
-| 1:12 | Isla de las metas. |
-| 1:26 | Cada movimiento cuenta. |
-| 1:41 | Elige tu red. |
-| 1:53 | Tu wallet. Tu firma. |
-| 2:06 | Deposita. Retira. Verifica. |
-| 2:19 | Conserva su camino. |
-| 2:32 | También desde el móvil. |
-| 2:42 | Tu próxima aventura empieza aquí. |
+| 0:00 | Learn. Play. Grow. |
+| 0:04 | Create your circle |
+| 0:12 | Give them practice Brotes |
+| 0:19 | Save toward a goal |
+| 0:25 | Market Adventure |
+| 0:39 | Goal Island |
+| 0:52 | Digital Detective |
+| 0:59 | Practice a purchase |
+| 1:08 | Review every decision |
+| 1:15 | Guide at their pace |
+| 1:22 | Choose your Solana network |
+| 1:28 | Guardian-controlled testnet account |
+| 1:37 | Review before signing |
+| 1:47 | Verify in Solana Explorer |
+| 1:56 | Keep their progress |
+| 2:05 | Make Brote yours |
+| 2:14 | Try Brote |
 
-The walkthrough includes creating profiles and adult consent, assigning fictional Brotes, saving toward goals, the digital safety lesson, Market adventure, Goal Island, practice expense requests and approvals, CSV exports, mainnet/testnet selection, guardian-controlled Solana accounts, deposits and withdrawals, Explorer receipts, backups, demo perspectives, languages, and the mobile side menu.
+The walkthrough demonstrates creating profiles and confirming consent for adult learners; assigning practice Brotes; setting goals; Market Adventure, Goal Island, and Digital Detective; practice expense requests, approvals, history, and CSV export; guidance controls; mainnet/testnet selection; and account, backup, and accessibility options. The quick teaser gives a shorter overview of practice, games, guardian review, networks, and settings.
 
 ## Evidence boundaries
 
-Gameplay recordings and stills show actual browser interactions with fictional demo profiles. In-game coins are separate from practice-wallet balances. Rewards require an explicit claim and are granted once per game and profile.
+Practice runs in the local browser. Brotes are fictional practice balances, and game coins stay inside their games. Game rewards require an explicit claim and are granted once per profile. The family/personal perspective switch is a demo control; it does not create an authenticated session.
 
-The Solana transaction screens are archived evidence from the disposable local wallet used in [testnet QA](TESTNET_QA.md). The video labels that evidence. No funds were transferred while producing the film. The Phantom/Solflare extension UI and funded mainnet execution remain unvalidated; the app uses the Solana System Program rather than a custom Brote program.
+The Solana account shown is a seeded System Program account controlled by the guardian wallet; Brote does not deploy a custom program. The filmed local QA account used a disposable test wallet. The deposit was taken to its review screen and cancelled before wallet signing; withdrawal fields were filled but not reviewed. No funds moved during filming. Earlier testnet transactions shown in the Explorer were checked against a fresh Explorer view. Phantom/Solflare extension screens and funded mainnet execution remain unvalidated.
 
-## Rebuild the films
+## Rebuild
 
-Use macOS with the Paulina voice, Python with Pillow, and `ffmpeg`/`ffprobe`. Fonts are downloaded from the official Google Fonts repository when absent; their licenses remain with the font authors. App art and screenshots are from Brote. No private keys are read.
+The source manifests are [walkthrough-en.json](video/walkthrough-en.json) and [teaser-en.json](video/teaser-en.json). Their media paths resolve under `docs/video/english/`; keep the captures, recordings, and `music-bed.wav` there. Python 3, Pillow, NumPy, FFmpeg, and ffprobe are required. The renderer loads Outfit and Nunito Sans from the committed `docs/video/english/fonts/` folder, alongside both SIL Open Font licenses. If a scene has no supplied voice track, its fallback uses macOS Samantha English via `say` at 185 words per minute.
+
+Generate the original, sample-free 114 BPM synth music bed and render each film:
 
 ```sh
-python3 -m pip install Pillow
-python3 scripts/prepare-video-assets.py --output /tmp/brote-video/assets
-python3 scripts/render-guide.py --assets /tmp/brote-video/assets \
-  --work /tmp/brote-video/guide --preview-only
-python3 scripts/render-guide.py --assets /tmp/brote-video/assets \
-  --work /tmp/brote-video/guide
-python3 scripts/render-guide.py --config docs/video/games-es.json \
-  --assets /tmp/brote-video/assets --work /tmp/brote-video/games \
-  --output-name brote-games-es
+python3 -m venv /tmp/brote-video-tools
+source /tmp/brote-video-tools/bin/activate
+python3 -m pip install Pillow numpy
+python3 scripts/make-walkthrough-music.py --output docs/video/english/music-bed.wav
+python3 scripts/render-walkthrough.py --config docs/video/walkthrough-en.json \
+  --assets docs/video/english --work /tmp/brote-video-en/walkthrough \
+  --output-name brote-walkthrough-en.mp4
+python3 scripts/render-walkthrough.py --config docs/video/teaser-en.json \
+  --assets docs/video/english --work /tmp/brote-video-en/teaser \
+  --output-name brote-teaser-en.mp4
 ```
 
-The scene manifests are [guide-es.json](video/guide-es.json) and [games-es.json](video/games-es.json). `--preview-only` checks the entry animation, each shot, and each dissolve before a full render. Audio determines scene lengths, with room between instructions. SRT/VTT captions follow the paced chapter timeline; they are not forced word-level alignment. Production MP4s use `faststart` for progressive playback.
+The renderer writes the MP4, SRT, WebVTT, and timing manifest into each work directory. Its `--preview-only` option renders a scene contact sheet for review before a full build. The committed asset bundle and final publication checks are tracked in [English video QA evidence](evidence/video-english-qa.json).
 
-## Review
+## Release and audience review
 
-Parallel implementation and independent content reviews checked the controls, consent, currencies, network costs, evidence labels, rewards, and full-app coverage. Final media validation and browser playback results are recorded in [video evidence](evidence/video-qa.json).
+The teaser states its proposition in the first three seconds, moves through several real app actions in its opening six seconds, uses captions, and ends with a direct invitation to try Brote. This follows TikTok's general guidance for an early hook, captions or text, movement, and a clear call to action ([TikTok creative best practices](https://ads.tiktok.com/resources/help/article/creative-best-practices?lang=en)). The 16:9 format keeps the app legible as a full-page walkthrough; TikTok's platform-specific guidance favors vertical 9:16, so these exports are not tailored to that format.
+
+These choices do not guarantee engagement. After release, use audience-retention analytics to find where viewers leave, rewatch, or skip, and revise the opening or pacing based on observed results ([YouTube audience-retention guide](https://support.google.com/youtube/answer/9314415?hl=en)).

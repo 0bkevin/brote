@@ -12,7 +12,7 @@ Practice mode works without a wallet: create a profile, assign fictional **Brote
 
 [Play the games](https://brote-three.vercel.app/app/?view=learn): explore **Market adventure** to compare prices and shop within a budget, or build **Goal Island** while saving for a goal and preparing for a storm. Both use original illustrated worlds, support keyboard/touch play, and award each achievement once. [Game rules and verification](docs/GAMES.md).
 
-[Watch the complete app walkthrough](https://brote-three.vercel.app/guide/) (2:52) or the extra games guide (1:02). Both are Spanish, 1080p, and 16:9, with motion, narration, and captions. [Scenes and reproduction](docs/VIDEO_GUIDE.md).
+[Watch the English app walkthrough](https://brote-three.vercel.app/media/brote-walkthrough-en.mp4) (2:19) or the quick app teaser (0:49); both include English captions ([VTT](https://brote-three.vercel.app/media/brote-walkthrough-en.vtt), [teaser VTT](https://brote-three.vercel.app/media/brote-teaser-en.vtt)). The video gallery also retains the Spanish walkthrough and games guide. [Scenes, evidence boundaries, and reproduction](docs/VIDEO_GUIDE.md).
 
 ## Architecture
 
