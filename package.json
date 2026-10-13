@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "tsc -b && vite build && node scripts/build-routes.mjs",
+    "build": "tsc -b && npm run og && vite build && node scripts/build-routes.mjs",
+    "og": "tsx scripts/build-og.tsx",
     "preview": "vite preview --host 0.0.0.0",
     "test": "tsx --test src/*.test.ts src/games/*.test.ts scripts/*.test.mjs"
   },
@@ -23,7 +24,8 @@
     "vite": "^7.0.0",
     "typescript": "^5.9.0",
     "tsx": "^4.20.0",
-    "@types/node": "^24.0.0"
+    "@types/node": "^24.0.0",
+    "@resvg/resvg-js": "^2.6.2"
   },
   "description": "A gamified family finance web app with supervised practice wallets and guardian-controlled Solana accounts.",
   "license": "MIT",
