@@ -7,6 +7,7 @@ import { coreMessages } from "./locales/core";
 import { arcadeMessages } from "./locales/arcade";
 import { marketMessages } from "./locales/market";
 import { islandMessages } from "./locales/island";
+import { syncSeoMetadata } from "./seo";
 
 export type Language = "es" | "en" | "pt";
 export type TranslationValues = Record<string, string | number>;
@@ -88,7 +89,6 @@ export const t = translate;
 function syncDocumentLanguage() {
   if (typeof document === "undefined") return;
   document.documentElement.lang = language === "pt" ? "pt-BR" : language;
-  document.title = translate("Brote · Crecemos juntos");
-  document.querySelector('meta[name="description"]')?.setAttribute("content", translate("Brote: aprende a cuidar tu dinero, en buena compañía. Wallets acompañadas, metas y pequeñas aventuras financieras."));
+  syncSeoMetadata(language);
 }
 syncDocumentLanguage();

@@ -45,7 +45,7 @@ Optional: set `VITE_SOLANA_RPC_URL` for mainnet and `VITE_SOLANA_TESTNET_RPC_URL
 
 Profiles, practice history, and the signed-operation journal are stored in this browser. The family/personal view switch is a demo control; local limits and consent prompts are not on-chain enforcement or account authentication. Real activity shows blockchain transfers, not merchant purchase details. Live testnet creation, deposits, withdrawals, and recovery were verified with a disposable QA wallet. Phantom/Solflare extension UI and funded mainnet execution still require a user-led test. Visa and production custody are future work.
 
-[Roadmap](docs/ROADMAP.md) · [Pitch](docs/PITCH.md) · [Deployment](docs/DEPLOYMENT.md) · [Audit](docs/AUDIT.md) · [Testnet evidence](docs/TESTNET_QA.md) · [Verification](docs/VERIFICATION.md) · [Commit guide](docs/COMMITS.md)
+[Roadmap](docs/ROADMAP.md) · [Pitch](docs/PITCH.md) · [Deployment](docs/DEPLOYMENT.md) · [SEO and social previews](docs/SEO.md) · [Audit](docs/AUDIT.md) · [Testnet evidence](docs/TESTNET_QA.md) · [Verification](docs/VERIFICATION.md) · [Commit guide](docs/COMMITS.md)
 
 ## License
 

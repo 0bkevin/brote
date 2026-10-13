@@ -1,0 +1,35 @@
+{
+  "origin": "https://brote-three.vercel.app",
+  "siteName": "Brote",
+  "locales": {
+    "es": { "html": "es", "og": "es_VE", "image": "/og/brote-es.png", "imageAlt": "Brote: El dinero se aprende. En equipo. Mascota de brote junto a una wallet de práctica y una meta de ahorro, en morado, azul y verde lima." },
+    "en": { "html": "en", "og": "en_US", "image": "/og/brote-en.png", "imageAlt": "Brote: Learn about money. Together. A cheerful sprout beside a practice wallet and savings goal, in purple, blue and lime." },
+    "pt": { "html": "pt-BR", "og": "pt_BR", "image": "/og/brote-pt.png", "imageAlt": "Brote: Aprenda sobre dinheiro. Em equipe. Um broto sorridente ao lado de uma carteira de prática e uma meta de economia, em roxo, azul e verde-lima." }
+  },
+  "pages": {
+    "home": {
+      "path": "/", "defaultLanguage": "es",
+      "es": { "title": "Brote · Aprende de dinero, en equipo", "description": "Aprende a cuidar tu dinero con wallets de práctica, metas de ahorro y juegos. Acompaña cada paso y explora Solana en familia con Brote." },
+      "en": { "title": "Brote · Learn about money, together", "description": "Build money skills with practice wallets, savings goals and games. Guide every step and explore Solana together with Brote." },
+      "pt": { "title": "Brote · Aprenda sobre dinheiro, em equipe", "description": "Aprenda a cuidar do dinheiro com carteiras de prática, metas e jogos. Acompanhe cada passo e explore Solana em família com Brote." }
+    },
+    "app": {
+      "path": "/app/", "defaultLanguage": "es",
+      "es": { "title": "Brote · Tu aventura financiera empieza aquí", "description": "Crea wallets de práctica, comparte Brotes ficticios, ahorra y aprende jugando. Supervisa movimientos y explora cuentas de Solana con un representante." },
+      "en": { "title": "Brote · Your money adventure starts here", "description": "Create practice wallets, share pretend Brotes, save and learn through play. Follow activity and explore guardian-controlled Solana accounts." },
+      "pt": { "title": "Brote · Sua aventura financeira começa aqui", "description": "Crie carteiras de prática, compartilhe Brotes fictícios, poupe e aprenda jogando. Acompanhe atividades e explore contas Solana com um responsável." }
+    },
+    "guide": {
+      "path": "/guide/", "defaultLanguage": "en",
+      "es": { "title": "Brote · Guía visual de la aplicación", "description": "Descubre cómo crear wallets de práctica, ahorrar, jugar, revisar gastos y explorar Solana con el recorrido visual de Brote." },
+      "en": { "title": "Brote · App walkthrough and video guide", "description": "See how to create practice wallets, save, play games, review spending and explore Solana with Brote's full walkthrough and quick tour." },
+      "pt": { "title": "Brote · Guia visual do aplicativo", "description": "Veja como criar carteiras de prática, poupar, jogar, revisar gastos e explorar Solana com o guia visual do Brote." }
+    },
+    "architecture": {
+      "path": "/architecture/", "defaultLanguage": "en",
+      "es": { "title": "Brote · Arquitectura e integración con Solana", "description": "Explora cómo Brote separa el dinero ficticio de las cuentas de Solana controladas por el representante, con un diagrama de arquitectura." },
+      "en": { "title": "Brote · Architecture and Solana integration", "description": "Explore how Brote separates its browser-local practice ledger from guardian-controlled Solana accounts in an interactive architecture diagram." },
+      "pt": { "title": "Brote · Arquitetura e integração com Solana", "description": "Explore como o Brote separa o dinheiro fictício das contas Solana controladas pelo responsável, com um diagrama de arquitetura." }
+    }
+  }
+}

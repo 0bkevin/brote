@@ -448,3 +448,13 @@ Find this index update with `git log --oneline --grep="index the English app wal
 Synchronize the visual product overview with every actual commit, including the finished English video release and its review fixes.
 
 Find this update with `git log --oneline --grep="synchronize the complete release overview"`.
+
+## 108. `76b4aaa` — feat(brand): generate localized Brote social preview artwork
+
+Create 1200 × 630 social images in Spanish, English and Portuguese with the existing sprout mascot, licensed Outfit and Nunito Sans fonts, and Brote's purple, blue and lime palette. Keep the editable SVGs and an automatic image build command.
+
+## 109. feat(seo): add localized page metadata and crawler discovery
+
+Serve route-specific titles, descriptions, canonical URLs, Open Graph, X cards and JSON-LD directly in the HTML. Synchronize share metadata with language selection on the landing page, app and video guide. Generate robots.txt and a sitemap, document the public origin, and verify all 103 tests plus nine browser route/language combinations.
+
+Find this update with `git log --oneline --grep="add localized page metadata and crawler discovery"`.
