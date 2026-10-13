@@ -1,0 +1,24 @@
+{
+  "source_fps": 8,
+  "recorded_app_revision": "83f76f60db3b9d34225ebdcac2f58a867fb24c3f",
+  "notes": "Browser recordings of real simulated gameplay. Fictional demo profiles. No real SOL transferred for this film. Solana screenshots show earlier disposable testnet QA, not Phantom/Solflare validation.",
+  "sequences": [
+    {
+      "file": "market-first.mp4",
+      "frames_dir": "market-move-frames",
+      "seconds": 7
+    },
+    {
+      "file": "market-finish.mp4",
+      "frames_dir": "market-finish-frames"
+    },
+    {
+      "file": "island-earn.mp4",
+      "frames_dir": "island-earn-frames"
+    },
+    {
+      "file": "island-storm.mp4",
+      "frames_dir": "island-storm-frames"
+    }
+  ]
+}

@@ -1,0 +1,394 @@
+{
+  "language": "es",
+  "width": 1920,
+  "height": 1080,
+  "fps": 24,
+  "scenes": [
+    {
+      "chapter": "EMPIEZA AQUÍ",
+      "headline": "El dinero se aprende.\nEn equipo.",
+      "body": "Una guía para dar tu primer paso con alguien de confianza.",
+      "action": "Entra a la demo",
+      "narration": "Bienvenido a Brote. Aprende sobre dinero con alguien de confianza: primero practica con Brotes ficticios y después explora Solana.",
+      "shots": [
+        {
+          "file": "landing.png",
+          "focus": [
+            780,
+            340
+          ],
+          "zoom": 1.25
+        }
+      ]
+    },
+    {
+      "chapter": "TU CÍRCULO",
+      "headline": "Un espacio para cada persona.",
+      "body": "Nombre, relación y compañero.\nPara adultos, pide su consentimiento.",
+      "action": "Crear wallet → Crear wallet de práctica",
+      "narration": "Crea un perfil con nombre, relación y compañero. Si es adulto, confirma su consentimiento. Pulsa Crear wallet de práctica: empieza con cero Brotes.",
+      "shots": [
+        {
+          "file": "create.png",
+          "focus": [
+            755,
+            420
+          ],
+          "zoom": 1.1,
+          "pointer": [
+            756,
+            680
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "PRÁCTICA",
+      "headline": "Dale Brotes para empezar.",
+      "body": "Por ejemplo: 100 B para Lucas.\nSon ficticios; no son dinero ni SOL.",
+      "action": "Asignar Brotes → 100 B",
+      "narration": "En Mis wallets, elige a Lucas y pulsa Asignar Brotes. Elige cien y pulsa Asignar Brotes. Son puntos ficticios, sin valor monetario.",
+      "shots": [
+        {
+          "file": "assign.png",
+          "focus": [
+            760,
+            400
+          ],
+          "zoom": 1.75,
+          "pointer": [
+            745,
+            500
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "AHORRO",
+      "headline": "Un sueño.\nUn primer paso.",
+      "body": "Crea una meta y reserva parte del saldo. El progreso se actualiza.",
+      "action": "Nueva meta → Añadir a mi ahorro",
+      "narration": "Pulsa Nueva meta y define qué quieres lograr. Usa Añadir a mi ahorro para reservar Brotes. Lucas ahorra veinte para su bicicleta: avanza diez por ciento.",
+      "shots": [
+        {
+          "file": "goal-form.png",
+          "focus": [
+            755,
+            410
+          ],
+          "zoom": 1.75,
+          "pointer": [
+            747,
+            505
+          ]
+        },
+        {
+          "file": "goal.png",
+          "focus": [
+            760,
+            535
+          ],
+          "zoom": 1.75,
+          "pointer": [
+            780,
+            615
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "APRENDER JUGANDO",
+      "headline": "Detective digital.",
+      "body": "Aprende a reconocer mensajes sospechosos. Revisa la explicación y recibe tu recompensa.",
+      "action": "Elige respuestas → Revisar",
+      "narration": "Detective digital enseña a reconocer mensajes sospechosos. Responde, revisa las explicaciones y completa la misión para recibir tu insignia.",
+      "shots": [
+        {
+          "file": "quiz.png",
+          "focus": [
+            760,
+            390
+          ],
+          "zoom": 1.75,
+          "pointer": [
+            760,
+            580
+          ]
+        },
+        {
+          "file": "reward.png",
+          "focus": [
+            755,
+            390
+          ],
+          "zoom": 1.75,
+          "pointer": [
+            755,
+            430
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "APRENDER JUGANDO",
+      "headline": "Mercado\naventura.",
+      "body": "Compara precios.\nCompra lo necesario.\nDevuelve y vuelve a intentar.\nTres rondas, sin reloj.",
+      "action": "Moverse → Comprar → Revisar compra",
+      "narration": "En Mercado aventura, mueve a tu compañero con flechas o toca un puesto. Compara precios, compra lo de la lista y revisa en caja. Puedes devolver productos. Supera las tres rondas.",
+      "shots": [
+        {
+          "framesDir": "market-move-frames",
+          "sourceFps": 8,
+          "focus": [
+            1300,
+            1000
+          ],
+          "zoom": 1.1
+        },
+        {
+          "file": "market-cart.png",
+          "focus": [
+            1030,
+            540
+          ],
+          "zoom": 1.55,
+          "pointer": [
+            1075,
+            528
+          ]
+        },
+        {
+          "file": "market-win.png",
+          "focus": [
+            755,
+            415
+          ],
+          "zoom": 1.5
+        }
+      ],
+      "note": "JUEGO REAL · MONEDAS SIMULADAS · GUARDA EL LOGRO AL TERMINAR"
+    },
+    {
+      "chapter": "APRENDER JUGANDO",
+      "headline": "Isla de\nlas metas.",
+      "body": "Gana. Cuida lo esencial.\nReserva para una tormenta.\nConstruye el puente hasta tu meta.",
+      "action": "Trabajar → Guardar reserva → Abrir jardín",
+      "narration": "En Isla de las metas, trabaja, cubre lo esencial y guarda una reserva. Ahorra para el puente durante cuatro días. Cuando llegue la tormenta, repara con tu reserva. Después abre el jardín.",
+      "shots": [
+        {
+          "file": "island-start.png",
+          "focus": [
+            755,
+            410
+          ],
+          "zoom": 1.3
+        },
+        {
+          "framesDir": "island-storm-frames",
+          "sourceFps": 8,
+          "focus": [
+            1280,
+            1040
+          ],
+          "zoom": 1.13
+        },
+        {
+          "file": "island-win.png",
+          "focus": [
+            755,
+            525
+          ],
+          "zoom": 1.35
+        }
+      ],
+      "note": "JUEGO REAL · RESERVA Y META SEPARADAS · RECOMPENSA UNA VEZ POR PERFIL"
+    },
+    {
+      "chapter": "ACOMPAÑAR",
+      "headline": "Cada movimiento cuenta.",
+      "body": "Registra una compra de práctica.\nAcompaña, aprueba o rechaza.\nFiltra y exporta el historial.",
+      "action": "Practicar un gasto → Actividad → Exportar",
+      "narration": "Pulsa Practicar un gasto: escribe el concepto y la cantidad. En Actividad, el responsable aprueba o rechaza solicitudes. Filtra el historial o usa Exportar para descargar un CSV.",
+      "shots": [
+        {
+          "file": "spend.png",
+          "focus": [
+            755,
+            420
+          ],
+          "zoom": 1.75
+        },
+        {
+          "file": "activity.png",
+          "focus": [
+            850,
+            410
+          ],
+          "zoom": 1.12
+        },
+        {
+          "file": "activity-approved.png",
+          "focus": [
+            850,
+            410
+          ],
+          "zoom": 1.12
+        }
+      ]
+    },
+    {
+      "chapter": "SOLANA",
+      "headline": "Elige tu red.",
+      "body": "Mainnet: SOL real.\nTestnet: SOL de prueba, sin valor monetario. Los datos están separados.",
+      "action": "Solana → Red Solana → Testnet",
+      "narration": "Pulsa Solana y elige Red Solana. Mainnet usa SOL real; testnet usa SOL de prueba sin valor monetario. Cada red conserva sus datos separados.",
+      "shots": [
+        {
+          "file": "mainnet.png",
+          "focus": [
+            1020,
+            220
+          ],
+          "zoom": 1.6,
+          "pointer": [
+            1237,
+            239
+          ]
+        },
+        {
+          "file": "testnet.png",
+          "focus": [
+            1040,
+            250
+          ],
+          "zoom": 1.6,
+          "pointer": [
+            1237,
+            239
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "SOLANA",
+      "headline": "Tu wallet.\nTu firma.",
+      "body": "Wallet del representante.\nCuenta del perfil bajo su firma.\nSaldo mínimo de red + comisión.",
+      "action": "Conectar → Perfil → Crear cuenta",
+      "narration": "Conecta Phantom o Solflare del representante. Crear la cuenta requiere saldo mínimo y comisión; revisa antes de firmar. Esta evidencia archivada usa una wallet local de testnet.",
+      "shots": [
+        {
+          "file": "testnet.png",
+          "focus": [
+            850,
+            420
+          ],
+          "zoom": 1.4
+        },
+        {
+          "file": "solana-confirmed.png",
+          "focus": [
+            755,
+            350
+          ],
+          "zoom": 1.22,
+          "startFocus": [
+            755,
+            350
+          ]
+        }
+      ],
+      "note": "EVIDENCIA ARCHIVADA · TESTNET · WALLET LOCAL · EXTENSIONES PENDIENTES DE VALIDAR"
+    },
+    {
+      "chapter": "SOLANA",
+      "headline": "Deposita. Retira. Verifica.",
+      "body": "Indica cantidad y destino.\nRevisa, firma y sigue el recibo en Solana Explorer.",
+      "action": "Revisar y depositar / retirar",
+      "narration": "Para depositar, indica la cantidad. Para retirar, añade también el destino. Revisa y firma cada operación. Abre el recibo para verificarlo en Solana Explorer.",
+      "shots": [
+        {
+          "file": "solana-confirmed.png",
+          "focus": [
+            755,
+            650
+          ],
+          "zoom": 1.2,
+          "startFocus": [
+            755,
+            650
+          ]
+        },
+        {
+          "file": "solana-history.png",
+          "focus": [
+            900,
+            1000
+          ],
+          "zoom": 1.2,
+          "startFocus": [
+            900,
+            1000
+          ]
+        }
+      ],
+      "note": "EVIDENCIA ARCHIVADA · TESTNET · WALLET LOCAL · EXTENSIONES PENDIENTES DE VALIDAR"
+    },
+    {
+      "chapter": "TU PROGRESO",
+      "headline": "Conserva su camino.",
+      "body": "La práctica se guarda en este navegador. Descarga una copia reciente y restáurala cuando la necesites.",
+      "action": "Preferencias → Guardar copia",
+      "narration": "En Preferencias, usa Guardar copia para conservar el progreso. Restáurala en la misma red. Guarda una copia reciente: las claves de tu wallet no se incluyen.",
+      "shots": [
+        {
+          "file": "backup.png",
+          "focus": [
+            600,
+            265
+          ],
+          "zoom": 1.7,
+          "pointer": [
+            430,
+            365
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "A TU MANERA",
+      "headline": "También desde el móvil.",
+      "body": "Menú lateral compacto.\nEspañol, English y Português.\nModo simple para ir paso a paso.",
+      "action": "Abrir menú → Idioma / Modo simple",
+      "narration": "Vista familiar o Mi espacio cambian la perspectiva de la demo. En móvil, abre el menú lateral: elige idioma o activa Modo simple.",
+      "shots": [
+        {
+          "file": "mobile-menu.png",
+          "focus": [
+            195,
+            420
+          ],
+          "zoom": 1
+        }
+      ]
+    },
+    {
+      "chapter": "CRECEMOS JUNTOS",
+      "headline": "Tu próxima aventura empieza aquí.",
+      "body": "Una meta. Una misión.\nUna conversación sobre dinero.\nA tu ritmo, en compañía.",
+      "action": "brote-three.vercel.app",
+      "narration": "Empieza por una meta, un juego o una conversación. Aprende a tu ritmo, en compañía. Brote: crecemos juntos.",
+      "shots": [
+        {
+          "file": "home.png",
+          "focus": [
+            970,
+            330
+          ],
+          "zoom": 1.15
+        }
+      ]
+    }
+  ],
+  "title": "brote.",
+  "kicker": "GUÍA DE INICIO · 16:9"
+}
