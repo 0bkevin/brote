@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" fill="none">
+  <defs>
+    <linearGradient id="sky" x1="145" y1="0" x2="1048" y2="820" gradientUnits="userSpaceOnUse"><stop stop-color="#B4D9FF"/><stop offset="1" stop-color="#E9D7FF"/></linearGradient>
+    <linearGradient id="water" x1="600" y1="395" x2="600" y2="820" gradientUnits="userSpaceOnUse"><stop stop-color="#63D7D4"/><stop offset="1" stop-color="#4C8FEB"/></linearGradient>
+    <linearGradient id="land" x1="600" y1="240" x2="600" y2="690" gradientUnits="userSpaceOnUse"><stop stop-color="#B5EF9C"/><stop offset="1" stop-color="#5CCB91"/></linearGradient>
+    <linearGradient id="path" x1="600" y1="350" x2="600" y2="640" gradientUnits="userSpaceOnUse"><stop stop-color="#FFE9B6"/><stop offset="1" stop-color="#E9B88B"/></linearGradient>
+    <linearGradient id="roofPurple" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#AB90FF"/><stop offset="1" stop-color="#6C4BFF"/></linearGradient>
+    <linearGradient id="roofCoral" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFB18C"/><stop offset="1" stop-color="#FF796D"/></linearGradient>
+    <linearGradient id="roofMint" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#B8F2D6"/><stop offset="1" stop-color="#54CBA9"/></linearGradient>
+    <filter id="islandShadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="23" stdDeviation="18" flood-color="#263A7A" flood-opacity=".25"/></filter>
+    <filter id="buildingShadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#395578" flood-opacity=".2"/></filter>
+  </defs>
+  <rect width="1200" height="820" rx="40" fill="url(#sky)"/>
+  <circle cx="1004" cy="112" r="58" fill="#FFF1A4"/>
+  <path d="M0 555q181-85 350 4 162-96 337-3 167-86 317 6 108-59 196-5v263H0V555Z" fill="url(#water)"/>
+  <path d="M60 646q98-35 183-3m604 63q101-38 208-3m-806-6 57-13m475-110 69-15m-12 174 36-10" stroke="#B5F7E9" stroke-width="8" stroke-linecap="round" opacity=".56"/>
+  <ellipse cx="601" cy="518" rx="438" ry="190" fill="#D5B27D" opacity=".72" filter="url(#islandShadow)"/>
+  <path d="M169 490q49-188 235-236 101-49 205 1 145-67 260 17 122 34 162 162 71 159-61 221-140 92-276 42-147 59-276-11-161 48-240-59-82-48-9-137Z" fill="url(#land)"/>
+  <path d="M242 488q59-127 161-155 139-46 223 25 116-61 210 4 115 79 67 172-44 88-155 60-87 51-176 12-128 57-210-13-127 3-120-105Z" fill="#C5F1A4" opacity=".57"/>
+  <!-- winding path through island -->
+  <path d="M581 378q-35 53 24 93 67 44 0 92-73 51-8 99" stroke="#DFAE7D" stroke-width="88" stroke-linecap="round" opacity=".5"/>
+  <path d="M581 367q-35 53 24 93 67 44 0 92-73 51-8 99" stroke="url(#path)" stroke-width="72" stroke-linecap="round"/>
+  <path d="M580 382q-17 29 16 52m13 36q27 23-6 47m-27 37q-27 20-6 47" stroke="#FFF5D4" stroke-width="6" stroke-linecap="round" opacity=".8"/>
+  <!-- central little village buildings, roofs kept simple for overlays -->
+  <g filter="url(#buildingShadow)">
+    <!-- home -->
+    <path d="M447 356h115v82H447z" fill="#FFF0D7"/><path d="m429 360 75-64 78 64v13H429v-13Z" fill="url(#roofPurple)"/><path d="M468 382h27v56h-27zm48 0h25v24h-25z" fill="#B8E7FF"/><path d="M481 382v56m51-56v24" stroke="#fff" stroke-width="5" opacity=".75"/><path d="M499 409h14v29h-14z" fill="#B88272"/>
+    <!-- shop on left -->
+    <path d="M273 426h126v76H273z" fill="#FFF2D9"/><path d="m255 428 80-61 82 61v13H255v-13Z" fill="url(#roofCoral)"/><path d="M279 442h113v18H279z" fill="#FFF9EA"/><path d="M279 460h113v15H279z" fill="#FF926B"/><path d="M295 475h81v19h-81z" fill="#BF8465"/><path d="M306 475v19m28-19v19m28-19v19" stroke="#F9D6A9" stroke-width="4"/>
+    <!-- bank on right -->
+    <path d="M770 410h146v91H770z" fill="#FFF1D9"/><path d="m750 412 91-70 95 70v14H750v-14Z" fill="url(#roofMint)"/><path d="M777 431h132v14H777z" fill="#5ABDA2"/><path d="M790 445h20v47h-20zm34 0h20v47h-20zm34 0h20v47h-20zm34 0h17v47h-17z" fill="#FFF4D6"/><path d="M781 493h126v8H781z" fill="#D7AD7C"/>
+    <!-- small market on far edge -->
+    <path d="M564 267h96v73h-96z" fill="#FFF1D9"/><path d="m549 272 62-49 65 49v11H549v-11Z" fill="#6C4BFF"/><path d="M578 293h70v12h-70z" fill="#F8F0DD"/><path d="M578 305h70v12h-70z" fill="#FF926B"/><path d="M587 319h51v15h-51z" fill="#D4AE7C"/>
+  </g>
+  <!-- bridge linking a tiny grassy islet -->
+  <path d="M922 514q63 17 123 2l54 58q-89 46-177 0l-45-40 45-20Z" fill="#CB9D73"/>
+  <path d="M923 503q65 17 120 0l47 53q-80 39-160 0l-48-37 41-16Z" fill="#EBC69A"/>
+  <path d="m917 497 43 12m-7 14 43 13m-9 13 42 12m-8 14 35 10" stroke="#FFF0CE" stroke-width="7" stroke-linecap="round"/>
+  <path d="M1000 501q29-32 81-7 25 29-4 70-38 26-87-8-14-27 10-55Z" fill="#78D59A"/>
+  <path d="M1048 480q-5-43 18-52 21 14 9 53m9 4q14-33 35-23 9 23-18 39" fill="#379A78"/><circle cx="1050" cy="490" r="14" fill="#FF926B"/>
+  <!-- tree canopies -->
+  <g filter="url(#buildingShadow)">
+    <path d="M196 453q-4-38 29-49 26 5 24 37 30-10 47 13 8 31-28 42-43 9-66-8-21-10-6-35Z" fill="#52BE86"/><path d="M222 484v32m26-38 4 39" stroke="#9C704D" stroke-width="9" stroke-linecap="round"/>
+    <path d="M936 369q-4-38 29-49 26 5 24 37 30-10 47 13 8 31-28 42-43 9-66-8-21-10-6-35Z" fill="#53C58A"/><path d="M962 400v32m26-38 4 39" stroke="#9C704D" stroke-width="9" stroke-linecap="round"/>
+    <path d="M382 271q-3-29 23-38 22 4 20 29 24-8 38 10 6 25-23 34-35 7-54-7-18-8-4-28Z" fill="#76D68D"/><path d="M404 296v27" stroke="#9C704D" stroke-width="7" stroke-linecap="round"/>
+  </g>
+  <!-- garden flowers -->
+  <g>
+    <path d="M323 540v29m21-25v27m539-19v26m27-31v31m-477 56v23m323-16v23" stroke="#438E70" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="323" cy="536" r="7" fill="#FF8D8B"/><circle cx="344" cy="539" r="7" fill="#FFD56E"/><circle cx="883" cy="547" r="7" fill="#FF8D8B"/><circle cx="910" cy="543" r="7" fill="#C1A3FF"/><circle cx="706" cy="636" r="7" fill="#FFD56E"/><circle cx="559" cy="625" r="7" fill="#FF8D8B"/>
+    <circle cx="323" cy="536" r="2" fill="#FFF5CE"/><circle cx="344" cy="539" r="2" fill="#FFF5CE"/><circle cx="883" cy="547" r="2" fill="#FFF5CE"/><circle cx="910" cy="543" r="2" fill="#FFF5CE"/>
+  </g>
+  <!-- floating clouds and gentle sparkles -->
+  <path d="M114 176q4-26 32-23 10-34 47-21 16-27 45-12 26 14 16 38-8 18-33 18H137q-30 0-23-20Zm608-95q4-23 29-20 9-31 41-19 14-24 39-10 23 12 14 33-7 16-29 16h-93q-26 0-21-20Z" fill="#FFF" opacity=".79"/>
+  <path d="m199 292 6 16 16 6-16 6-6 16-6-16-16-6 16-6 6-16Zm768 98 5 13 13 5-13 5-5 13-5-13-13-5 13-5 5-13ZM680 190l4 11 11 4-11 4-4 11-4-11-11-4 11-4 4-11Z" fill="#FFF8C9"/>
+  <!-- stepping stones and soft landing shadows -->
+  <ellipse cx="602" cy="674" rx="38" ry="10" fill="#287D8B" opacity=".16"/><ellipse cx="605" cy="674" rx="23" ry="7" fill="#FFE1A7"/>
+  <ellipse cx="650" cy="695" rx="28" ry="8" fill="#287D8B" opacity=".13"/><ellipse cx="650" cy="695" rx="17" ry="5" fill="#FFE1A7"/>
+</svg>

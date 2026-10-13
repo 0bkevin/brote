@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <defs><linearGradient id="coin" x1="23" y1="15" x2="101" y2="112" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF18A"/><stop offset=".55" stop-color="#FFC94E"/><stop offset="1" stop-color="#F29A46"/></linearGradient><filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#40355F" flood-opacity=".23"/></filter></defs>
+  <g filter="url(#shadow)"><circle cx="64" cy="61" r="48" fill="#D77C36"/><circle cx="64" cy="56" r="46" fill="url(#coin)"/><circle cx="64" cy="56" r="36" stroke="#FFF4B0" stroke-width="5"/><path d="M77 39q-5-8-17-7-13 1-13 11 0 8 16 12 17 4 17 14 0 11-15 13-14 2-23-7m22-48v57" stroke="#B56B36" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 42q8-19 27-25" stroke="#FFF" stroke-width="5" stroke-linecap="round" opacity=".62"/></g>
+</svg>
