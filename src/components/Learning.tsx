@@ -547,7 +547,7 @@ export default function Learning({
           ✿
         </div>
       </div>
-      <div className="learning-section-head">
+      <div className="learning-section-head" data-brote-tour="games">
         <div>
           <span className="learning-eyebrow">TU CAMINO DE APRENDIZAJE</span>
           <h2>Misiones para explorar</h2>

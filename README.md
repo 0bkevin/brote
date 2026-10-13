@@ -10,6 +10,8 @@ Brote is a responsive web app where a guardian creates profiles for children, ad
 
 Practice mode works without a wallet: create a profile, assign fictional **Brotes**, complete a mission, and review a purchase request. Solana mode supports Phantom, Solflare, and read-only public addresses.
 
+New here? Start the optional six-step guided tour, or skip it completely. Restart it anytime from **About Brote**. [Tour behavior and verification](docs/TOUR.md).
+
 [Play the games](https://brote-three.vercel.app/app/?view=learn): explore **Market adventure** to compare prices and shop within a budget, or build **Goal Island** while saving for a goal and preparing for a storm. Both use original illustrated worlds, support keyboard/touch play, and award each achievement once. [Game rules and verification](docs/GAMES.md).
 
 [Watch the English app walkthrough](https://brote-three.vercel.app/media/brote-walkthrough-en.mp4) (2:19) or the quick app teaser (0:49); both include English captions ([VTT](https://brote-three.vercel.app/media/brote-walkthrough-en.vtt), [teaser VTT](https://brote-three.vercel.app/media/brote-teaser-en.vtt)). The video gallery also retains the Spanish walkthrough and games guide. [Scenes, evidence boundaries, and reproduction](docs/VIDEO_GUIDE.md).

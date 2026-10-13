@@ -536,7 +536,7 @@ export default function Wallets({
         selectedId={wallet.id}
       />
       <section className="card wallet-detail">
-        <div className="wallet-detail-head">
+        <div className="wallet-detail-head" data-brote-tour="wallet">
           <div className="person-inline">
             <Avatar kind={wallet.avatar} color={wallet.color} />
             <div>
