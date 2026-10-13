@@ -88,6 +88,7 @@ export const landingMessages: TranslationMessages = {
   "02 / DECIDIR": { en: "02 / DECIDE", pt: "02 / DECIDIR" },
   "SOL en Solana": { en: "SOL on Solana", pt: "SOL na Solana" },
   "Real · firma del responsable": { en: "Real · guardian signature required", pt: "Real · assinatura do responsável" },
+  "Mainnet real · testnet de prueba": { en: "Real mainnet · testnet for testing", pt: "Mainnet real · testnet de teste" },
   "TU WALLET, TU DECISIÓN ↗": { en: "YOUR WALLET, YOUR DECISION ↗", pt: "SUA WALLET, SUA DECISÃO ↗" },
   "CUANDO QUIERAS EXPLORAR MÁS": { en: "WHENEVER YOU WANT TO EXPLORE MORE", pt: "QUANDO QUISER EXPLORAR MAIS" },
   "La práctica es juego.": { en: "Practice is play.", pt: "A prática é brincadeira." },
@@ -103,5 +104,7 @@ export const landingMessages: TranslationMessages = {
   "Juegos": { en: "Games", pt: "Jogos" },
   "Abrir demo": { en: "Open demo", pt: "Abrir demo" },
   "Brotes de práctica sin valor monetario. SOL real en Solana mainnet.": { en: "Practice Brotes have no monetary value. Real SOL on Solana mainnet.", pt: "Brotes de prática sem valor monetário. SOL real na rede principal Solana." },
+  "Brotes ficticios. Mainnet con SOL real. Testnet sin valor monetario.": { en: "Fictional Brotes. Real SOL on mainnet. Testnet has no monetary value.", pt: "Brotes fictícios. SOL real na mainnet. Testnet sem valor monetário." },
+  "Los Brotes te ayudan a aprender sin mover dinero. En Solana puedes elegir mainnet, con SOL real, o testnet, con SOL de prueba sin valor monetario. La persona responsable debe iniciar y firmar cada movimiento.": { en: "Brotes help you learn without moving money. In Solana, choose mainnet with real SOL or testnet with test SOL that has no monetary value. The guardian must initiate and sign every transaction.", pt: "Os Brotes ajudam você a aprender sem movimentar dinheiro. Na Solana, escolha mainnet com SOL real ou testnet com SOL de teste sem valor monetário. A pessoa responsável deve iniciar e assinar cada movimentação." },
   "Volver arriba": { en: "Back to top", pt: "Voltar ao topo" },
 };

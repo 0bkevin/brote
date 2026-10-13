@@ -289,8 +289,8 @@ export default function Landing() {
                     ●
                   </span>
                 </div>
-                <h3>{t('La compra inteligente')}</h3>
-                <p>{t('Arma una canasta sin pasarte del presupuesto de práctica.')}</p>
+                <h3>{t('Mercado aventura')}</h3>
+                <p>{t('Recorre el mercado y completa tu lista sin pasarte del presupuesto.')}</p>
                 <a href={LEARN}>{t('Jugar en la demo')}<ArrowRight size={17} aria-hidden="true" />
                 </a>
               </article>
@@ -327,8 +327,8 @@ export default function Landing() {
                   <span className="landing-game__choice-card">
                     <Target size={26} />{t('Después')}</span>
                 </div>
-                <h3>{t('Un plan para imprevistos')}</h3>
-                <p>{t('Decide cuánto destinar a hoy y cuánto guardar para el futuro.')}</p>
+                <h3>{t('Isla de las metas')}</h3>
+                <p>{t('Gana monedas de juego, prepara una reserva y construye tu meta en una isla.')}</p>
                 <a href={LEARN}>{t('Jugar en la demo')}<ArrowRight size={17} aria-hidden="true" />
                 </a>
               </article>
@@ -417,7 +417,7 @@ export default function Landing() {
                   <div>
                     <small>{t('02 / DECIDIR')}</small>
                     <b>{t('SOL en Solana')}</b>
-                    <p>{t('Real · firma del responsable')}</p>
+                    <p>{t('Mainnet real · testnet de prueba')}</p>
                   </div>
                 </div>
               </div>
@@ -429,7 +429,7 @@ export default function Landing() {
               <h2 id="landing-solana-title">{t('La práctica es juego.')}<br />
                 <span>{t('SOL es real.')}</span>
               </h2>
-              <p>{t('Los Brotes te ayudan a aprender sin mover dinero. En una experiencia aparte puedes conectar una wallet de Solana mainnet y revisar operaciones reales. La persona responsable debe iniciar y firmar cada movimiento.')}</p>
+              <p>{t('Los Brotes te ayudan a aprender sin mover dinero. En Solana puedes elegir mainnet, con SOL real, o testnet, con SOL de prueba sin valor monetario. La persona responsable debe iniciar y firmar cada movimiento.')}</p>
               <div className="landing-solana__fact">
                 <ShieldCheck size={22} />
                 <span>{t('Explora distintos perfiles en la demo. Para mover SOL, la wallet responsable tiene que firmar.')}</span>
@@ -484,7 +484,7 @@ export default function Landing() {
         </div>
         <div className="landing-shell landing-footer__bottom">
           <span>© {new Date().getFullYear()} Brote</span>
-          <span>{t('Brotes de práctica sin valor monetario. SOL real en Solana mainnet.')}</span>
+          <span>{t('Brotes ficticios. Mainnet con SOL real. Testnet sin valor monetario.')}</span>
           <a href="#inicio">{t('Volver arriba')}<ChevronDown size={15} />
           </a>
         </div>
