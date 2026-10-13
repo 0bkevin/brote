@@ -6,3 +6,4 @@ dist/
 .openai/*.local.json
 .vercel/
 __pycache__/
+docs/video/english/music-bed.wav
