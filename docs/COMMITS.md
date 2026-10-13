@@ -395,7 +395,7 @@ Ship the full 2:52 app guide and extra 1:02 games guide with 1080p H.264, 48kHz 
 
 Explain every chapter, evidence boundaries and reproducible rendering; record final metadata, hashes, native playback and mobile checks.
 
-## 97. docs(history): index the complete instructional video release
+## 97. `1095fbb` — docs(history): index the complete instructional video release
 
 Keep the complete commit list and interactive overview current with all tutorial implementation, review fixes, published media and evidence.
 
@@ -404,3 +404,41 @@ Retrieve this update with `git log --oneline --grep="index the complete instruct
 ## Updating this index
 
 The history retains the individual commits and has not been rewritten as a single commit. To keep this index current, append each new commit with its hash, subject, and a concise summary.
+
+## 98. `237c29b` — feat(media): render full-frame English walkthroughs with captions
+
+Preserve the whole app viewport, combine real footage with English instructions, and include the licensed Brote fonts.
+
+## 99. `af6b49e` — feat(audio): synthesize an original playful walkthrough music bed
+
+Create a deterministic, sample-free 114 BPM arrangement that stays behind the narrator.
+
+## 100. `0198224` — docs(video): record English app actions and script complete guided tours
+
+Capture actual profile, practice, game, approval, Solana, and backup actions. Script both a complete walkthrough and an app-wide quick tour.
+
+## 101. `8a3fe4d` — fix(media): normalize footage color metadata before compositing
+
+Normalize videos and screenshots before concatenation so colors and overlay timing stay correct across cuts.
+
+## 102. `d8c7fe8` — feat(media): publish English app walkthrough and quick tour
+
+Publish the 2:19 full-app walkthrough and 49-second quick tour in 1080p, with English narration, music, posters, and captions.
+
+## 103. `1757fad` — feat(guide): make English app demos the primary video guides
+
+Replace the main players, preserve the gallery translations, and keep mobile downloads and language controls at 34px.
+
+## 104. `4514d24` — docs(media): explain English chapters and reproducible video editing
+
+Document chapter navigation, source assets, audio and font licenses, reproduction, and testnet evidence boundaries.
+
+## 105. `0958896` — test(media): verify responsive playback and export fidelity
+
+Record complete decoding, media metadata and hashes, native playback, responsive language checks, independent review fixes, and 100 passing app tests.
+
+## 106. docs(history): index the English app walkthrough release
+
+Keep the complete functional commit index and product overview current through the English walkthrough release.
+
+Find this index update with `git log --oneline --grep="index the English app walkthrough release"`.
