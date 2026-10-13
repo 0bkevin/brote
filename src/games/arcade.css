@@ -1,0 +1,46 @@
+.modal.game-modal { width: 1040px; max-width: min(1040px, 100%); padding: 22px; max-height: calc(100dvh - 32px); display: flex; flex-direction: column; overflow: hidden; }
+.modal.game-modal > .learning-modal-content { flex: 1 1 auto; min-height: 0; max-height: none; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; }
+.game-modal .modal-heading { margin-bottom: 14px; }
+.game-modal .market-game, .game-modal .island-game { border: 0; box-shadow: none; padding: 10px; }
+.game-modal .market-game { background: #fff; }
+.game-modal .market-head { margin-bottom: 10px; }
+.game-modal .market-brand h2, .game-modal .island-heading h2 { display: none; }
+.game-modal .market-instructions, .game-modal .market-meter > div,
+.game-modal .market-detail, .game-modal .market-cart, .game-modal .island-stats > div,
+.game-modal .island-action, .game-modal .island-victory { border: 0; }
+.game-modal .market-detail, .game-modal .market-cart { background: #f5f3fc; }
+.game-modal .market-board, .game-modal .island-scene { border: 0; }
+.game-modal .market-primary, .game-modal .island-day, .game-modal .island-next { box-shadow: none; }
+.arcade-mission-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.arcade-main-card { padding-top: 0; overflow: hidden; border: 0; }
+.arcade-card-art { position: relative; margin: 0 -18px 18px; height: 170px; overflow: hidden; background: #e7f4ff; }
+.arcade-card-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.arcade-card-art > span { position: absolute; left: 20px; bottom: 14px; padding: 6px 10px; border-radius: 999px; background: #22264a; color: #d7ff5c; font-size: 10px; font-weight: 900; letter-spacing: .7px; }
+.arcade-extra { grid-column: 1 / -1; min-height: 0; border: 0; }
+.arcade-extra .learning-card-meta { margin-bottom: 10px; }
+.arcade-reward { margin-top: 16px; padding: 16px; border-radius: 16px; background: #edffd5; color: #324334; }
+.arcade-reward > div { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.arcade-reward p { margin-bottom: 12px; font-size: 13px; }
+@media(max-width: 680px) {
+  .modal.game-modal { padding: 12px; max-height: calc(100dvh - 20px); border-radius: 16px; }
+  .game-modal .modal-heading h2 { font-size: 18px; }
+  .game-modal .modal-heading { gap: 8px; margin-bottom: 10px; }
+  .game-modal .learning-modal-intro { margin-bottom: 10px; }
+  .game-modal .learning-modal-intro .learning-muted { font-size: 12px; }
+  .game-modal .market-game, .game-modal .island-game { padding: 0; }
+  .game-modal .market-game button, .game-modal .island-game button { min-height: 34px; }
+  .game-modal .market-primary, .game-modal .market-restart,
+  .game-modal .island-action, .game-modal .island-footer button { padding-top: 6px; padding-bottom: 6px; }
+  .game-modal .island-pin { min-height: 34px; padding: 2px 4px; }
+  .game-modal .island-pin svg { height: 16px; width: 16px; }
+  .game-modal .island-action { height: 34px; padding: 4px 6px; gap: 6px; line-height: 1.05; }
+  .game-modal .island-footer button { font-size: 12px; line-height: 1.1; }
+  .arcade-mission-grid { grid-template-columns: minmax(0, 1fr); }
+  .arcade-extra { grid-column: auto; }
+  .arcade-card-art { height: 145px; margin: 0 -16px 14px; }
+  .arcade-reward { padding: 12px; }
+  .arcade-reward .button { white-space: normal; height: auto; min-height: 34px; }
+}
+@media(prefers-reduced-motion: reduce) {
+  .game-modal *, .arcade-main-card * { scroll-behavior: auto; }
+}

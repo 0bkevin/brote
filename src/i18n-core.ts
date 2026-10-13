@@ -4,6 +4,9 @@ import { learningMessages } from "./locales/learning";
 import { solanaMessages } from "./locales/solana";
 import { domainMessages } from "./locales/domain";
 import { coreMessages } from "./locales/core";
+import { arcadeMessages } from "./locales/arcade";
+import { marketMessages } from "./locales/market";
+import { islandMessages } from "./locales/island";
 
 export type Language = "es" | "en" | "pt";
 export type TranslationValues = Record<string, string | number>;
@@ -39,7 +42,7 @@ export function setLanguage(next: Language) {
 if (typeof window !== "undefined") window.addEventListener("storage", event => {
   if (event.key === storageKey) commitLanguage(validLanguage(event.newValue) ? event.newValue : "es");
 });
-const catalog = { ...coreMessages, ...appMessages, ...landingMessages, ...learningMessages, ...solanaMessages, ...domainMessages };
+const catalog = { ...coreMessages, ...appMessages, ...landingMessages, ...learningMessages, ...solanaMessages, ...domainMessages, ...arcadeMessages, ...marketMessages, ...islandMessages };
 const reverse = new Map<string, string>();
 for (const [source, translations] of Object.entries(catalog)) {
   reverse.set(translations.en, source);

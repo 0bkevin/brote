@@ -11,7 +11,7 @@ export default function Modal({
   title: string;
   onClose: () => void;
   children: ReactNode;
-  variant?: "sheet";
+  variant?: "sheet" | "game";
 }) {
   const { t } = useI18n();
   const dialog = useRef<HTMLDivElement>(null);
@@ -73,7 +73,7 @@ export default function Modal({
     >
       <div
         ref={dialog}
-        className={`modal${variant === "sheet" ? " mobile-sheet" : ""}`}
+        className={`modal${variant === "sheet" ? " mobile-sheet" : variant === "game" ? " game-modal" : ""}`}
         role="dialog"
         aria-modal="true"
         aria-label={title}
