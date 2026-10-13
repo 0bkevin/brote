@@ -29,6 +29,7 @@
   .app-shell .sr-label select, .app-shell .solana-action input,
   .app-shell .inline-save input,
   .app-shell .solana-watch input, .app-shell .solana-profilebar select,
+  .app-shell .network-selector select,
   .modal .field input, .modal .field select {
     min-height: 34px !important;
     height: 34px;

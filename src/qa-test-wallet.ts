@@ -1,4 +1,5 @@
 import { PublicKey, Transaction } from "@solana/web3.js";
+import { SOLANA_NETWORK } from "./solana-network";
 
 type Listener = (...args: unknown[]) => void;
 
@@ -70,6 +71,6 @@ class BroteTestWallet {
 
 export function installBroteTestWallet(): void {
   if (!import.meta.env.DEV || import.meta.env.VITE_BROTE_TEST_WALLET !== "true" ||
-      import.meta.env.VITE_SOLANA_NETWORK !== "testnet") return;
+      SOLANA_NETWORK.cluster !== "testnet") return;
   window.broteTestWallet ??= new BroteTestWallet();
 }

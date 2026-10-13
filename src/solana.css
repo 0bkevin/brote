@@ -17,6 +17,34 @@
   margin: 0;
   max-width: 45rem;
 }
+.solana-panel__network {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.network-selector {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #4b3d75;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.network-selector select {
+  height: 34px;
+  min-height: 34px;
+  max-width: 110px;
+  padding: 4px 8px;
+  border: 1px solid #dcd5ec;
+  border-radius: 9px;
+  background: #fff;
+  color: #30255c;
+  cursor: pointer;
+}
+.network-selector--compact select { max-width: 90px; }
 .solana-network {
   display: inline-flex;
   align-items: center;
@@ -377,6 +405,7 @@
   .app-shell .solana-panel { --solana-control-height: 34px; }
   .solana-panel { min-width: 0; gap: 16px; padding: 18px; }
   .solana-panel__head { flex-direction: column; gap: 10px; }
+  .solana-panel__network { justify-content: flex-start; }
   .solana-panel__head h2 { font-size: 22px; }
   .solana-network { white-space: normal; }
   .solana-status { align-items: flex-start; padding: 14px; }

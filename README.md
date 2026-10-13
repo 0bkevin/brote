@@ -20,7 +20,7 @@ Practice mode works without a wallet: create a profile, assign fictional **Brote
 
 ![Signing flow: review, guardian signature, durable journal, broadcast, and RPC confirmation](docs/assets/solana-flow.gif)
 
-Signed transaction bytes are saved locally **before broadcast**. Uncertain outcomes block new signatures; recovery checks chain status or explicitly rebroadcasts the same bytes. RPC endpoints are verified against the selected cluster. **Mainnet is the default**; explicit testnet builds use separate storage and Explorer links. Practice Brotes have no monetary value and never become SOL.
+Signed transaction bytes are saved locally **before broadcast**. Uncertain outcomes block new signatures; recovery checks chain status or explicitly rebroadcasts the same bytes. Both mainnet and testnet are available in the production app. **Mainnet is the default**; choose Testnet in the Solana view or open `/app/?mode=crypto&network=testnet`. The selection reloads the page. Each network has separate browser storage, backups, verified RPC connections, and Explorer links. Practice Brotes have no monetary value and never become SOL.
 
 See [the Solana integration](SOLANA.md), [localization](docs/LOCALIZATION.md), and [interactive architecture diagram](https://brote-three.vercel.app/architecture/) for details.
 
@@ -35,7 +35,7 @@ npm test
 npm run build
 ```
 
-Optional: set `VITE_SOLANA_RPC_URL` to a browser-accessible HTTPS **mainnet** RPC. Vite exposes this value in the client bundle, so use an endpoint intended for public clients. Without it, Brote uses verified public mainnet endpoints.
+Optional: set `VITE_SOLANA_RPC_URL` for mainnet and `VITE_SOLANA_TESTNET_RPC_URL` for testnet. Each must be a browser-accessible HTTPS endpoint for its named network. Vite exposes these values in the client bundle, so use endpoints intended for public clients. Without overrides, Brote uses genesis-verified public endpoints. The former `VITE_SOLANA_NETWORK` build selection is no longer used by the app.
 
 ## Prototype scope
 

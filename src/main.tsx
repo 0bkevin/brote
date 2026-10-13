@@ -4,6 +4,7 @@ import { StoreProvider } from "./store";
 import { SolanaProvider } from "./solana";
 import App from "./App";
 import Landing from "./Landing";
+import { SOLANA_NETWORK } from "./solana-network";
 import "./styles.css";
 import "./learning.css";
 import "./solana.css";
@@ -12,7 +13,7 @@ import "./landing.css";
 import "./mobile-nav.css";
 import "./mobile-compact.css";
 if (import.meta.env.DEV && import.meta.env.VITE_BROTE_TEST_WALLET === "true" &&
-    import.meta.env.VITE_SOLANA_NETWORK === "testnet") {
+    SOLANA_NETWORK.cluster === "testnet") {
   await import("./qa-test-wallet").then(({ installBroteTestWallet }) => installBroteTestWallet());
 }
 createRoot(document.getElementById("root")!).render(

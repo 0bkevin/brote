@@ -23,10 +23,10 @@ vercel link --yes --scope mustafinhos-projects --project brote
 vercel --prod --yes --scope mustafinhos-projects
 ```
 
-Local `.vercel/` settings and `.env*` files are ignored by Git and excluded from deployment uploads. No RPC override is required for this demo; any `VITE_SOLANA_RPC_URL` must be a mainnet HTTPS endpoint intended for public browser use.
+Local `.vercel/` settings and `.env*` files are ignored by Git and excluded from deployment uploads. One production build serves both networks: `/app/` defaults to mainnet, and `/app/?mode=crypto&network=testnet` selects testnet. The in-app selector performs a full reload. Unknown or duplicate `network` values stop app initialization. No RPC override is required for the demo. `VITE_SOLANA_RPC_URL` is mainnet only; `VITE_SOLANA_TESTNET_RPC_URL` is testnet only. Both must be HTTPS endpoints intended for public browser use and are checked against the selected network's genesis hash before use. `VITE_SOLANA_NETWORK` does not select a production network.
 
 ## Moving between hosts
 
-Browser storage belongs to an origin. A profile created on the earlier Site deployment will not automatically appear on Vercel. Export its JSON backup from the old host and restore it on the new host to preserve profile IDs, guardian bases, and signed-operation records. Stable IDs and the same guardian wallet are required to rediscover the same real-SOL accounts.
+Browser storage belongs to an origin and is separated by network on each origin. A profile created on the earlier Site deployment will not automatically appear on Vercel. Export its JSON backup from the old host and restore it on the new host, on the same network, to preserve profile IDs, guardian bases, and signed-operation records. Older untagged backups are treated as mainnet. Stable IDs and the same guardian wallet are required to rediscover the same Solana accounts.
 
 The original Site remains available at https://brote-family-solana.brown-isle-1431.chatgpt.site. Mainnet reads were tested; no funded transaction was signed or broadcast during deployment verification.

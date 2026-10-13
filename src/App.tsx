@@ -40,6 +40,7 @@ import Wallets, {
 } from "./components/Wallets";
 import Learning from "./components/Learning";
 import SolanaPanel from "./components/SolanaPanel";
+import NetworkSelector from "./components/NetworkSelector";
 import { useI18n, LanguageSwitcher } from "./i18n";
 
 function TransactionList({
@@ -569,6 +570,7 @@ export default function App() {
                 Solana
               </button>
             </div>
+            {mode === "crypto" && <NetworkSelector compact busy={chain.busy} />}
             <label className="role-switch">
               <span className="sr-only">{t("Cambiar vista de demo")}</span>
               <select

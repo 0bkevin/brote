@@ -54,4 +54,4 @@ VITE_SOLANA_NETWORK=testnet \
 npx vite --host 127.0.0.1 --port 5174
 ```
 
-A normal build has no QA signing endpoint or test wallet. Build a testnet frontend for an ordinary wallet with `VITE_SOLANA_NETWORK=testnet npm run build`.
+A normal production build exposes both networks and has no QA signing endpoint or test wallet. Open `/app/?mode=crypto&network=testnet` for an ordinary wallet or the explicitly enabled local adapter. `VITE_SOLANA_NETWORK=testnet` in the command above is a server-side QA guard, not the production network selector. Use `Red Solana` to switch networks; it reloads the page into the selected network's separate storage and journal.

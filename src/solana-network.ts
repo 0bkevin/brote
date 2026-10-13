@@ -26,11 +26,30 @@ const TESTNET: SolanaNetwork = {
   operationsKey: "brote:solana:testnet:operations:v1",
 };
 
-/** Build selection is deliberately strict: an unknown value must never send mainnet transactions. */
+/** Only a valid explicit URL choice can override the mainnet default. */
 export function resolveSolanaNetwork(value: string | undefined): SolanaNetwork {
-  if (value === undefined || value === "" || value === "mainnet") return MAINNET;
+  if (value === undefined || value === "mainnet") return MAINNET;
   if (value === "testnet") return TESTNET;
-  throw new Error(`VITE_SOLANA_NETWORK inválido: ${value}. Usa mainnet o testnet.`);
+  throw new Error(`Red Solana inválida: ${value}. Usa mainnet o testnet.`);
 }
 
-export const SOLANA_NETWORK = resolveSolanaNetwork(import.meta.env?.VITE_SOLANA_NETWORK);
+export function resolveSolanaNetworkFromSearch(search: string): SolanaNetwork {
+  const values = new URLSearchParams(search).getAll("network");
+  if (values.length > 1) throw new Error("Red Solana inválida: selección duplicada.");
+  return resolveSolanaNetwork(values[0]);
+}
+
+export function networkHref(currentUrl: string, cluster: SolanaCluster): string {
+  const url = new URL(currentUrl);
+  url.searchParams.set("mode", "crypto");
+  url.searchParams.set("network", cluster);
+  return `${url.pathname}${url.search}${url.hash}`;
+}
+
+export function configuredRpcUrl(network: SolanaNetwork, mainnetUrl?: string, testnetUrl?: string): string | undefined {
+  return (network.cluster === "mainnet" ? mainnetUrl : testnetUrl)?.trim() || undefined;
+}
+
+export const SOLANA_NETWORK = resolveSolanaNetworkFromSearch(
+  typeof window === "undefined" ? "" : window.location.search,
+);

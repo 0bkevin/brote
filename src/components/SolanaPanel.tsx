@@ -17,6 +17,7 @@ import {
 import type { Wallet } from "../types";
 import { useI18n, getIntlLocale } from "../i18n";
 import { LatestRequest } from "../solana-connection";
+import NetworkSelector from "./NetworkSelector";
 
 type Props = {
   wallets: Wallet[];
@@ -163,8 +164,12 @@ export default function SolanaPanel({
           <p className="muted">
             {t("Cada perfil tiene una dirección propia. La billetera del representante controla los movimientos.")} </p>
         </div>
-        <span className="solana-network">
-          <span className="solana-network__dot" /> {t(chain.network)} </span>
+        <div className="solana-panel__network">
+          <span className="solana-network">
+            <span className="solana-network__dot" /> {t(chain.network)}
+          </span>
+          <NetworkSelector busy={chain.busy} />
+        </div>
       </header>
       {testnet && <p className="solana-note" role="status">{t("Red de prueba: el SOL de prueba no tiene valor monetario.")}</p>}
 

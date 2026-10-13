@@ -20,7 +20,7 @@ import { translate } from "./i18n-core";
 import { useStore } from "./store";
 import { hasRentExemptDestinationBalance, hasValidSystemAccountRemainder, parseSolLamports, seedFor } from "./solana-utils";
 import { ConnectionRequests, WrongSolanaClusterError, mergeVerifiedReads, retryReadOnVerifiedFallback, verifySolanaConnection } from "./solana-connection";
-import { SOLANA_NETWORK } from "./solana-network";
+import { SOLANA_NETWORK, configuredRpcUrl } from "./solana-network";
 import {
   OperationJournal,
   SigningSession,
@@ -336,10 +336,14 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
     if (connectionRef.current) return connectionRef.current;
     if (connectionPromiseRef.current) return connectionPromiseRef.current;
     const pending = (async () => {
-      const configured = import.meta.env.VITE_SOLANA_RPC_URL?.trim();
+      const configured = configuredRpcUrl(
+        SOLANA_NETWORK,
+        import.meta.env.VITE_SOLANA_RPC_URL,
+        import.meta.env.VITE_SOLANA_TESTNET_RPC_URL,
+      );
       const primary = configured || SOLANA_NETWORK.rpcUrl;
       if (!/^https:\/\//i.test(primary))
-        throw new Error("VITE_SOLANA_RPC_URL debe usar HTTPS.");
+        throw new Error("El RPC Solana configurado debe usar HTTPS.");
       try {
         const connection = await checkedConnection(primary);
         connectionRef.current = connection;
@@ -618,7 +622,11 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
       return { profiles, balance, failedReads };
       };
       // Testnet has no approved fallback; a failed read must stay unknown.
-      const configured = SOLANA_NETWORK.cluster !== "mainnet" || !!import.meta.env.VITE_SOLANA_RPC_URL?.trim();
+      const configured = SOLANA_NETWORK.cluster !== "mainnet" || !!configuredRpcUrl(
+        SOLANA_NETWORK,
+        import.meta.env.VITE_SOLANA_RPC_URL,
+        import.meta.env.VITE_SOLANA_TESTNET_RPC_URL,
+      );
       const selected = await retryReadOnVerifiedFallback({
         primary: connection,
         primaryUrl: connection.rpcEndpoint,
