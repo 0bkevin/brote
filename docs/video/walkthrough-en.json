@@ -1,0 +1,409 @@
+{
+  "language": "en",
+  "music": "music-bed.wav",
+  "scenes": [
+    {
+      "id": "hook",
+      "section": "BROTE",
+      "label": "Learn. Play. Grow.",
+      "narration": "Learn money skills. Play. Save. Grow together.",
+      "shots": [
+        {
+          "file": "recordings/marketBuyRecord.mp4",
+          "start": 8,
+          "end": 9.3
+        },
+        {
+          "file": "recordings/islandPinsRecord.mp4",
+          "start": 1,
+          "end": 2.3
+        },
+        {
+          "file": "recordings/fundsRecord.mp4",
+          "start": 1.8,
+          "end": 3.2
+        }
+      ]
+    },
+    {
+      "id": "profile",
+      "section": "01",
+      "label": "Create your circle",
+      "narration": "Create a practice wallet. Add a name, your relationship, and a companion. For adult learners, confirm they agreed to share activity.",
+      "shots": [
+        {
+          "file": "recordings/profileRecord.mp4",
+          "start": 0.3,
+          "end": 3.7,
+          "speed": 0.85
+        },
+        {
+          "file": "recordings/profileFinishRecord.mp4",
+          "start": 0,
+          "end": 2.4,
+          "speed": 0.85
+        },
+        {
+          "file": "captures/profileDoneCapture.png",
+          "duration": 1.5
+        }
+      ]
+    },
+    {
+      "id": "funds",
+      "section": "02",
+      "label": "Give them practice Brotes",
+      "narration": "Give the learner Brotes. Choose an amount and confirm. These practice coins have no monetary value.",
+      "shots": [
+        {
+          "file": "recordings/fundsRecord.mp4",
+          "start": 0,
+          "end": 3.6,
+          "speed": 0.8
+        },
+        {
+          "file": "captures/fundsCapture.png",
+          "duration": 1.5
+        }
+      ]
+    },
+    {
+      "id": "goal",
+      "section": "03",
+      "label": "Save toward a goal",
+      "narration": "Create a goal, set its target, and move Brotes into savings. The progress bar shows how far you've come.",
+      "shots": [
+        {
+          "file": "recordings/goalRecord.mp4",
+          "start": 0,
+          "end": 3.3,
+          "speed": 0.85
+        },
+        {
+          "file": "recordings/saveSpendRecord.mp4",
+          "start": 6.3,
+          "end": 7.1,
+          "speed": 0.8
+        },
+        {
+          "file": "captures/goalDone.png",
+          "duration": 1.8
+        }
+      ]
+    },
+    {
+      "id": "market",
+      "section": "04",
+      "label": "Market Adventure",
+      "narration": "Open Market Adventure. Move with arrows or tap a stall. Compare prices, buy essentials, and return items when you change your mind. Finish three rounds within budget, then claim a practice reward once per profile.",
+      "shots": [
+        {
+          "file": "recordings/marketBuyRecord.mp4",
+          "start": 0.2,
+          "end": 2.5
+        },
+        {
+          "file": "recordings/marketBuyRecord.mp4",
+          "start": 7,
+          "end": 11.2
+        },
+        {
+          "file": "recordings/marketCompleteRecord.mp4",
+          "start": 0,
+          "end": 3.2
+        },
+        {
+          "file": "recordings/marketCompleteRecord.mp4",
+          "start": 9.4,
+          "end": 12.1
+        },
+        {
+          "file": "recordings/rewardIslandRecord.mp4",
+          "start": 0,
+          "end": 1.7
+        }
+      ]
+    },
+    {
+      "id": "island",
+      "section": "05",
+      "label": "Goal Island",
+      "narration": "In Goal Island, earn coins, cover essentials, and build an emergency reserve. Use that reserve to repair storm damage. Save for the bridge to reach the treasure garden. Game coins stay inside the game.",
+      "shots": [
+        {
+          "file": "recordings/islandPinsRecord.mp4",
+          "start": 0,
+          "end": 3.8
+        },
+        {
+          "file": "recordings/islandRecord.mp4",
+          "start": 7,
+          "end": 11.5
+        },
+        {
+          "file": "recordings/islandFinishRecord.mp4",
+          "start": 0.8,
+          "end": 2.8,
+          "duration": 2.8
+        },
+        {
+          "file": "captures/islandWonCapture.png",
+          "duration": 1.2
+        }
+      ],
+      "captionPosition": "top"
+    },
+    {
+      "id": "safety",
+      "section": "06",
+      "label": "Digital Detective",
+      "narration": "Digital Detective teaches online safety. Choose the safest response, check your answers, and review the explanation.",
+      "shots": [
+        {
+          "file": "recordings/quizRecord.mp4",
+          "start": 0,
+          "end": 3.5,
+          "speed": 0.85
+        },
+        {
+          "file": "recordings/quizResultRecord.mp4",
+          "start": 0,
+          "end": 0.85,
+          "speed": 0.85
+        },
+        {
+          "file": "captures/quizResultCapture.png",
+          "duration": 1.3
+        }
+      ]
+    },
+    {
+      "id": "spend",
+      "section": "07",
+      "label": "Practice a purchase",
+      "narration": "Practice a purchase. Enter what you're buying, pick a category, and choose the amount. Approval keeps the guardian involved before funds are deducted.",
+      "shots": [
+        {
+          "file": "recordings/spendClearRecord.mp4",
+          "start": 0,
+          "end": 4.5,
+          "speed": 0.8
+        },
+        {
+          "file": "captures/expensePending.png",
+          "duration": 1.4
+        }
+      ],
+      "captionPosition": "top"
+    },
+    {
+      "id": "activity",
+      "section": "08",
+      "label": "Review every decision",
+      "narration": "Open Activity to approve or reject requests. Filter by learner, review the history, and export a CSV.",
+      "shots": [
+        {
+          "file": "recordings/approveClearRecord.mp4",
+          "start": 0,
+          "end": 3.8,
+          "speed": 0.8
+        },
+        {
+          "file": "captures/activityFinalCapture.png",
+          "duration": 1.6
+        }
+      ],
+      "captionPosition": "top"
+    },
+    {
+      "id": "rules",
+      "section": "09",
+      "label": "Guide at their pace",
+      "narration": "Set a spending limit, require approval, or pause practice actions in each learner's Guidance settings.",
+      "shots": [
+        {
+          "file": "recordings/rulesClearRecord.mp4",
+          "start": 0,
+          "end": 2.6,
+          "speed": 0.85
+        },
+        {
+          "file": "captures/rules.png",
+          "duration": 2.2
+        }
+      ]
+    },
+    {
+      "id": "networks",
+      "section": "10",
+      "label": "Choose your Solana network",
+      "narration": "Ready for Solana? Choose Mainnet or Testnet. Test SOL is for testing and has no monetary value.",
+      "shots": [
+        {
+          "file": "captures/mainnet.png",
+          "duration": 2.3
+        },
+        {
+          "file": "recordings/networkRecord.mp4",
+          "start": 0.5,
+          "end": 1.4,
+          "speed": 0.8
+        },
+        {
+          "file": "captures/networkCapture.png",
+          "duration": 2.3
+        }
+      ]
+    },
+    {
+      "id": "account",
+      "section": "LOCAL QA",
+      "label": "Guardian-controlled testnet account",
+      "narration": "This local test wallet shows the guardian-controlled account. Each profile has its own address; real transactions require the guardian's signature.",
+      "shots": [
+        {
+          "file": "recordings/connectRecord.mp4",
+          "start": 0,
+          "end": 1.9,
+          "speed": 0.8
+        },
+        {
+          "file": "captures/solanaCapture.png",
+          "duration": 3.2
+        },
+        {
+          "file": "captures/historyCapture.png",
+          "duration": 1.3
+        }
+      ]
+    },
+    {
+      "id": "transfer",
+      "section": "LOCAL QA",
+      "label": "Review before signing",
+      "narration": "Enter an amount and destination. The deposit review shows addresses and a network fee notice. We cancel before wallet signing. Withdrawal details can be entered separately.",
+      "shots": [
+        {
+          "file": "recordings/depositRecord.mp4",
+          "start": 0,
+          "end": 1
+        },
+        {
+          "file": "captures/depositCapture.png",
+          "duration": 2.5
+        },
+        {
+          "file": "recordings/withdrawHistoryRecord.mp4",
+          "start": 0,
+          "end": 1.1
+        },
+        {
+          "file": "captures/historyCapture.png",
+          "duration": 2.8
+        }
+      ]
+    },
+    {
+      "id": "receipt",
+      "section": "EARLIER TESTNET TRANSACTION",
+      "label": "Verify in Solana Explorer",
+      "narration": "These are earlier testnet transactions, verified on Solana Explorer. Open a receipt to check the amount, signature, and finalized status.",
+      "shots": [
+        {
+          "file": "captures/explorerCapture.png",
+          "duration": 3
+        },
+        {
+          "file": "recordings/explorerRecord.mp4",
+          "start": 0,
+          "end": 1.2,
+          "speed": 0.8
+        },
+        {
+          "file": "captures/explorerTransferCapture.png",
+          "duration": 2.5
+        }
+      ]
+    },
+    {
+      "id": "backup",
+      "section": "11",
+      "label": "Keep their progress",
+      "narration": "Save a backup of profiles, goals, and activity. Preview it before restoring. Here, we keep the current data. Keys stay in your wallet.",
+      "shots": [
+        {
+          "file": "recordings/backupRecord.mp4",
+          "start": 0,
+          "end": 1.2
+        },
+        {
+          "file": "recordings/restoreRecord.mp4",
+          "start": 0,
+          "end": 1.7
+        },
+        {
+          "file": "captures/restoreCapture.png",
+          "duration": 2.3
+        },
+        {
+          "file": "recordings/restoreCancelRecord.mp4",
+          "start": 0,
+          "end": 0.9
+        },
+        {
+          "file": "captures/settingsCapture.png",
+          "duration": 1.4
+        }
+      ],
+      "captionPosition": "top"
+    },
+    {
+      "id": "perspective",
+      "section": "12",
+      "label": "Make Brote yours",
+      "narration": "Switch demo perspectives to explore the learner's view. Simple mode reduces visual complexity. Choose English, Spanish, or Portuguese.",
+      "shots": [
+        {
+          "file": "recordings/perspectiveClearRecord.mp4",
+          "start": 0,
+          "end": 4.5,
+          "speed": 0.85
+        },
+        {
+          "file": "captures/personalCapture.png",
+          "duration": 2.0
+        }
+      ],
+      "highlights": [
+        {
+          "start": 5.4,
+          "end": 7.0,
+          "shot": 1,
+          "rect": [
+            1120,
+            14,
+            76,
+            32
+          ],
+          "label": "English \u00b7 Spanish \u00b7 Portuguese"
+        }
+      ]
+    },
+    {
+      "id": "close",
+      "section": "YOUR NEXT STEP",
+      "label": "Try Brote",
+      "narration": "Start with practice. Create your circle. Your next adventure starts in Brote.",
+      "shots": [
+        {
+          "file": "captures/landingCapture.png",
+          "duration": 2.5
+        },
+        {
+          "file": "captures/homeFinalCapture.png",
+          "duration": 2.2
+        }
+      ]
+    }
+  ]
+}

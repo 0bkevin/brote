@@ -1,0 +1,238 @@
+{
+  "language": "en",
+  "captureViewport": [
+    1280,
+    720
+  ],
+  "recordingResolution": [
+    2560,
+    1440
+  ],
+  "files": [
+    {
+      "file": "captures/activityFinalCapture.png",
+      "bytes": 100245,
+      "sha256": "9f604569b4a1a14cc2c256d3badffa98fe67cf67702cfb0e88f1fd7e19766b81"
+    },
+    {
+      "file": "captures/depositCapture.png",
+      "bytes": 105221,
+      "sha256": "d7b88f7182f3e4e6d7b54af7563ae2e3882e36f5eef825adae4c02f1d8eaada6"
+    },
+    {
+      "file": "captures/expensePending.png",
+      "bytes": 559619,
+      "sha256": "964f16e8fc45cd298d7768e78ea87b6cc7812341ce1bce4ce9f91bf760c48648"
+    },
+    {
+      "file": "captures/explorerCapture.png",
+      "bytes": 86417,
+      "sha256": "7281a75c9b2ec96e8fbae798fd834a062b574713fea7640dcebf3008eb38fcc8"
+    },
+    {
+      "file": "captures/explorerTransferCapture.png",
+      "bytes": 85475,
+      "sha256": "730e7a3e3fd1bfaf3f54bffea642e8a6d343a78a135c2c6e0e15584d090e7273"
+    },
+    {
+      "file": "captures/fundsCapture.png",
+      "bytes": 101448,
+      "sha256": "cf36b1af8f46eca8e4af57578498c2030057b3bce272b8a5e7babb14988f193b"
+    },
+    {
+      "file": "captures/goalDone.png",
+      "bytes": 506880,
+      "sha256": "0c06dffa036b92e7d64a2465cc4c017964af5b25061751b3c1baa878e040d4a6"
+    },
+    {
+      "file": "captures/historyCapture.png",
+      "bytes": 105843,
+      "sha256": "09e9cec9f3d537f864ccca114e97da13b22aacb3cc6ef2abeeebc7ecddbaded1"
+    },
+    {
+      "file": "captures/homeFinalCapture.png",
+      "bytes": 280658,
+      "sha256": "9776f8c7ddc60e61ebedd83b064b67caf31610b8e690238a21f7d4f79e1f1e27"
+    },
+    {
+      "file": "captures/islandWonCapture.png",
+      "bytes": 185437,
+      "sha256": "8cfe6f13d97e6ee60d5db6425e75435f920bd583e4d5f3fedcaec9fb75e7bd63"
+    },
+    {
+      "file": "captures/landingCapture.png",
+      "bytes": 189946,
+      "sha256": "1e029c71eaa69ebdb25375a8cd2b5fa70dcbf2b64636564654162863778d437b"
+    },
+    {
+      "file": "captures/mainnet.png",
+      "bytes": 585511,
+      "sha256": "6b5b8f93f3b24ca1a9c70ff66820b7de89c37632021e502551f4bd548118610e"
+    },
+    {
+      "file": "captures/networkCapture.png",
+      "bytes": 105149,
+      "sha256": "27fc554ac4dd77b478e3010b6a46c6b08650d8bd67506ac955002abb5f700d07"
+    },
+    {
+      "file": "captures/personalCapture.png",
+      "bytes": 94961,
+      "sha256": "4364e1f0b53883d1565393a28f5983802b4133f07062bafa75693935e46e0ca7"
+    },
+    {
+      "file": "captures/profileDoneCapture.png",
+      "bytes": 127555,
+      "sha256": "69712c5fb250bd9a0fa541dfe2f38005029be65eec9ee12a4b39639f21e3489d"
+    },
+    {
+      "file": "captures/quizResultCapture.png",
+      "bytes": 221117,
+      "sha256": "ba60bf30697d2d4c4724a69e889698b060e0d6af5e01191062683d1d67415cf1"
+    },
+    {
+      "file": "captures/restoreCapture.png",
+      "bytes": 181466,
+      "sha256": "18bfe620efb7b447530f3367f150115db7bd3669de8004226649e5d1c2c377b9"
+    },
+    {
+      "file": "captures/rules.png",
+      "bytes": 276830,
+      "sha256": "9a0cc4e9d5e936fbb628c02e30fdb3375da1861ee6269b4ee2b44f51d21cc723"
+    },
+    {
+      "file": "captures/settingsCapture.png",
+      "bytes": 129772,
+      "sha256": "0d16f7744818d57117f09b7178091c502a209e513eddde7fab323616cfe11988"
+    },
+    {
+      "file": "captures/solanaCapture.png",
+      "bytes": 117748,
+      "sha256": "69555b0db68916b7ed70094b20dc3392b8f4c34960825826a0fec25611f2079a"
+    },
+    {
+      "file": "recordings/approveClearRecord.mp4",
+      "bytes": 224552,
+      "sha256": "5a3da50ce52b1ebcc61a339e46d91b5a630ac24645d0fc3d89a8d5355f7ee871"
+    },
+    {
+      "file": "recordings/backupRecord.mp4",
+      "bytes": 223354,
+      "sha256": "b0a0f82314cc06e3b99179c7620380488aa4480a632356ef5e71b186546127ae"
+    },
+    {
+      "file": "recordings/connectRecord.mp4",
+      "bytes": 199774,
+      "sha256": "46719bcfa8190cb6bb6f50c34906351b0736607d30dfbb12f1df1eccad51fcd7"
+    },
+    {
+      "file": "recordings/depositRecord.mp4",
+      "bytes": 220738,
+      "sha256": "dc97dc9a50dd5c3767e067d262d83aaca3f36ce30866166c6ab31a17fba66033"
+    },
+    {
+      "file": "recordings/explorerRecord.mp4",
+      "bytes": 467547,
+      "sha256": "e744f46f08a2b09f1a8451191e0c70d80bd15b63864aba452ac6460ae0e4232f"
+    },
+    {
+      "file": "recordings/fundsRecord.mp4",
+      "bytes": 499333,
+      "sha256": "1c344a5b39994db9a12d2289b97c0fbd305234c60be94452fc8f531a9bb77da6"
+    },
+    {
+      "file": "recordings/goalRecord.mp4",
+      "bytes": 491960,
+      "sha256": "64f8d1dcf69558a1ff2c1cfd5ef3ef2131558f196b1bf4ecc771b2f5fe09e072"
+    },
+    {
+      "file": "recordings/islandFinishRecord.mp4",
+      "bytes": 326108,
+      "sha256": "7357348eea912ed3b4d395462ff39ccec2c0acdec007026f386b0350b5fc8742"
+    },
+    {
+      "file": "recordings/islandPinsRecord.mp4",
+      "bytes": 619892,
+      "sha256": "294342896d55edb015b400cae1f6d101ee0efd6e21d04ef98b54a167f19d3da7"
+    },
+    {
+      "file": "recordings/islandRecord.mp4",
+      "bytes": 2166469,
+      "sha256": "abc0555e3f26dd3c960e8408fef9c345887a820c64acfd3004217176fee540bd"
+    },
+    {
+      "file": "recordings/marketBuyRecord.mp4",
+      "bytes": 898732,
+      "sha256": "92126b3a09cf3522d67748eedfc8e09859ce7deff874db9a4cb759d1b49082c9"
+    },
+    {
+      "file": "recordings/marketCompleteRecord.mp4",
+      "bytes": 2533611,
+      "sha256": "8339ef0f294066caed55b1b6fe829d8cb7035cc4eac31717e808fec3a1121329"
+    },
+    {
+      "file": "recordings/networkRecord.mp4",
+      "bytes": 271254,
+      "sha256": "c937214161f2bbc563e164efdaf8bbe27f7e64f6bbc86b9b59bc6ebe91c3e586"
+    },
+    {
+      "file": "recordings/perspectiveClearRecord.mp4",
+      "bytes": 231583,
+      "sha256": "a54923663a3a6f682f7e7c3313ed8ef9c61ab553b699504f9b6e6019f034d08b"
+    },
+    {
+      "file": "recordings/profileFinishRecord.mp4",
+      "bytes": 453353,
+      "sha256": "6f7699695bb93724281c30294f87e4af0ae09e8739dc5236215a1d179ac8f09c"
+    },
+    {
+      "file": "recordings/profileRecord.mp4",
+      "bytes": 451398,
+      "sha256": "11ffd5ec15b2aafec4336f18b9b9ee97b11fefc2f9d7105a28c5c3fa35396476"
+    },
+    {
+      "file": "recordings/quizRecord.mp4",
+      "bytes": 475021,
+      "sha256": "b98d21e0bcc9d4040de4f606d196e60a28f2da73ea1534a84c2b3b1c9ccd3409"
+    },
+    {
+      "file": "recordings/quizResultRecord.mp4",
+      "bytes": 205749,
+      "sha256": "8045772fc8ea7ecccc62ec15cd0f928be51a5c51e8e060c584b5014cdc5a1538"
+    },
+    {
+      "file": "recordings/restoreCancelRecord.mp4",
+      "bytes": 222912,
+      "sha256": "bd234bb316148453b8521a3409befdda5489b498f81940384282fb491322bac6"
+    },
+    {
+      "file": "recordings/restoreRecord.mp4",
+      "bytes": 200676,
+      "sha256": "478f3cf468c2fe5d3391b1e2a8fa249aca9e3632f6efc3ee4719072f116fc406"
+    },
+    {
+      "file": "recordings/rewardIslandRecord.mp4",
+      "bytes": 180489,
+      "sha256": "af0babeaefdfc088445fd31e7e0038b7923d6267235159e44bf0cd5706b04bb7"
+    },
+    {
+      "file": "recordings/rulesClearRecord.mp4",
+      "bytes": 193742,
+      "sha256": "0cd874076fb8f0c2f1650b0674cd330ffa7ee893b7509ed3e6de33ef77c83de1"
+    },
+    {
+      "file": "recordings/saveSpendRecord.mp4",
+      "bytes": 660114,
+      "sha256": "d10f0dbd9e0480d9c099548294dae075530c44fb4691f98c3464dd1247d46337"
+    },
+    {
+      "file": "recordings/spendClearRecord.mp4",
+      "bytes": 443102,
+      "sha256": "6a8342b9f8133ec6f39d125bca4b5531d75e0ed9144aec6fd07e606bd8529ab9"
+    },
+    {
+      "file": "recordings/withdrawHistoryRecord.mp4",
+      "bytes": 187118,
+      "sha256": "c9cb89700d88adcf66edeafa040172fbcd11a294e7b418b3d50de080afa2870e"
+    }
+  ]
+}

@@ -1,0 +1,910 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "language": "en",
+  "duration": 139.2,
+  "scenes": [
+    {
+      "id": "hook",
+      "section": "BROTE",
+      "label": "Learn. Play. Grow.",
+      "start": 0.0,
+      "end": 4.0,
+      "voiceFile": "generated/voice-hook.aiff",
+      "voiceSeconds": 3.221,
+      "shots": [
+        {
+          "file": "docs/video/english/recordings/marketBuyRecord.mp4",
+          "start": 0.0,
+          "end": 1.3,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/recordings/islandPinsRecord.mp4",
+          "start": 1.3,
+          "end": 2.6,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/recordings/fundsRecord.mp4",
+          "start": 2.6,
+          "end": 4.0,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "start": 0.18,
+          "end": 3.221,
+          "text": "Learn money skills. Play. Save. Grow together."
+        }
+      ]
+    },
+    {
+      "id": "profile",
+      "section": "01",
+      "label": "Create your circle",
+      "start": 4.0,
+      "end": 12.367,
+      "voiceFile": "generated/voice-profile.aiff",
+      "voiceSeconds": 7.731,
+      "shots": [
+        {
+          "file": "docs/video/english/recordings/profileRecord.mp4",
+          "start": 0.0,
+          "end": 4.0,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/recordings/profileFinishRecord.mp4",
+          "start": 4.0,
+          "end": 6.833,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/profileDoneCapture.png",
+          "start": 6.833,
+          "end": 8.333,
+          "sourceSize": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "start": 0.18,
+          "end": 3.416,
+          "text": "Create a practice wallet. Add a name, your relationship,"
+        },
+        {
+          "start": 3.416,
+          "end": 5.506,
+          "text": "and a companion. For adult learners,"
+        },
+        {
+          "start": 5.506,
+          "end": 7.731,
+          "text": "confirm they agreed to share activity."
+        }
+      ]
+    },
+    {
+      "id": "funds",
+      "section": "02",
+      "label": "Give them practice Brotes",
+      "start": 12.367,
+      "end": 18.6,
+      "voiceFile": "generated/voice-funds.aiff",
+      "voiceSeconds": 5.624,
+      "shots": [
+        {
+          "file": "docs/video/english/recordings/fundsRecord.mp4",
+          "start": 0.0,
+          "end": 4.5,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/fundsCapture.png",
+          "start": 4.5,
+          "end": 6.0,
+          "sourceSize": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "start": 0.18,
+          "end": 3.161,
+          "text": "Give the learner Brotes. Choose an amount and confirm."
+        },
+        {
+          "start": 3.161,
+          "end": 5.624,
+          "text": "These practice coins have no monetary value."
+        }
+      ]
+    },
+    {
+      "id": "goal",
+      "section": "03",
+      "label": "Save toward a goal",
+      "start": 18.6,
+      "end": 25.267,
+      "voiceFile": "generated/voice-goal.aiff",
+      "voiceSeconds": 6.024,
+      "shots": [
+        {
+          "file": "docs/video/english/recordings/goalRecord.mp4",
+          "start": 0.0,
+          "end": 3.867,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/recordings/saveSpendRecord.mp4",
+          "start": 3.867,
+          "end": 4.867,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/goalDone.png",
+          "start": 4.867,
+          "end": 6.667,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "start": 0.18,
+          "end": 2.762,
+          "text": "Create a goal, set its target, and move Brotes"
+        },
+        {
+          "start": 2.762,
+          "end": 4.869,
+          "text": "into savings. The progress bar shows"
+        },
+        {
+          "start": 4.869,
+          "end": 6.024,
+          "text": "how far you've come."
+        }
+      ]
+    },
+    {
+      "id": "market",
+      "section": "04",
+      "label": "Market Adventure",
+      "start": 25.267,
+      "end": 39.367,
+      "voiceFile": "generated/voice-market.aiff",
+      "voiceSeconds": 12.614,
+      "shots": [
+        {
+          "file": "docs/video/english/recordings/marketBuyRecord.mp4",
+          "start": 0.0,
+          "end": 2.3,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/recordings/marketBuyRecord.mp4",
+          "start": 2.3,
+          "end": 6.5,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/recordings/marketCompleteRecord.mp4",
+          "start": 6.5,
+          "end": 9.7,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/recordings/marketCompleteRecord.mp4",
+          "start": 9.7,
+          "end": 12.4,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/recordings/rewardIslandRecord.mp4",
+          "start": 12.4,
+          "end": 14.1,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "start": 0.18,
+          "end": 2.959,
+          "text": "Open Market Adventure. Move with arrows or tap a"
+        },
+        {
+          "start": 2.959,
+          "end": 6.571,
+          "text": "stall. Compare prices, buy essentials, and return items when"
+        },
+        {
+          "start": 6.571,
+          "end": 9.905,
+          "text": "you change your mind. Finish three rounds within budget,"
+        },
+        {
+          "start": 9.905,
+          "end": 12.614,
+          "text": "then claim a practice reward once per profile."
+        }
+      ]
+    },
+    {
+      "id": "island",
+      "section": "05",
+      "label": "Goal Island",
+      "start": 39.367,
+      "end": 51.667,
+      "voiceFile": "generated/voice-island.aiff",
+      "voiceSeconds": 11.433,
+      "shots": [
+        {
+          "file": "docs/video/english/recordings/islandPinsRecord.mp4",
+          "start": 0.0,
+          "end": 3.8,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/recordings/islandRecord.mp4",
+          "start": 3.8,
+          "end": 8.3,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/recordings/islandFinishRecord.mp4",
+          "start": 8.3,
+          "end": 11.1,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/islandWonCapture.png",
+          "start": 11.1,
+          "end": 12.3,
+          "sourceSize": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "start": 0.18,
+          "end": 3.328,
+          "text": "In Goal Island, earn coins, cover essentials, and build"
+        },
+        {
+          "start": 3.328,
+          "end": 6.409,
+          "text": "an emergency reserve. Use that reserve to repair storm"
+        },
+        {
+          "start": 6.409,
+          "end": 9.156,
+          "text": "damage. Save for the bridge to reach the treasure"
+        },
+        {
+          "start": 9.156,
+          "end": 11.433,
+          "text": "garden. Game coins stay inside the game."
+        }
+      ]
+    },
+    {
+      "id": "safety",
+      "section": "06",
+      "label": "Digital Detective",
+      "start": 51.667,
+      "end": 59.367,
+      "voiceFile": "generated/voice-safety.aiff",
+      "voiceSeconds": 7.089,
+      "shots": [
+        {
+          "file": "docs/video/english/recordings/quizRecord.mp4",
+          "start": 0.0,
+          "end": 4.133,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/recordings/quizResultRecord.mp4",
+          "start": 4.133,
+          "end": 5.133,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/quizResultCapture.png",
+          "start": 5.133,
+          "end": 6.433,
+          "sourceSize": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "start": 0.18,
+          "end": 4.284,
+          "text": "Digital Detective teaches online safety. Choose the safest response,"
+        },
+        {
+          "start": 4.284,
+          "end": 7.089,
+          "text": "check your answers, and review the explanation."
+        }
+      ]
+    },
+    {
+      "id": "spend",
+      "section": "07",
+      "label": "Practice a purchase",
+      "start": 59.367,
+      "end": 68.133,
+      "voiceFile": "generated/voice-spend.aiff",
+      "voiceSeconds": 8.149,
+      "shots": [
+        {
+          "file": "docs/video/english/recordings/spendClearRecord.mp4",
+          "start": 0.0,
+          "end": 5.633,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/expensePending.png",
+          "start": 5.633,
+          "end": 7.033,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "start": 0.18,
+          "end": 2.982,
+          "text": "Practice a purchase. Enter what you're buying, pick a"
+        },
+        {
+          "start": 2.982,
+          "end": 5.534,
+          "text": "category, and choose the amount. Approval keeps"
+        },
+        {
+          "start": 5.534,
+          "end": 8.149,
+          "text": "the guardian involved before funds are deducted."
+        }
+      ]
+    },
+    {
+      "id": "activity",
+      "section": "08",
+      "label": "Review every decision",
+      "start": 68.133,
+      "end": 75.433,
+      "voiceFile": "generated/voice-activity.aiff",
+      "voiceSeconds": 6.693,
+      "shots": [
+        {
+          "file": "docs/video/english/recordings/approveClearRecord.mp4",
+          "start": 0.0,
+          "end": 4.733,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/activityFinalCapture.png",
+          "start": 4.733,
+          "end": 6.333,
+          "sourceSize": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "start": 0.18,
+          "end": 3.705,
+          "text": "Open Activity to approve or reject requests. Filter by"
+        },
+        {
+          "start": 3.705,
+          "end": 6.693,
+          "text": "learner, review the history, and export a CSV."
+        }
+      ]
+    },
+    {
+      "id": "rules",
+      "section": "09",
+      "label": "Guide at their pace",
+      "start": 75.433,
+      "end": 81.6,
+      "voiceFile": "generated/voice-rules.aiff",
+      "voiceSeconds": 5.542,
+      "shots": [
+        {
+          "file": "docs/video/english/recordings/rulesClearRecord.mp4",
+          "start": 0.0,
+          "end": 3.067,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/rules.png",
+          "start": 3.067,
+          "end": 5.267,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "start": 0.18,
+          "end": 3.166,
+          "text": "Set a spending limit, require approval, or pause practice"
+        },
+        {
+          "start": 3.166,
+          "end": 5.542,
+          "text": "actions in each learner's Guidance settings."
+        }
+      ]
+    },
+    {
+      "id": "networks",
+      "section": "10",
+      "label": "Choose your Solana network",
+      "start": 81.6,
+      "end": 88.0,
+      "voiceFile": "generated/voice-networks.aiff",
+      "voiceSeconds": 5.79,
+      "shots": [
+        {
+          "file": "docs/video/english/captures/mainnet.png",
+          "start": 0.0,
+          "end": 2.3,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/recordings/networkRecord.mp4",
+          "start": 2.3,
+          "end": 3.433,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/networkCapture.png",
+          "start": 3.433,
+          "end": 5.733,
+          "sourceSize": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "start": 0.18,
+          "end": 3.375,
+          "text": "Ready for Solana? Choose Mainnet or Testnet. Test SOL"
+        },
+        {
+          "start": 3.375,
+          "end": 5.79,
+          "text": "is for testing and has no monetary value."
+        }
+      ]
+    },
+    {
+      "id": "account",
+      "section": "LOCAL QA",
+      "label": "Guardian-controlled testnet account",
+      "start": 88.0,
+      "end": 96.8,
+      "voiceFile": "generated/voice-account.aiff",
+      "voiceSeconds": 8.173,
+      "shots": [
+        {
+          "file": "docs/video/english/recordings/connectRecord.mp4",
+          "start": 0.0,
+          "end": 2.367,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/solanaCapture.png",
+          "start": 2.367,
+          "end": 5.567,
+          "sourceSize": [
+            1280,
+            720
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/historyCapture.png",
+          "start": 5.567,
+          "end": 6.867,
+          "sourceSize": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "start": 0.18,
+          "end": 3.802,
+          "text": "This local test wallet shows the guardian-controlled account. Each"
+        },
+        {
+          "start": 3.802,
+          "end": 5.55,
+          "text": "profile has its own address; real"
+        },
+        {
+          "start": 5.55,
+          "end": 8.173,
+          "text": "transactions require the guardian's signature."
+        }
+      ]
+    },
+    {
+      "id": "transfer",
+      "section": "LOCAL QA",
+      "label": "Review before signing",
+      "start": 96.8,
+      "end": 106.933,
+      "voiceFile": "generated/voice-transfer.aiff",
+      "voiceSeconds": 9.529,
+      "shots": [
+        {
+          "file": "docs/video/english/recordings/depositRecord.mp4",
+          "start": 0.0,
+          "end": 1.0,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/depositCapture.png",
+          "start": 1.0,
+          "end": 3.5,
+          "sourceSize": [
+            1280,
+            720
+          ]
+        },
+        {
+          "file": "docs/video/english/recordings/withdrawHistoryRecord.mp4",
+          "start": 3.5,
+          "end": 4.6,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/historyCapture.png",
+          "start": 4.6,
+          "end": 7.4,
+          "sourceSize": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "start": 0.18,
+          "end": 3.296,
+          "text": "Enter an amount and destination. The deposit review shows"
+        },
+        {
+          "start": 3.296,
+          "end": 6.094,
+          "text": "addresses and a network fee notice. We cancel before"
+        },
+        {
+          "start": 6.094,
+          "end": 9.529,
+          "text": "wallet signing. Withdrawal details can be entered separately."
+        }
+      ]
+    },
+    {
+      "id": "receipt",
+      "section": "EARLIER TESTNET TRANSACTION",
+      "label": "Verify in Solana Explorer",
+      "start": 106.933,
+      "end": 116.0,
+      "voiceFile": "generated/voice-receipt.aiff",
+      "voiceSeconds": 8.463,
+      "shots": [
+        {
+          "file": "docs/video/english/captures/explorerCapture.png",
+          "start": 0.0,
+          "end": 3.0,
+          "sourceSize": [
+            1280,
+            720
+          ]
+        },
+        {
+          "file": "docs/video/english/recordings/explorerRecord.mp4",
+          "start": 3.0,
+          "end": 4.5,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/explorerTransferCapture.png",
+          "start": 4.5,
+          "end": 7.0,
+          "sourceSize": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "start": 0.18,
+          "end": 4.391,
+          "text": "These are earlier testnet transactions, verified on Solana Explorer."
+        },
+        {
+          "start": 4.391,
+          "end": 5.936,
+          "text": "Open a receipt to check the"
+        },
+        {
+          "start": 5.936,
+          "end": 8.463,
+          "text": "amount, signature, and finalized status."
+        }
+      ]
+    },
+    {
+      "id": "backup",
+      "section": "11",
+      "label": "Keep their progress",
+      "start": 116.0,
+      "end": 125.033,
+      "voiceFile": "generated/voice-backup.aiff",
+      "voiceSeconds": 8.421,
+      "shots": [
+        {
+          "file": "docs/video/english/recordings/backupRecord.mp4",
+          "start": 0.0,
+          "end": 1.2,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/recordings/restoreRecord.mp4",
+          "start": 1.2,
+          "end": 2.9,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/restoreCapture.png",
+          "start": 2.9,
+          "end": 5.2,
+          "sourceSize": [
+            1280,
+            720
+          ]
+        },
+        {
+          "file": "docs/video/english/recordings/restoreCancelRecord.mp4",
+          "start": 5.2,
+          "end": 6.1,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/settingsCapture.png",
+          "start": 6.1,
+          "end": 7.5,
+          "sourceSize": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "start": 0.18,
+          "end": 3.638,
+          "text": "Save a backup of profiles, goals, and activity. Preview"
+        },
+        {
+          "start": 3.638,
+          "end": 5.993,
+          "text": "it before restoring. Here, we keep the"
+        },
+        {
+          "start": 5.993,
+          "end": 8.421,
+          "text": "current data. Keys stay in your wallet."
+        }
+      ]
+    },
+    {
+      "id": "perspective",
+      "section": "12",
+      "label": "Make Brote yours",
+      "start": 125.033,
+      "end": 134.0,
+      "voiceFile": "generated/voice-perspective.aiff",
+      "voiceSeconds": 8.351,
+      "shots": [
+        {
+          "file": "docs/video/english/recordings/perspectiveClearRecord.mp4",
+          "start": 0.0,
+          "end": 5.3,
+          "sourceSize": [
+            2560,
+            1440
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/personalCapture.png",
+          "start": 5.3,
+          "end": 7.3,
+          "sourceSize": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "start": 0.18,
+          "end": 3.951,
+          "text": "Switch demo perspectives to explore the learner's view. Simple"
+        },
+        {
+          "start": 3.951,
+          "end": 8.351,
+          "text": "mode reduces visual complexity. Choose English, Spanish, or Portuguese."
+        }
+      ]
+    },
+    {
+      "id": "close",
+      "section": "YOUR NEXT STEP",
+      "label": "Try Brote",
+      "start": 134.0,
+      "end": 139.2,
+      "voiceFile": "generated/voice-close.aiff",
+      "voiceSeconds": 4.59,
+      "shots": [
+        {
+          "file": "docs/video/english/captures/landingCapture.png",
+          "start": 0.0,
+          "end": 2.5,
+          "sourceSize": [
+            1280,
+            720
+          ]
+        },
+        {
+          "file": "docs/video/english/captures/homeFinalCapture.png",
+          "start": 2.5,
+          "end": 4.7,
+          "sourceSize": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "start": 0.18,
+          "end": 2.518,
+          "text": "Start with practice. Create your circle."
+        },
+        {
+          "start": 2.518,
+          "end": 4.59,
+          "text": "Your next adventure starts in Brote."
+        }
+      ]
+    }
+  ],
+  "clicks": []
+}

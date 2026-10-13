@@ -1,0 +1,180 @@
+{
+  "language": "en",
+  "music": "music-bed.wav",
+  "scenes": [
+    {
+      "id": "hook",
+      "section": "BROTE",
+      "label": "Learn. Play. Grow.",
+      "narration": "Money skills start with everyday choices. Make them an adventure.",
+      "shots": [
+        {
+          "file": "recordings/marketBuyRecord.mp4",
+          "start": 8,
+          "end": 9.3
+        },
+        {
+          "file": "recordings/islandPinsRecord.mp4",
+          "start": 1,
+          "end": 2.3
+        },
+        {
+          "file": "recordings/fundsRecord.mp4",
+          "start": 1.8,
+          "end": 3.2
+        }
+      ]
+    },
+    {
+      "id": "circle",
+      "section": "CREATE",
+      "label": "A wallet for each learner",
+      "narration": "Create a practice wallet, choose a companion, and give your learner fictional Brotes.",
+      "shots": [
+        {
+          "file": "recordings/profileRecord.mp4",
+          "start": 0.3,
+          "end": 2.4
+        },
+        {
+          "file": "recordings/profileFinishRecord.mp4",
+          "start": 0.8,
+          "end": 2.4
+        },
+        {
+          "file": "recordings/fundsRecord.mp4",
+          "start": 1.7,
+          "end": 3.6
+        }
+      ]
+    },
+    {
+      "id": "goals",
+      "section": "PRACTICE",
+      "label": "Turn a wish into a goal",
+      "narration": "Set a goal and save toward it. See each small step add up.",
+      "shots": [
+        {
+          "file": "recordings/goalRecord.mp4",
+          "start": 0,
+          "end": 2.2
+        },
+        {
+          "file": "recordings/saveSpendRecord.mp4",
+          "start": 6.3,
+          "end": 7.1
+        },
+        {
+          "file": "captures/goalDone.png",
+          "duration": 1
+        }
+      ]
+    },
+    {
+      "id": "games",
+      "section": "PLAY",
+      "label": "Learn by doing",
+      "narration": "Compare prices in Market Adventure. Build an emergency reserve in Goal Island. Earn practice rewards when you finish.",
+      "shots": [
+        {
+          "file": "recordings/marketBuyRecord.mp4",
+          "start": 7.2,
+          "end": 10.2
+        },
+        {
+          "file": "recordings/islandPinsRecord.mp4",
+          "start": 0,
+          "end": 3.6
+        },
+        {
+          "file": "recordings/rewardIslandRecord.mp4",
+          "start": 0,
+          "end": 1.7
+        }
+      ]
+    },
+    {
+      "id": "choices",
+      "section": "GUIDE",
+      "label": "Stay involved",
+      "narration": "Practice a purchase. Review requests, approve spending, and follow each learner's activity.",
+      "shots": [
+        {
+          "file": "recordings/spendClearRecord.mp4",
+          "start": 1.2,
+          "end": 4.5
+        },
+        {
+          "file": "recordings/approveClearRecord.mp4",
+          "start": 0.8,
+          "end": 2.9
+        }
+      ],
+      "captionPosition": "top"
+    },
+    {
+      "id": "solana",
+      "section": "LOCAL TESTNET QA",
+      "label": "Explore Solana together",
+      "narration": "Choose Mainnet or Testnet. Guardian signatures authorize transfers. Here are earlier testnet transactions verified in Solana Explorer.",
+      "shots": [
+        {
+          "file": "recordings/networkRecord.mp4",
+          "start": 0,
+          "end": 1.4
+        },
+        {
+          "file": "captures/solanaCapture.png",
+          "duration": 2.3
+        },
+        {
+          "file": "recordings/withdrawHistoryRecord.mp4",
+          "start": 0,
+          "end": 1.1
+        },
+        {
+          "file": "captures/explorerCapture.png",
+          "duration": 2.6
+        }
+      ]
+    },
+    {
+      "id": "pace",
+      "section": "YOUR PACE",
+      "label": "Keep your progress",
+      "narration": "Save a backup, explore demo perspectives, and use simple mode. Brote speaks English, Spanish, and Portuguese.",
+      "shots": [
+        {
+          "file": "recordings/backupRecord.mp4",
+          "start": 0,
+          "end": 1.2
+        },
+        {
+          "file": "recordings/perspectiveClearRecord.mp4",
+          "start": 0,
+          "end": 4.5
+        },
+        {
+          "file": "captures/personalCapture.png",
+          "duration": 1
+        }
+      ]
+    },
+    {
+      "id": "close",
+      "section": "START HERE",
+      "label": "Try Brote",
+      "narration": "Open Brote. Start with practice. Grow your confidence together.",
+      "shots": [
+        {
+          "file": "captures/landingCapture.png",
+          "duration": 2.4
+        },
+        {
+          "file": "captures/homeFinalCapture.png",
+          "duration": 1.6
+        }
+      ]
+    }
+  ]
+}
