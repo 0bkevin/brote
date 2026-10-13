@@ -1,0 +1,41 @@
+{
+  "format": "1920x1080 16:9",
+  "language": "es",
+  "app_revision": "83f76f60db3b9d34225ebdcac2f58a867fb24c3f",
+  "videos": [
+    {
+      "file": "brote-guide-es.mp4",
+      "duration": 172.374674,
+      "width": 1920,
+      "height": 1080,
+      "fps": "24/1",
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "audio_sample_rate": "48000",
+      "bytes": 20231331,
+      "sha256": "734205abde8c6516143327cc5955a8f24b047fe1f61a7c8b1e4c38b7e9b3aee1",
+      "chapters": 14
+    },
+    {
+      "file": "brote-games-es.mp4",
+      "duration": 61.999674,
+      "width": 1920,
+      "height": 1080,
+      "fps": "24/1",
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "audio_sample_rate": "48000",
+      "bytes": 7298305,
+      "sha256": "cb8a863cc35704570fc9c25c837f7bb7508c84cbc081a79a765d76abb333591f",
+      "chapters": 6
+    }
+  ],
+  "checks": {
+    "full_decode": "passed",
+    "browser_playback": "Chrome native controls, both players started without media errors",
+    "mobile": "320px, no horizontal overflow, 288x162 players, all page controls34px",
+    "content_reviews": "Two independent rounds; consent, action labels, network costs, archived evidence and claim scope corrected; revised crops inspected individually",
+    "source_reproduction": "Committed captures and recordings successfully rebuilt with prepare-video-assets.py",
+    "localization": "ES, EN and pt-BR checked; selected language survives reload and shares app preference"
+  }
+}

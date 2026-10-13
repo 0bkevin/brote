@@ -6,11 +6,13 @@ Brote is a responsive web app where a guardian creates profiles for children, ad
 
 ## Try it
 
-[Live website](https://brote-three.vercel.app) · [Open the app](https://brote-three.vercel.app/app/) · [Architecture diagram](https://brote-three.vercel.app/architecture/)
+[Live website](https://brote-three.vercel.app) · [Open the app](https://brote-three.vercel.app/app/) · [Architecture diagram](https://brote-three.vercel.app/architecture/) · [Video guides](https://brote-three.vercel.app/guide/)
 
 Practice mode works without a wallet: create a profile, assign fictional **Brotes**, complete a mission, and review a purchase request. Solana mode supports Phantom, Solflare, and read-only public addresses.
 
 [Play the games](https://brote-three.vercel.app/app/?view=learn): explore **Market adventure** to compare prices and shop within a budget, or build **Goal Island** while saving for a goal and preparing for a storm. Both use original illustrated worlds, support keyboard/touch play, and award each achievement once. [Game rules and verification](docs/GAMES.md).
+
+[Watch the complete app walkthrough](https://brote-three.vercel.app/guide/) (2:52) or the extra games guide (1:02). Both are Spanish, 1080p, and 16:9, with motion, narration, and captions. [Scenes and reproduction](docs/VIDEO_GUIDE.md).
 
 ## Architecture
 

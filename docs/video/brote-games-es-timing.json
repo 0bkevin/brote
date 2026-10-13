@@ -1,0 +1,205 @@
+{
+  "duration": 62.0,
+  "fps": 24,
+  "width": 1920,
+  "height": 1080,
+  "title": "brote.",
+  "kicker": "APRENDE JUGANDO · 16:9",
+  "scenes": [
+    {
+      "chapter": "ELIGE TU AVENTURA",
+      "headline": "Aprende\nhaciendo.",
+      "body": "Dos juegos, decisiones cotidianas.\nSin reloj y con monedas ficticias.",
+      "action": "Aprender jugando → Elige un perfil",
+      "narration": "Abre Aprender jugando y elige un perfil. En Brote puedes aprender con dos aventuras, sin reloj y con monedas ficticias.",
+      "shots": [
+        {
+          "file": "learn-new.png",
+          "focus": [
+            850,
+            430
+          ],
+          "zoom": 1.3
+        }
+      ],
+      "frames": 233,
+      "subtitle_parts": [
+        "Abre Aprender jugando y elige un perfil. En Brote puedes aprender con dos aventuras, sin",
+        "reloj y con monedas ficticias."
+      ],
+      "start": 0
+    },
+    {
+      "chapter": "MERCADO AVENTURA",
+      "headline": "Muévete.\nCompara.\nDecide.",
+      "body": "Flechas, WASD o toca un puesto.\nMira tu lista y el saldo disponible.",
+      "action": "Toca un puesto → Comprar",
+      "narration": "En Mercado aventura, muévete con flechas o toca un puesto. Compara precios antes de comprar. Tu lista y saldo te ayudan a decidir.",
+      "shots": [
+        {
+          "framesDir": "market-move-frames",
+          "sourceFps": 8,
+          "focus": [
+            1280,
+            1000
+          ],
+          "zoom": 1.1
+        },
+        {
+          "file": "market-cart.png",
+          "focus": [
+            1030,
+            540
+          ],
+          "zoom": 1.5
+        }
+      ],
+      "frames": 255,
+      "subtitle_parts": [
+        "En Mercado aventura, muévete con flechas o toca un puesto. Compara precios antes de comprar.",
+        "Tu lista y saldo te ayudan a decidir."
+      ],
+      "start": 9.708333333333334
+    },
+    {
+      "chapter": "MERCADO AVENTURA",
+      "headline": "Tu presupuesto\nes tu brújula.",
+      "body": "Si falta dinero, devuelve y elige mejor.\nLleva la lista completa a la caja.",
+      "action": "Devolver → Revisar compra",
+      "narration": "Si falta dinero, devuelve un producto y busca un precio menor. Completa la lista, revisa en caja y supera las tres rondas.",
+      "shots": [
+        {
+          "file": "market-budget.png",
+          "focus": [
+            1070,
+            580
+          ],
+          "zoom": 1.5
+        },
+        {
+          "framesDir": "market-finish-frames",
+          "sourceFps": 8,
+          "focus": [
+            1280,
+            950
+          ],
+          "zoom": 1.1
+        },
+        {
+          "file": "market-win.png",
+          "focus": [
+            755,
+            420
+          ],
+          "zoom": 1.5
+        }
+      ],
+      "frames": 243,
+      "subtitle_parts": [
+        "Si falta dinero, devuelve un producto y busca un precio menor. Completa la lista, revisa en",
+        "caja y supera las tres rondas."
+      ],
+      "start": 20.333333333333336
+    },
+    {
+      "chapter": "ISLA DE LAS METAS",
+      "headline": "Haz crecer\ntu isla.",
+      "body": "Trabaja y cubre lo esencial.\nAparta una reserva y ahorra para el puente.",
+      "action": "Trabajar → Necesidades → Ahorrar",
+      "narration": "En Isla de las metas, trabaja y cubre lo esencial cada día. Guarda una reserva y aparta monedas para construir tu puente.",
+      "shots": [
+        {
+          "file": "island-start.png",
+          "focus": [
+            755,
+            420
+          ],
+          "zoom": 1.3
+        },
+        {
+          "framesDir": "island-earn-frames",
+          "sourceFps": 8,
+          "focus": [
+            1280,
+            1040
+          ],
+          "zoom": 1.13
+        }
+      ],
+      "frames": 236,
+      "subtitle_parts": [
+        "En Isla de las metas, trabaja y cubre lo esencial cada día. Guarda una reserva y aparta",
+        "monedas para construir tu puente."
+      ],
+      "start": 30.458333333333336
+    },
+    {
+      "chapter": "ISLA DE LAS METAS",
+      "headline": "Prepárate para\nlo inesperado.",
+      "body": "La tormenta llega el día 3.\nTu reserva ayuda a reparar el sendero.",
+      "action": "Reparar sendero → Abrir el jardín",
+      "narration": "La tormenta llega el tercer día. Repara el sendero con tu reserva. Al completar cuatro días y el puente, abre el jardín del tesoro.",
+      "shots": [
+        {
+          "framesDir": "island-storm-frames",
+          "sourceFps": 8,
+          "focus": [
+            1280,
+            1040
+          ],
+          "zoom": 1.13
+        },
+        {
+          "file": "island-win.png",
+          "focus": [
+            755,
+            525
+          ],
+          "zoom": 1.35
+        }
+      ],
+      "frames": 250,
+      "subtitle_parts": [
+        "La tormenta llega el tercer día. Repara el sendero con tu reserva. Al completar cuatro días y",
+        "el puente, abre el jardín del tesoro."
+      ],
+      "start": 40.29166666666667
+    },
+    {
+      "chapter": "CELEBRA TU PROGRESO",
+      "headline": "Guarda\ntu logro.",
+      "body": "Recibe XP y Brotes de práctica.\nUn premio por juego y perfil.",
+      "action": "Guardar logro y recompensa",
+      "narration": "Al ganar, pulsa Guardar logro y recompensa. Recibes experiencia y Brotes de práctica una vez por juego y perfil. Puedes repetir para aprender.",
+      "shots": [
+        {
+          "file": "market-claim.png",
+          "focus": [
+            755,
+            550
+          ],
+          "zoom": 1.35,
+          "pointer": [
+            415,
+            733
+          ]
+        },
+        {
+          "file": "market-reward.png",
+          "focus": [
+            755,
+            420
+          ],
+          "zoom": 1.35
+        }
+      ],
+      "note": "BROTES DE PRÁCTICA · SIN VALOR MONETARIO",
+      "frames": 271,
+      "subtitle_parts": [
+        "Al ganar, pulsa Guardar logro y recompensa. Recibes experiencia y Brotes de práctica una vez",
+        "por juego y perfil. Puedes repetir para aprender."
+      ],
+      "start": 50.708333333333336
+    }
+  ]
+}
