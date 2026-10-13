@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7fb">
+  <meta name="description" content="Videos guía de Brote: aprende a usar la app y explora sus juegos educativos.">
+  <title>Guía en video · Brote</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{color-scheme:light;--navy:#22264a;--purple:#6c4bff;--lime:#d7ff5c;--ink:#292d49;--muted:#686b80;--paper:#f7f7fb;--white:#fff;--line:#e8e8f0;--shadow:0 18px 55px rgba(34,38,74,.09);font-family:"Nunito Sans",system-ui,sans-serif;color:var(--ink);background:var(--paper)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-width:320px;background:radial-gradient(ellipse at 88% 4%,rgba(215,255,92,.28),transparent 25rem),var(--paper)}
+    a{color:inherit}button,select{font:inherit}.skip{position:absolute;left:1rem;top:-4rem;z-index:5;padding:.7rem 1rem;background:#fff;border-radius:.7rem;color:var(--navy)}.skip:focus{top:1rem}
+    :focus-visible{outline:3px solid #4a32cf;outline-offset:3px} .wrap{width:min(1120px,calc(100% - 48px));margin-inline:auto}
+    header{padding:23px 0 18px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:20px}.brand img{display:block;width:148px;height:auto}.lang{display:flex;align-items:center;gap:9px;color:#555971;font-size:.88rem;font-weight:800}.lang select{min-height:42px;padding:0 36px 0 13px;border:1px solid #dedeea;border-radius:12px;background:#fff;color:var(--navy);font-weight:800;cursor:pointer}
+    main{padding-bottom:64px}.intro{padding:25px 0 29px;max-width:790px}.eyebrow{display:inline-flex;align-items:center;gap:8px;margin:0 0 12px;color:#5941e2;font-size:.77rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.eyebrow:before{content:"";width:22px;height:3px;border-radius:9px;background:var(--lime)}h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:Outfit,"Nunito Sans",sans-serif;color:var(--navy)}h1{max-width:720px;margin-bottom:12px;font-size:clamp(2.35rem,5vw,4.2rem);line-height:1.02;letter-spacing:-.045em} .intro p{max-width:640px;margin-bottom:0;color:#5f6279;font-size:clamp(1rem,1.8vw,1.15rem);line-height:1.65}
+    .feature{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(260px,.8fr);gap:24px;align-items:stretch}.video-card{min-width:0;overflow:hidden;border-radius:24px;background:#fff;box-shadow:var(--shadow)}.video-frame{position:relative;aspect-ratio:16/9;background:#171a32}.video-frame video{display:block;width:100%;height:100%;object-fit:cover}.caption-note{display:block;margin-top:12px;color:#686b80;font-size:.76rem;font-weight:700}.card-content{padding:21px 23px 23px}.card-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:9px}.badge{display:inline-flex;align-items:center;gap:7px;color:#6450db;font-size:.72rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.badge i{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 3px #f1fad1}h2{margin:0;font-size:1.55rem;line-height:1.14;letter-spacing:-.025em}.duration{flex:none;padding:6px 10px;border-radius:99px;background:#f2f0ff;color:#4e39c7;font-size:.75rem;font-weight:900;white-space:nowrap}.desc{margin:9px 0 16px;color:#66697e;font-size:.96rem;line-height:1.55}.topics{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 19px;padding:0;list-style:none}.topics li{padding:6px 10px;border-radius:9px;background:#f5f5fa;color:#4d5068;font-size:.77rem;font-weight:800}.actions{display:flex;align-items:center;flex-wrap:wrap;gap:9px}.action{display:inline-flex;justify-content:center;align-items:center;gap:7px;min-height:42px;padding:0 14px;border:1px solid #e2e1ec;border-radius:12px;background:#fff;color:var(--navy);font-size:.85rem;font-weight:900;text-decoration:none;transition:transform .16s ease,background .16s ease,border-color .16s ease}.action:hover{transform:translateY(-1px);border-color:#bcb2ff;background:#f9f7ff}.action.primary{border-color:var(--purple);background:var(--purple);color:#fff}.action.primary:hover{background:#5437ea}.action svg{width:16px;height:16px;flex:none}
+    .side{display:flex;flex-direction:column}.side .video-card{height:100%;display:flex;flex-direction:column}.side .video-frame{flex:none}.side .card-content{display:flex;flex:1;flex-direction:column;padding:19px 20px 20px}.side .desc{font-size:.9rem}.side .actions{margin-top:auto}.game-mark{display:flex;align-items:center;gap:8px;color:#696c82;font-size:.78rem;font-weight:800}.game-mark svg{width:18px;height:18px;color:var(--purple)}
+    .next-step{display:flex;align-items:center;justify-content:space-between;gap:22px;margin-top:28px;padding:22px 26px;border-radius:20px;background:var(--navy);color:#fff}.next-step h2{margin:0 0 4px;color:#fff;font-size:1.25rem}.next-step p{margin:0;color:#d7d9e7;font-size:.9rem;line-height:1.45}.next-step .action{flex:none;border-color:var(--lime);background:var(--lime);color:var(--navy)}.next-step .action:hover{background:#c9f243}
+    footer{padding:18px 0 28px;color:#74768a;font-size:.82rem}.footer-inner{display:flex;justify-content:space-between;gap:16px;align-items:center}.footer-inner a{color:#5140c8;font-weight:900;text-decoration-thickness:1px;text-underline-offset:3px}
+    @media(max-width:780px){.feature{grid-template-columns:1fr;gap:18px}.side .video-card{height:auto}.side .card-content{min-height:0}.intro{padding-top:19px}.side .actions{margin-top:4px}}
+    @media(max-width:520px){.wrap{width:min(100% - 32px,1120px)}header{padding:15px 0 12px}.topbar{gap:8px}.brand img{width:110px}.lang{gap:6px;font-size:.78rem}.lang select{width:105px;min-width:0;min-height:34px;padding-left:8px;padding-right:22px;border-radius:10px;font-size:.8rem}.intro{padding:22px 0 22px}h1{font-size:2.45rem}.intro p{font-size:.98rem}.video-card{border-radius:19px}.card-content,.side .card-content{padding:17px 16px 18px}.card-top{align-items:flex-start}.badge{font-size:.67rem}h2{font-size:1.32rem}.desc{font-size:.9rem}.topics{gap:6px}.topics li{font-size:.73rem;padding:5px 8px}.actions{gap:7px}.action{min-height:34px;padding:0 10px;border-radius:10px;font-size:.78rem}.action svg{width:14px;height:14px}.caption-note{right:8px;bottom:8px;font-size:.65rem}.next-step{align-items:flex-start;flex-direction:column;gap:14px;padding:19px;border-radius:17px}.next-step .action{min-height:34px}.footer-inner{align-items:flex-start;flex-direction:column;gap:7px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#contenido" data-i18n="skip">Saltar al contenido</a>
+  <header>
+    <div class="wrap topbar">
+      <a class="brand" href="/app/" aria-label="Brote — inicio" data-i18n-aria="brandAria"><img src="/logo.svg" alt="Brote"></a>
+      <label class="lang"><span data-i18n="languageLabel">Idioma</span>
+        <select id="language" aria-label="Idioma de la página">
+          <option value="es">Español</option><option value="en">English</option><option value="pt">Português</option>
+        </select>
+      </label>
+    </div>
+  </header>
+  <main id="contenido" class="wrap">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow" data-i18n="eyebrow">Aprende a tu ritmo</p>
+      <h1 id="page-title" data-i18n="title">Tu guía para empezar con Brote</h1>
+      <p data-i18n="intro">Conoce la app paso a paso y descubre cómo aprender sobre dinero jugando. Puedes pausar y volver cuando quieras.</p>
+    </section>
+
+    <section class="feature" aria-label="Videos guía" data-i18n-aria="videoRegion">
+      <article class="video-card">
+        <div class="video-frame">
+          <video controls preload="metadata" poster="/media/brote-guide-es.jpg" aria-label="Guía completa de Brote en español">
+            <source src="/media/brote-guide-es.mp4" type="video/mp4">
+            <track kind="captions" src="/media/brote-guide-es.vtt" srclang="es" label="Español" />
+            <span data-i18n="videoFallback">Tu navegador no puede reproducir este video. Puedes descargarlo con el enlace de abajo.</span>
+          </video>
+        </div>
+        <div class="card-content">
+          <div class="card-top"><span class="badge"><i></i><span data-i18n="fullGuide">Guía completa</span></span><span class="duration" data-i18n="durationFull">2:52 · 1080p</span></div>
+          <h2 data-i18n="mainTitle">Todo lo esencial, paso a paso</h2>
+          <p class="desc" data-i18n="mainDesc">Aprende a crear perfiles y metas, usar Brotes ficticios y revisar la actividad. También verás la diferencia entre mainnet y testnet y cómo hacer copias de seguridad.</p>
+          <ul class="topics" aria-label="Temas de la guía">
+            <li data-i18n="topicProfiles">Perfiles y metas</li><li data-i18n="topicPractice">Brotes de práctica</li><li data-i18n="topicSafety">Redes y respaldos</li>
+          </ul>
+          <div class="actions">
+            <a class="action primary" href="/media/brote-guide-es.mp4" download><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v3h16v-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="downloadVideo">Descargar video</span></a>
+            <a class="action" href="/media/brote-guide-es.srt" download><span data-i18n="downloadSubs">Subtítulos SRT</span></a>
+            <span class="caption-note" data-i18n="burned">Subtítulos en español incluidos</span>
+          </div>
+        </div>
+      </article>
+
+      <div class="side">
+        <article class="video-card">
+          <div class="video-frame">
+            <video controls preload="metadata" poster="/media/brote-games-es.jpg" aria-label="Guía de los juegos de Brote en español">
+              <source src="/media/brote-games-es.mp4" type="video/mp4">
+              <track kind="captions" src="/media/brote-games-es.vtt" srclang="es" label="Español" />
+              <span data-i18n="videoFallback">Tu navegador no puede reproducir este video. Puedes descargarlo con el enlace de abajo.</span>
+            </video>
+            </div>
+          <div class="card-content">
+            <div class="card-top"><span class="badge"><i></i><span data-i18n="quickGuide">Guía breve</span></span><span class="duration" data-i18n="durationGames">1:02 · 1080p</span></div>
+            <h2 data-i18n="gamesTitle">Aprender también es jugar</h2>
+            <p class="desc" data-i18n="gamesDesc">Explora Mercado aventura e Isla de las metas: dos juegos tranquilos para practicar cómo comparar precios, cuidar un presupuesto, ahorrar y planear para imprevistos.</p>
+            <div class="game-mark"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 8h10a4 4 0 0 1 3.8 5.2l-.8 2.6a2.2 2.2 0 0 1-3.6 1l-2.1-1.8h-4.6l-2.1 1.8a2.2 2.2 0 0 1-3.6-1l-.8-2.6A4 4 0 0 1 7 8Z" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5v4m-2-2h4m6-.8h.01M18 13h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span data-i18n="gameNames">Mercado aventura · Isla de las metas</span></div>
+            <div class="actions" style="margin-top:17px">
+              <a class="action primary" href="/media/brote-games-es.mp4" download><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v3h16v-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="downloadVideo">Descargar video</span></a>
+              <a class="action" href="/media/brote-games-es.srt" download><span data-i18n="downloadSubs">Subtítulos SRT</span></a>
+            <span class="caption-note" data-i18n="burned">Subtítulos en español incluidos</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="next-step" aria-labelledby="next-title">
+      <div><h2 id="next-title" data-i18n="nextTitle">¿Listo para probarlo?</h2><p data-i18n="nextDesc">Abre la demo y explora Brote a tu propio ritmo.</p></div>
+      <a class="action" href="/app/" data-i18n="openDemo">Abrir la demo <span aria-hidden="true">↗</span></a>
+    </section>
+  </main>
+  <footer><div class="wrap footer-inner"><span data-i18n="footer">Brote · Crecemos juntos.</span><a href="/app/" data-i18n="backApp">Ir a Brote</a></div></footer>
+  <script>
+    const copy={
+      es:{skip:"Saltar al contenido",languageLabel:"Idioma",title:"Tu guía para empezar con Brote",eyebrow:"Aprende a tu ritmo",intro:"Conoce la app paso a paso y descubre cómo aprender sobre dinero jugando. Puedes pausar y volver cuando quieras.",burned:"Subtítulos en español incluidos",videoFallback:"Tu navegador no puede reproducir este video. Puedes descargarlo con el enlace de abajo.",fullGuide:"Guía completa",durationFull:"2:52 · 1080p",mainTitle:"Todo lo esencial, paso a paso",mainDesc:"Aprende a crear perfiles y metas, usar Brotes ficticios y revisar la actividad. También verás la diferencia entre mainnet y testnet y cómo hacer copias de seguridad.",topicProfiles:"Perfiles y metas",topicPractice:"Brotes de práctica",topicSafety:"Redes y respaldos",downloadVideo:"Descargar video",downloadSubs:"Subtítulos SRT",quickGuide:"Guía breve",durationGames:"1:02 · 1080p",gamesTitle:"Aprender también es jugar",gamesDesc:"Explora Mercado aventura e Isla de las metas: dos juegos tranquilos para practicar cómo comparar precios, cuidar un presupuesto, ahorrar y planear para imprevistos.",gameNames:"Mercado aventura · Isla de las metas",nextTitle:"¿Listo para probarlo?",nextDesc:"Abre la demo y explora Brote a tu propio ritmo.",openDemo:"Abrir la demo",footer:"Brote · Crecemos juntos.",backApp:"Ir a Brote",pageTitle:"Guía en video · Brote",mainAria:"Guía completa de Brote en español",gamesAria:"Guía de los juegos de Brote en español",topicsAria:"Temas de la guía",languageAria:"Idioma de la página",brandAria:"Brote, ir al inicio",videoRegion:"Videos guía",captionLabel:"Español"},
+      en:{skip:"Skip to content",languageLabel:"Language",title:"Your guide to getting started with Brote",eyebrow:"Learn at your own pace",intro:"Get to know the app step by step and see how learning about money can feel like play. Pause and come back whenever you like.",burned:"Spanish subtitles included",videoFallback:"Your browser can’t play this video. Use the link below to download it.",fullGuide:"Full guide",durationFull:"2:52 · 1080p",mainTitle:"Everything you need, step by step",mainDesc:"Learn to create profiles and goals, use fictional Brotes, and review activity. You’ll also see the difference between mainnet and testnet, and how to make backups.",topicProfiles:"Profiles and goals",topicPractice:"Practice Brotes",topicSafety:"Networks and backups",downloadVideo:"Download video",downloadSubs:"SRT subtitles",quickGuide:"Quick guide",durationGames:"1:02 · 1080p",gamesTitle:"Learning can be a game",gamesDesc:"Explore Market Adventure and Goal Island: two relaxed games for practicing price comparisons, budgeting, saving, and planning for surprises.",gameNames:"Market Adventure · Goal Island",nextTitle:"Ready to give it a try?",nextDesc:"Open the demo and explore Brote at your own pace.",openDemo:"Open the demo",footer:"Brote · Growing together.",backApp:"Go to Brote",pageTitle:"Video guide · Brote",mainAria:"Complete Brote guide in Spanish",gamesAria:"Brote games guide in Spanish",topicsAria:"Guide topics",languageAria:"Page language",brandAria:"Brote, go to home",videoRegion:"Video guides",captionLabel:"Spanish"},
+      pt:{skip:"Pular para o conteúdo",languageLabel:"Idioma",title:"Seu guia para começar no Brote",eyebrow:"Aprenda no seu ritmo",intro:"Conheça o app passo a passo e descubra como aprender sobre dinheiro brincando. Pause e volte quando quiser.",burned:"Legendas em espanhol incluídas",videoFallback:"Seu navegador não pode reproduzir este vídeo. Use o link abaixo para baixá-lo.",fullGuide:"Guia completo",durationFull:"2:52 · 1080p",mainTitle:"Tudo o que você precisa, passo a passo",mainDesc:"Aprenda a criar perfis e metas, usar Brotes fictícios e conferir a atividade. Você também vai entender a diferença entre mainnet e testnet e como fazer backups.",topicProfiles:"Perfis e metas",topicPractice:"Brotes de prática",topicSafety:"Redes e backups",downloadVideo:"Baixar vídeo",downloadSubs:"Legendas SRT",quickGuide:"Guia rápido",durationGames:"1:02 · 1080p",gamesTitle:"Aprender também pode ser brincar",gamesDesc:"Explore Mercado aventura e Ilha das metas: dois jogos tranquilos para praticar como comparar preços, cuidar do orçamento, poupar e se planejar para imprevistos.",gameNames:"Mercado aventura · Ilha das metas",nextTitle:"Pronto para experimentar?",nextDesc:"Abra a demo e explore o Brote no seu ritmo.",openDemo:"Abrir a demo",footer:"Brote · Crescemos juntos.",backApp:"Ir para o Brote",pageTitle:"Guia em vídeo · Brote",mainAria:"Guia completo do Brote em espanhol",gamesAria:"Guia dos jogos do Brote em espanhol",topicsAria:"Tópicos do guia",languageAria:"Idioma da página",brandAria:"Brote, ir para o início",videoRegion:"Guias em vídeo",captionLabel:"Espanhol"}
+    };
+    const picker=document.getElementById('language');
+    function setLanguage(lang){const words=copy[lang]||copy.es;document.documentElement.lang=lang;document.title=words.pageTitle;document.querySelectorAll('[data-i18n]').forEach(node=>{const key=node.dataset.i18n;if(words[key])node.textContent=words[key]});document.querySelectorAll('[data-i18n-aria]').forEach(node=>{const key=node.dataset.i18nAria;if(words[key])node.setAttribute('aria-label',words[key])});picker.setAttribute('aria-label',words.languageAria);document.querySelectorAll('video').forEach((video,index)=>{video.setAttribute('aria-label',index===0?words.mainAria:words.gamesAria);video.querySelector('track').label=words.captionLabel});document.querySelector('.topics').setAttribute('aria-label',words.topicsAria)}
+    picker.addEventListener('change',event=>setLanguage(event.target.value));
+  </script>
+</body>
+</html>
