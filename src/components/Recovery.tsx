@@ -3,6 +3,7 @@ import { LatestRequest } from "../solana-connection";
 import { Download, FolderOpen, ShieldCheck } from "lucide-react";
 import { MAX_BACKUP_BYTES, mergeBackupOperations, operationsForBackup, parseBackup, serializeBackup, verifyBackupAccountDerivations } from "../persistence";
 import { OperationJournal } from "../solana-operations";
+import { SOLANA_NETWORK } from "../solana-network";
 import type { AppState } from "../types";
 import { useStore } from "../store";
 import { useSolana } from "../solana";
@@ -19,9 +20,9 @@ function downloadText(text: string, filename: string) {
 }
 
 export function downloadBackup(state: AppState, _guardianAddress?: string | null) {
-  const signedOperations = operationsForBackup(state, new OperationJournal(window.localStorage).read());
+  const signedOperations = operationsForBackup(state, new OperationJournal(window.localStorage, SOLANA_NETWORK.operationsKey).read());
   downloadText(
-    serializeBackup(state, new Date().toISOString(), signedOperations),
+    serializeBackup(state, new Date().toISOString(), signedOperations, SOLANA_NETWORK.cluster),
     `brote-copia-${new Date().toISOString().slice(0, 10)}.json`,
   );
 }
@@ -52,7 +53,7 @@ export default function Recovery({ state, notify }: {
     const request = readRequest.current.begin();
     try {
       if (file.size > MAX_BACKUP_BYTES) throw Error(t("Esta copia es demasiado grande."));
-      const parsed = parseBackup(await file.text());
+      const parsed = parseBackup(await file.text(), SOLANA_NETWORK.cluster);
       await verifyBackupAccountDerivations(parsed);
       if (!readRequest.current.isCurrent(request)) return;
       setPending(parsed);

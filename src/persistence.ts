@@ -3,9 +3,16 @@ import { createInitialState, isAppState } from "./domain";
 import type { AppState } from "./types";
 import { base64ToBytes, isSignedOperation, OperationJournal, type OperationStorage, type SignedOperation } from "./solana-operations";
 import { seedFor } from "./solana-utils";
+import { SOLANA_NETWORK, type SolanaCluster, type SolanaNetwork } from "./solana-network";
 
-export const STORAGE_KEY = "brote-demo-v1";
-export const WRITER_LOCK = "brote-demo-v1-writer";
+export function storageKeysForCluster(cluster: SolanaCluster) {
+  return cluster === "mainnet"
+    ? { storage: "brote-demo-v1", writerLock: "brote-demo-v1-writer" }
+    : { storage: "brote-demo-v1-testnet", writerLock: "brote-demo-v1-testnet-writer" };
+}
+
+export const STORAGE_KEY = storageKeysForCluster(SOLANA_NETWORK.cluster).storage;
+export const WRITER_LOCK = storageKeysForCluster(SOLANA_NETWORK.cluster).writerLock;
 export const MAX_BACKUP_BYTES = 50_000_000;
 
 type StorageLike = Pick<Storage, "getItem" | "setItem">;
@@ -138,6 +145,8 @@ export interface Backup {
   format: "brote-backup";
   version: 1;
   exportedAt: string;
+  /** Absent in older mainnet exports. */
+  solanaNetwork?: SolanaCluster;
   /** Legacy, unverified hint. Verified bases are in state.guardianBases. */
   guardianAddress: string | null;
   state: AppState;
@@ -160,12 +169,14 @@ export function serializeBackup(
   state: AppState,
   exportedAt = new Date().toISOString(),
   signedOperations: SignedOperation[] = [],
+  cluster: SolanaCluster = "mainnet",
 ): string {
   if (!isPersistableState(state)) throw Error("Los datos no tienen un formato válido para la copia.");
   if (!signedOperations.every(isSignedOperation) || !operationsMatchState(signedOperations, state))
     throw Error("El registro de transacciones no coincide con los perfiles guardados.");
   const backup: Backup = {
     format: "brote-backup", version: 1, exportedAt,
+    solanaNetwork: cluster,
     guardianAddress: state.legacyGuardianAddress ?? null,
     state, signedOperations,
   };
@@ -175,7 +186,7 @@ export function serializeBackup(
   return json;
 }
 
-export function parseBackup(json: string): Backup {
+export function parseBackup(json: string, expectedCluster: SolanaCluster = "mainnet"): Backup {
   if (new Blob([json]).size > MAX_BACKUP_BYTES)
     throw Error("Esta copia es demasiado grande.");
   let data: unknown;
@@ -186,6 +197,7 @@ export function parseBackup(json: string): Backup {
   if (
     candidate.format !== "brote-backup" || candidate.version !== 1 ||
     typeof candidate.exportedAt !== "string" ||
+    (candidate.solanaNetwork !== undefined && candidate.solanaNetwork !== "mainnet" && candidate.solanaNetwork !== "testnet") ||
     !isPersistableState(candidate.state) ||
     (candidate.guardianAddress !== null && typeof candidate.guardianAddress !== "string") ||
     (candidate.signedOperations !== undefined &&
@@ -194,10 +206,13 @@ export function parseBackup(json: string): Backup {
         new Set(candidate.signedOperations.map((item: SignedOperation) => item.signature)).size !== candidate.signedOperations.length ||
         !operationsMatchState(candidate.signedOperations, candidate.state as AppState)))
   ) throw Error("Esta copia no es compatible con Brote.");
+  if ((candidate.solanaNetwork ?? "mainnet") !== expectedCluster)
+    throw Error("Esta copia pertenece a otra red Solana. Abre Brote en la red de la copia para restaurarla.");
   const state = candidate.state as AppState;
   const guardianAddress = candidate.guardianAddress as string | null;
   return {
     format: "brote-backup", version: 1, exportedAt: candidate.exportedAt as string,
+    solanaNetwork: candidate.solanaNetwork as SolanaCluster | undefined,
     guardianAddress,
     signedOperations: candidate.signedOperations as SignedOperation[] | undefined,
     state: guardianAddress && state.legacyGuardianAddress === undefined
@@ -223,13 +238,20 @@ export async function verifyBackupAccountDerivations(backup: Backup): Promise<vo
   }
 }
 
-export async function mergeBackupOperations(storage: OperationStorage, backup: Backup, assertCurrent: () => void = () => {}): Promise<SignedOperation[]> {
+export async function mergeBackupOperations(
+  storage: OperationStorage,
+  backup: Backup,
+  assertCurrent: () => void = () => {},
+  network: Pick<SolanaNetwork, "cluster" | "operationsKey"> = SOLANA_NETWORK,
+): Promise<SignedOperation[]> {
+  if ((backup.solanaNetwork ?? "mainnet") !== network.cluster)
+    throw Error("Esta copia pertenece a otra red Solana. Abre Brote en la red de la copia para restaurarla.");
   const imported = backup.signedOperations ?? [];
   if (!imported.every(isSignedOperation) || !operationsMatchState(imported, backup.state))
     throw Error("Las transacciones de la copia no coinciden con sus perfiles.");
   await verifyBackupAccountDerivations(backup);
   assertCurrent();
-  const journal = new OperationJournal(storage);
+  const journal = new OperationJournal(storage, network.operationsKey);
   const existing = journal.read();
   if (!operationsMatchState(existing.filter(operation => operation.state === "pending"), backup.state))
     throw Error("La copia debe conservar los perfiles y responsables de las firmas pendientes de este navegador.");

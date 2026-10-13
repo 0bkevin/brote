@@ -3,11 +3,13 @@ import assert from "node:assert/strict";
 import { createInitialState, createWalletState } from "./domain";
 import { Keypair, PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
 import {
-  DurableStore, STORAGE_KEY, decodeStored, mergeBackupOperations, operationsForBackup, parseBackup, serializeBackup,
+  DurableStore, STORAGE_KEY, WRITER_LOCK, decodeStored, mergeBackupOperations, operationsForBackup, parseBackup, serializeBackup,
+  storageKeysForCluster,
   startWriterLease, type LockRequest,
 } from "./persistence";
 import { OperationJournal, SOLANA_OPERATIONS_KEY, bytesToBase64, type SignedOperation } from "./solana-operations";
 import { encodeBase58, seedFor } from "./solana-utils";
+import { resolveSolanaNetwork } from "./solana-network";
 
 class MemoryStorage {
   data = new Map<string, string>();
@@ -80,6 +82,33 @@ test("verified guardian bases and a legacy recovery hint survive export and rest
   const imported = parseBackup(legacy);
   assert.equal(imported.state.legacyGuardianAddress, addressA);
   assert.equal(imported.state.guardianBases, undefined);
+});
+
+test("backups declare their network and reject cross-network or untagged testnet restores", () => {
+  const state = createInitialState();
+  const mainnet = serializeBackup(state);
+  const testnet = serializeBackup(state, undefined, [], "testnet");
+  assert.equal(parseBackup(mainnet).solanaNetwork, "mainnet");
+  assert.equal(parseBackup(testnet, "testnet").solanaNetwork, "testnet");
+  assert.throws(() => parseBackup(mainnet, "testnet"), /otra red Solana/);
+  assert.throws(() => parseBackup(testnet), /otra red Solana/);
+  const legacy = JSON.stringify({
+    format: "brote-backup", version: 1, exportedAt: new Date().toISOString(),
+    guardianAddress: null, state,
+  });
+  assert.equal(parseBackup(legacy).solanaNetwork, undefined);
+  assert.throws(() => parseBackup(legacy, "testnet"), /otra red Solana/);
+  assert.throws(() => parseBackup(JSON.stringify({ ...JSON.parse(mainnet), solanaNetwork: "devnet" })), /compatible/);
+});
+
+test("profile data and writer locks have distinct keys on testnet", () => {
+  const mainnet = storageKeysForCluster("mainnet");
+  const testnet = storageKeysForCluster("testnet");
+  assert.deepEqual(mainnet, { storage: "brote-demo-v1", writerLock: "brote-demo-v1-writer" });
+  assert.equal(STORAGE_KEY, mainnet.storage);
+  assert.equal(WRITER_LOCK, mainnet.writerLock);
+  assert.notEqual(testnet.storage, mainnet.storage);
+  assert.notEqual(testnet.writerLock, mainnet.writerLock);
 });
 
 test("a generated large compact backup can be imported", () => {
@@ -155,6 +184,20 @@ test("a current backup carries pending signed bytes and blocks a new signature a
   await mergeBackupOperations(fresh, backup);
   assert.deepEqual(new OperationJournal(fresh).read(), [operation]);
   assert.throws(() => new OperationJournal(fresh).assertNoPending(), /sin resultado definitivo/);
+});
+
+test("testnet restore reads and writes only the testnet operation journal", async () => {
+  const { operation, state } = await signedBackupFixture();
+  const { operation: unrelatedMainnetOperation } = await signedBackupFixture();
+  const storage = new MemoryStorage();
+  const testnet = resolveSolanaNetwork("testnet");
+  new OperationJournal(storage).save(unrelatedMainnetOperation);
+  const mainnetBefore = storage.getItem(SOLANA_OPERATIONS_KEY);
+  const backup = parseBackup(serializeBackup(state, undefined, [operation], "testnet"), "testnet");
+  await mergeBackupOperations(storage, backup, () => {}, testnet);
+  assert.deepEqual(new OperationJournal(storage, testnet.operationsKey).read(), [operation]);
+  assert.equal(storage.getItem(SOLANA_OPERATIONS_KEY), mainnetBefore);
+  await assert.rejects(mergeBackupOperations(storage, backup), /otra red Solana/);
 });
 
 test("an older backup cannot clear an existing pending signature", async () => {
