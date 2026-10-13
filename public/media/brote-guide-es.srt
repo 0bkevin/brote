@@ -1,0 +1,115 @@
+1
+00:00:00,600 --> 00:00:05,208
+Bienvenido a Brote. Aprende sobre dinero con alguien de confianza: primero practica con
+
+2
+00:00:05,208 --> 00:00:09,817
+Brotes ficticios y después explora Solana.
+
+3
+00:00:11,017 --> 00:00:16,625
+Crea un perfil con nombre, relación y compañero. Si es adulto, confirma su consentimiento.
+
+4
+00:00:16,625 --> 00:00:22,233
+Pulsa Crear wallet de práctica: empieza con cero Brotes.
+
+5
+00:00:23,433 --> 00:00:28,625
+En Mis wallets, elige a Lucas y pulsa Asignar Brotes. Elige cien y pulsa Asignar Brotes. Son
+
+6
+00:00:28,625 --> 00:00:33,817
+puntos ficticios, sin valor monetario.
+
+7
+00:00:35,017 --> 00:00:40,417
+Pulsa Nueva meta y define qué quieres lograr. Usa Añadir a mi ahorro para reservar Brotes.
+
+8
+00:00:40,417 --> 00:00:45,817
+Lucas ahorra veinte para su bicicleta: avanza diez por ciento.
+
+9
+00:00:47,017 --> 00:00:52,229
+Detective digital enseña a reconocer mensajes sospechosos. Responde, revisa las explicaciones
+
+10
+00:00:52,229 --> 00:00:57,442
+y completa la misión para recibir tu insignia.
+
+11
+00:00:58,642 --> 00:01:05,125
+En Mercado aventura, mueve a tu compañero con flechas o toca un puesto. Compara precios,
+
+12
+00:01:05,125 --> 00:01:11,608
+compra lo de la lista y revisa en caja. Puedes devolver productos. Supera las tres rondas.
+
+13
+00:01:12,808 --> 00:01:17,256
+En Isla de las metas, trabaja, cubre lo esencial y guarda una reserva. Ahorra para el puente
+
+14
+00:01:17,256 --> 00:01:21,703
+durante cuatro días. Cuando llegue la tormenta, repara con tu reserva. Después abre el
+
+15
+00:01:21,703 --> 00:01:26,150
+jardín.
+
+16
+00:01:27,350 --> 00:01:34,104
+Pulsa Practicar un gasto: escribe el concepto y la cantidad. En Actividad, el responsable
+
+17
+00:01:34,104 --> 00:01:40,858
+aprueba o rechaza solicitudes. Filtra el historial o usa Exportar para descargar un CSV.
+
+18
+00:01:42,058 --> 00:01:47,354
+Pulsa Solana y elige Red Solana. Mainnet usa SOL real; testnet usa SOL de prueba sin valor
+
+19
+00:01:47,354 --> 00:01:52,650
+monetario. Cada red conserva sus datos separados.
+
+20
+00:01:53,850 --> 00:02:00,021
+Conecta Phantom o Solflare del representante. Crear la cuenta requiere saldo mínimo y
+
+21
+00:02:00,021 --> 00:02:06,192
+comisión; revisa antes de firmar. Esta evidencia archivada usa una wallet local de testnet.
+
+22
+00:02:07,392 --> 00:02:13,292
+Para depositar, indica la cantidad. Para retirar, añade también el destino. Revisa y firma
+
+23
+00:02:13,292 --> 00:02:19,192
+cada operación. Abre el recibo para verificarlo en Solana Explorer.
+
+24
+00:02:20,392 --> 00:02:25,938
+En Preferencias, usa Guardar copia para conservar el progreso. Restáurala en la misma red.
+
+25
+00:02:25,938 --> 00:02:31,483
+Guarda una copia reciente: las claves de tu wallet no se incluyen.
+
+26
+00:02:32,683 --> 00:02:37,208
+Vista familiar o Mi espacio cambian la perspectiva de la demo. En móvil, abre el menú
+
+27
+00:02:37,208 --> 00:02:41,733
+lateral: elige idioma o activa Modo simple.
+
+28
+00:02:42,933 --> 00:02:47,354
+Empieza por una meta, un juego o una conversación. Aprende a tu ritmo, en compañía. Brote:
+
+29
+00:02:47,354 --> 00:02:51,775
+crecemos juntos.
