@@ -84,3 +84,7 @@ Solana rounds 7–12 found and corrected:
 The final independent review reported no additional actionable findings. The expanded suite passes **73 tests**, including unknown fees, blockhash changes, guardian rent boundaries, session changes during RPC checks, imported signatures, and localized dynamic labels. These checks do not replace funded extension and network execution tests.
 
 A read-only mainnet RPC check at **2026-10-12 23:41:06 UTC** verified the mainnet genesis hash and quoted a zero-data `CreateAccountWithSeed` message: rent minimum **650,240 lamports**, fee **5,000 lamports**, one required signature. The payer was an ephemeral unfunded public key; no signature or broadcast occurred. These are observed values, not constants embedded in the app.
+
+## Live testnet verification
+
+The subsequent user-authorized testnet run confirmed actual creation, deposits, seeded withdrawals, recovery, and identical-byte rebroadcast. It exposed and corrected testnet backup isolation, BigInt handling in the local QA wallet, destination rent requirements, and invalid destination messages. The final suite passes 87 tests. See [TESTNET_QA.md](TESTNET_QA.md) for signatures and browser evidence. Mainnet funding and external extension UI remain untested.

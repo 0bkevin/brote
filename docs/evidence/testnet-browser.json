@@ -1,0 +1,26 @@
+{
+  "network": "testnet",
+  "guardian": "5vnwvSPxF7TpP8RLzcaaSRKgTszimJuisdPm4afm3R5p",
+  "profileAddress": "Gsiwjoy1twCYgxGEfNXqBcxbxWYYyticKPBPhT7Kixj5",
+  "profileBalanceLamports": 6650240,
+  "transactions": [
+    {
+      "name": "Create profile",
+      "signature": "syv7YBxHDM8GEN1H8QPheaxdJ8KxNwHvinL1JUAE75rmtao5wSqLAtxrJUejJSgYAq862iHwgv4yf3rby69eSmW",
+      "state": "confirmed"
+    },
+    {
+      "name": "Deposit 0.01 test SOL",
+      "signature": "52EsJP7qnsXF82ebTHiKwsHLYriA1YH7XfCbLKMuVmB2ZZuoK99vLU9LBmDSwK4aNxhQ7mGJw5MWibofoHdNtNM",
+      "state": "confirmed"
+    },
+    {
+      "name": "Withdraw 0.004 test SOL",
+      "signature": "F6Fbmih7BVPZP7a7QuE1XDknXVVuUeQWvw4hSwMQhaK736EJiAQUnFcvRQmiGRikMBNZ9uViHKuGdUQCFNEWNev",
+      "state": "confirmed"
+    }
+  ],
+  "backupRestoredAcrossOrigins": true,
+  "importedClaimsReconciledViaRpc": true,
+  "tinyRecipientRejectedBeforeSigning": true
+}

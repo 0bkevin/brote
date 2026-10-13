@@ -91,3 +91,7 @@ The latest [responsive review](RESPONSIVE_QA.md) extends coverage to ten presets
 ## Three-language and Solana follow-up
 
 The final local suite passes **73 tests** and `npm run build`. See [LOCALIZATION.md](LOCALIZATION.md) for the 120 locale/viewport layout checks, visual captures, translated mission completion, cross-tab form preservation, and dynamic error checks. Solana follow-up findings and the read-only mainnet fee/rent quote are recorded in [AUDIT.md](AUDIT.md). No funded transaction was signed or broadcast. GitHub CI and the production deployment validate the published revision separately.
+
+## Live testnet completion
+
+The user subsequently authorized a disposable testnet wallet and faucet funding. Confirmed on-chain evidence and browser results are recorded in [TESTNET_QA.md](TESTNET_QA.md). The final regression suite passes 87 tests; both selected-cluster builds compile. Test funds have no monetary value.

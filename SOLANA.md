@@ -1,6 +1,6 @@
-# Brote · Solana mainnet integration
+# Brote · Solana integration
 
-This integration uses **real SOL on Solana mainnet**. Brote's practice balances and purchases remain separate and must never be shown as on-chain funds.
+Production defaults to **real SOL on Solana mainnet**. An explicit `VITE_SOLANA_NETWORK=testnet` build uses test SOL with no monetary value and verifies the testnet genesis hash. Brote's practice balances and purchases remain separate and must never be shown as on-chain funds.
 
 ## Dependency and parent integration
 
@@ -25,7 +25,7 @@ import './solana.css';
 
 | Field or method                                      | Meaning                                                                                                                                                  |
 | ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `network`                                            | Literal `Solana mainnet`.                                                                                                                                |
+| `network`                                            | Selected `Solana mainnet` or `Solana testnet` build.                                                                                                                                |
 | `rpcUrl`, `rpcNotice`, `rpcError`                    | Verified endpoint and visible fallback/error state.                                                                                                      |
 | `availableWallets`, `walletName`, `connectedAddress` | Installed Phantom/Solflare detection and connected guardian.                                                                                             |
 | `observedAddress`, `observeAddress(address)`         | Connected guardian or read-only public address; the latter never grants signing.                                                                         |
@@ -60,7 +60,7 @@ If two extension approvals overlap, only the newest connection request can becom
 
 ## Fee, rent, and restored-operation checks
 
-Before wallet signing, Brote quotes `getFeeForMessage` for the final message, including the blockhash that will actually be signed, and reads the guardian's confirmed balance again. Creation and deposits require their funding amount plus that fee; withdrawals require the guardian's fee balance. The final guard also checks the guardian's balance after fee collection and after the instruction: each remainder must be zero or meet the RPC's current zero-data rent-exempt minimum. A withdrawal to the guardian includes its incoming credit in the final check. The profile account's withdrawal remainder must likewise be zero or rent-exempt.
+Before wallet signing, Brote quotes `getFeeForMessage` for the final message, including the blockhash that will actually be signed, and reads the guardian's confirmed balance again. Creation and deposits require their funding amount plus that fee; withdrawals require the guardian's fee balance. The final guard also checks the guardian's balance after fee collection and after the instruction: each remainder must be zero or meet the RPC's current zero-data rent-exempt minimum. A withdrawal to the guardian includes its incoming credit in the final check. The profile account's withdrawal remainder must likewise be zero or rent-exempt. The recipient must reach the rent-exempt minimum for its actual data size; invalid or zero minimum responses stop signing.
 
 The checked message cannot change before signing. Null or invalid fee/rent responses, insufficient funds, or a changed signing session stop the operation before the extension prompt. These are point-in-time checks; the network still determines the execution outcome if account balances change afterward.
 
@@ -70,7 +70,7 @@ SOL inputs accept a single decimal point or comma with up to nine decimal places
 
 ## RPC configuration
 
-`VITE_SOLANA_RPC_URL` may specify a dedicated **HTTPS Solana mainnet** RPC endpoint. The app calls `getGenesisHash` and accepts only mainnet's genesis hash before using it. If no override is set, it starts with `https://api.mainnet.solana.com` (Solana's documented public mainnet endpoint); if that public endpoint fails, it tries `https://solana-rpc.publicnode.com` (PublicNode's documented Solana mainnet endpoint), verifies the same genesis hash, and displays the fallback. RPC HTTP calls have a 15-second timeout. A failed configured endpoint is surfaced as an error. The app never falls back to devnet or testnet. For a deployed product, provide a dedicated mainnet RPC with adequate rate limits and browser CORS support.
+`VITE_SOLANA_RPC_URL` may specify a dedicated **HTTPS Solana mainnet** RPC endpoint. The app calls `getGenesisHash` and accepts only mainnet's genesis hash before using it. If no override is set, it starts with `https://api.mainnet.solana.com` (Solana's documented public mainnet endpoint); if that public endpoint fails, it tries `https://solana-rpc.publicnode.com` (PublicNode's documented Solana mainnet endpoint), verifies the same genesis hash, and displays the fallback. RPC HTTP calls have a 15-second timeout. A failed configured endpoint is surfaced as an error. A mainnet build never falls back to another cluster. An explicit testnet build uses its verified testnet endpoint and never falls back to mainnet. For a deployed product, provide a dedicated mainnet RPC with adequate rate limits and browser CORS support.
 
 If the official public endpoint passes its initial handshake but later balance, account, or history reads fail, a refresh verifies PublicNode's genesis again and retries those reads once. The app switches to PublicNode only when that retry reduces read failures. If verification or the retry fails, already known values remain known and failed fields remain unknown or marked incomplete. A configured RPC is never silently replaced. This read fallback does not retry signing, sending, or any other write operation.
 
@@ -85,3 +85,7 @@ The public Solana endpoint can return 403 or 429 and may not support a busy UI r
 - [Phantom injected provider transaction signing](https://docs.phantom.com/solana/sending-a-transaction)
 - [Solflare wallet SDK signing examples](https://docs.solflare.com/solflare/technical/integrate-solflare/solflare-wallet-sdk)
 - [Solana mainnet genesis hash in Solana Labs source](https://github.com/solana-labs/solana/blob/master/sdk/src/genesis_config.rs)
+
+## Live testnet validation
+
+See [TESTNET_QA.md](docs/TESTNET_QA.md) for confirmed transaction links, browser tests, once-only rebroadcast, backup isolation, and the localhost-only disposable signing adapter. Testnet backups carry a network tag and cannot be restored into mainnet; older untagged backups remain mainnet-compatible. The production frontend excludes the QA adapter and signing endpoints.

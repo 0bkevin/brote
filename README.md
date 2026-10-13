@@ -20,7 +20,7 @@ Practice mode works without a wallet: create a profile, assign fictional **Brote
 
 ![Signing flow: review, guardian signature, durable journal, broadcast, and RPC confirmation](docs/assets/solana-flow.gif)
 
-Signed transaction bytes are saved locally **before broadcast**. Uncertain outcomes block new signatures; recovery checks chain status or explicitly rebroadcasts the same bytes. RPC endpoints are verified against **Solana mainnet**. Practice Brotes have no monetary value and never become SOL.
+Signed transaction bytes are saved locally **before broadcast**. Uncertain outcomes block new signatures; recovery checks chain status or explicitly rebroadcasts the same bytes. RPC endpoints are verified against the selected cluster. **Mainnet is the default**; explicit testnet builds use separate storage and Explorer links. Practice Brotes have no monetary value and never become SOL.
 
 See [the Solana integration](SOLANA.md), [localization](docs/LOCALIZATION.md), and [interactive architecture diagram](https://brote-three.vercel.app/architecture/) for details.
 
@@ -39,9 +39,9 @@ Optional: set `VITE_SOLANA_RPC_URL` to a browser-accessible HTTPS **mainnet** RP
 
 ## Prototype scope
 
-Profiles, practice history, and the signed-operation journal are stored in this browser. The family/personal view switch is a demo control; local limits and consent prompts are not on-chain enforcement or account authentication. Real activity shows blockchain transfers, not merchant purchase details. Mainnet reads were tested; extension signing and funded transfers still require a live wallet test. Visa and production custody are future work.
+Profiles, practice history, and the signed-operation journal are stored in this browser. The family/personal view switch is a demo control; local limits and consent prompts are not on-chain enforcement or account authentication. Real activity shows blockchain transfers, not merchant purchase details. Live testnet creation, deposits, withdrawals, and recovery were verified with a disposable QA wallet. Phantom/Solflare extension UI and funded mainnet execution still require a user-led test. Visa and production custody are future work.
 
-[Roadmap](docs/ROADMAP.md) · [Pitch](docs/PITCH.md) · [Deployment](docs/DEPLOYMENT.md) · [Audit](docs/AUDIT.md) · [Verification](docs/VERIFICATION.md) · [Commit guide](docs/COMMITS.md)
+[Roadmap](docs/ROADMAP.md) · [Pitch](docs/PITCH.md) · [Deployment](docs/DEPLOYMENT.md) · [Audit](docs/AUDIT.md) · [Testnet evidence](docs/TESTNET_QA.md) · [Verification](docs/VERIFICATION.md) · [Commit guide](docs/COMMITS.md)
 
 ## License
 

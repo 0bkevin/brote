@@ -1,0 +1,77 @@
+{
+  "network": "testnet",
+  "guardian": "5vnwvSPxF7TpP8RLzcaaSRKgTszimJuisdPm4afm3R5p",
+  "profileId": "brote-live-1791849832707",
+  "profileAddress": "7syvPmvsJY2XaRhLyAHq52GJDphhHPoNgDb9TcLdJJGJ",
+  "observedAt": "2026-10-13T00:03:52.709Z",
+  "checks": [
+    {
+      "name": "guardian-funded",
+      "balanceLamports": 1992654520
+    },
+    {
+      "name": "create-profile",
+      "signature": "2p9hbp6WSz2s43oS25KdiuBUVAQqpM8y6W1RGEcC1emWqBqM1L3kdPZ5e24vbYBc7GT6DsBsmQbWiqkVwjhfP9aZ",
+      "state": "confirmed",
+      "balanceLamports": 650240,
+      "owner": "11111111111111111111111111111111",
+      "dataBytes": 0
+    },
+    {
+      "name": "deposit",
+      "signature": "5bVAZoq3CKztwHH2hk9TU4cLa59QhShf8M4UusLjr3qqqj9h5M8zGSrevDLApwWjdVqSyuZbEtdrWNKG9WTZnkGL",
+      "state": "confirmed",
+      "balanceLamports": 10650240
+    },
+    {
+      "name": "wrong-guardian-withdrawal-rejected-on-chain",
+      "passed": true,
+      "simulationError": {
+        "InstructionError": [
+          0,
+          {
+            "Custom": 5
+          }
+        ]
+      },
+      "broadcast": false
+    },
+    {
+      "name": "withdraw-to-guardian",
+      "signature": "4arZfd9ZR6cjq1hwB62krrV1asUJbUDGmSkZdwGQ15krDJU1Kb9QMydp4j7hqMgjCtNiAcwMB1xeo14m4FSjtMqW",
+      "state": "confirmed",
+      "balanceLamports": 6650240
+    },
+    {
+      "name": "rent-invalid-withdrawal-rejected",
+      "passed": true
+    },
+    {
+      "name": "restore-and-rpc-reconciliation",
+      "signatures": [
+        "2p9hbp6WSz2s43oS25KdiuBUVAQqpM8y6W1RGEcC1emWqBqM1L3kdPZ5e24vbYBc7GT6DsBsmQbWiqkVwjhfP9aZ",
+        "5bVAZoq3CKztwHH2hk9TU4cLa59QhShf8M4UusLjr3qqqj9h5M8zGSrevDLApwWjdVqSyuZbEtdrWNKG9WTZnkGL",
+        "4arZfd9ZR6cjq1hwB62krrV1asUJbUDGmSkZdwGQ15krDJU1Kb9QMydp4j7hqMgjCtNiAcwMB1xeo14m4FSjtMqW"
+      ],
+      "passed": true
+    },
+    {
+      "name": "identical-bytes-rebroadcast",
+      "signature": "2cBapbQeaW62VotaZiBsrbwfc8w2CkfE7AuHbgJCUy29n75H2FZKncUNEKENvYYxdNDGvsshcDHRKLbv9rztVXwZ",
+      "passed": true
+    },
+    {
+      "name": "lost-response-recovery",
+      "signature": "2cBapbQeaW62VotaZiBsrbwfc8w2CkfE7AuHbgJCUy29n75H2FZKncUNEKENvYYxdNDGvsshcDHRKLbv9rztVXwZ",
+      "passed": true,
+      "balanceLamports": 7650240
+    },
+    {
+      "name": "withdraw-all",
+      "signature": "2ajCfatLMcm4VgAXuhMdiVSMXqg96Mr2AsY8LZzGnaoSBt6Rxw4Z9pWT22w2E7Cj8tyNwGZCqCG7x4fVMCT9qFmV",
+      "state": "confirmed",
+      "balanceLamports": 0
+    }
+  ],
+  "status": "passed"
+}
