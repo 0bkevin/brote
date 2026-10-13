@@ -437,8 +437,14 @@ Document chapter navigation, source assets, audio and font licenses, reproductio
 
 Record complete decoding, media metadata and hashes, native playback, responsive language checks, independent review fixes, and 100 passing app tests.
 
-## 106. docs(history): index the English app walkthrough release
+## 106. `3c3c1e9` — docs(history): index the English app walkthrough release
 
 Keep the complete functional commit index and product overview current through the English walkthrough release.
 
 Find this index update with `git log --oneline --grep="index the English app walkthrough release"`.
+
+## 107. docs(history): synchronize the complete release overview
+
+Synchronize the visual product overview with every actual commit, including the finished English video release and its review fixes.
+
+Find this update with `git log --oneline --grep="synchronize the complete release overview"`.
