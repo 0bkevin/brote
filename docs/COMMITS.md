@@ -333,9 +333,43 @@ Use separate profile, lock, and journal keys on testnet. Tag backups with their 
 
 Add a reproducible live runner, real confirmed transaction signatures, browser receipts, once-only rebroadcast, wrong-guardian rejection, and restored-signature reconciliation evidence.
 
-## 82. docs(history): index testnet validation and recovery fixes
+## 82. `e5f8977` — docs(history): index testnet validation and recovery fixes
 
 Extend the complete functional history and product overview with actual testnet integration, safe QA tooling, recovery fixes, and live evidence. Retrieve this update with `git log --oneline --grep="index testnet validation"`.
+
+## 83. `c319006` — feat(solana): expose isolated mainnet and testnet sessions in production
+
+Add strict URL selection, full reload selectors, per-network RPC overrides, and isolated persistence without shipping the QA wallet.
+
+## 84. `cd61de9` — feat(brand): add original market and island game worlds
+
+Add responsive original SVG worlds and reward assets following Brote’s palette and character style.
+
+## 85. `55efd36` — feat(learning): build a playable budget market with movement and refunds
+
+Create a three-round game with keyboard/touch travel, price comparison, explicit purchases, exact refunds, and budget guards.
+
+## 86. `1a59985` — feat(learning): build a four-day savings island with emergency reserves
+
+Create a resource-management game with daily income, protected essentials, locked goal savings, a reserve-funded storm, and restart.
+
+## 87. `a7eff84` — feat(arcade): integrate replayable games with once-only profile rewards
+
+Replace two exercises with illustrated games, add localized entry points and compact dialogs, and save rewards once while allowing replay.
+
+## 88. `3513243` — docs(product): introduce interactive games and both Solana networks
+
+Update the landing page, English README, and game documentation for the playable experience and production network choice.
+
+## 89. `0895fce` — test(arcade): document full playthroughs, mobile controls, and reward safety
+
+Record 100 passing tests, real browser wins and replay, 34px controls, translations, read-only protection, and reviewed fixes.
+
+## 90. docs(history): index dual-network release and playable finance games
+
+Keep the complete functional commit history and product overview current for this release.
+
+Retrieve this update with `git log --oneline --grep="index dual-network release"`.
 
 ## Updating this index
 
