@@ -313,9 +313,29 @@ Extend the complete functional commit index and product overview through this re
 
 Use natural English landing copy and singular labels for one goal, one completed adventure, or one pending mobile approval in each language.
 
-## 77. docs(history): record final translation copy refinements
+## 77. `4020537` — docs(history): record final translation copy refinements
 
-Keep the complete commit index and overview current after the language copy polish. Retrieve this entry with `git log --oneline --grep="final translation copy"`.
+Keep the complete commit index and overview current after the language copy polish.
+
+## 78. `532fa64` — feat(solana): verify testnet builds and rent-safe recipient transfers
+
+Keep mainnet as the default, verify testnet genesis, isolate operation keys, and label test SOL. Reject invalid withdrawal destinations or recipient balances before signing.
+
+## 79. `d5a8102` — test(wallet): add a localhost-only disposable testnet signing adapter
+
+Add opt-in browser signing backed by an external 0600 key file, strict loopback/origin checks, testnet validation, System Program authority checks, and BigInt regression tests.
+
+## 80. `ff7b407` — fix(recovery): isolate profiles and signed backups by Solana network
+
+Use separate profile, lock, and journal keys on testnet. Tag backups with their network and reject cross-network restores while keeping older mainnet backups compatible.
+
+## 81. `1a04eb6` — test(solana): record live testnet transfers and recovery evidence
+
+Add a reproducible live runner, real confirmed transaction signatures, browser receipts, once-only rebroadcast, wrong-guardian rejection, and restored-signature reconciliation evidence.
+
+## 82. docs(history): index testnet validation and recovery fixes
+
+Extend the complete functional history and product overview with actual testnet integration, safe QA tooling, recovery fixes, and live evidence. Retrieve this update with `git log --oneline --grep="index testnet validation"`.
 
 ## Updating this index
 
