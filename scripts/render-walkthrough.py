@@ -322,13 +322,15 @@ def render_shot(info, path):
         command += ["-ss", str(start), "-t", str(end - start), "-i", str(info["path"])]
         filters = [f"setpts=(PTS-STARTPTS)/{speed}"]
     filters += [f"fps={FPS}",
-                f"scale={W}:{H}:force_original_aspect_ratio=decrease:flags=lanczos",
+                f"scale={W}:{H}:force_original_aspect_ratio=decrease:flags=lanczos:out_range=tv",
                 f"pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:color={NAVY}",
                 "setsar=1", f"tpad=stop_mode=clone:stop_duration={seconds}",
-                "format=yuv420p"]
+                "format=yuv420p",
+                "setparams=range=limited:color_primaries=bt709:color_trc=bt709:colorspace=bt709"]
     command += ["-vf", ",".join(filters), "-frames:v", str(info["frames"]),
                 "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "19",
-                "-r", str(FPS), str(path)]
+                "-color_range", "tv", "-colorspace", "bt709", "-color_trc", "bt709",
+                "-color_primaries", "bt709", "-r", str(FPS), str(path)]
     run(command)
 
 
@@ -337,7 +339,7 @@ def render_scene(scene, infos, length, shots, overlay, highlights, captions, out
     concat = work / f"concat-{scene['id']}.txt"
     concat.write_text("".join(f"file '{p.as_posix()}'\n" for p in shots))
     command = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
-               "-f", "concat", "-safe", "0", "-i", str(concat),
+               "-reinit_filter", "0", "-f", "concat", "-safe", "0", "-i", str(concat),
                "-loop", "1", "-i", str(overlay)]
     for path, _, _ in highlights + captions:
         command += ["-loop", "1", "-i", str(path)]
@@ -354,7 +356,8 @@ def render_scene(scene, infos, length, shots, overlay, highlights, captions, out
     command += ["-filter_complex", ";".join(filters), "-map", f"[{last}]",
                 "-frames:v", str(round(length * FPS)), "-an", "-c:v", "libx264",
                 "-preset", "veryfast", "-crf", "19", "-pix_fmt", "yuv420p",
-                "-r", str(FPS), str(out)]
+                "-color_range", "tv", "-colorspace", "bt709", "-color_trc", "bt709",
+                "-color_primaries", "bt709", "-r", str(FPS), str(out)]
     run(command)
 
 
