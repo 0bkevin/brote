@@ -5,3 +5,4 @@ dist/
 *.tsbuildinfo
 .openai/*.local.json
 .vercel/
+__pycache__/
